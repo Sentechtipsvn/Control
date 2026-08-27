@@ -5,27 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Control Center</title>
 
-    <!-- Cấu hình WebClip iOS -->
+    <!-- Cấu hình WebClip iOS Toàn màn hình -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Control Center">
+    <meta name="apple-mobile-web-app-title" content="Control">
 
-    <!-- Đã cập nhật đường dẫn tới tệp icon.png cùng thư mục -->
+    <!-- Icon ứng dụng ngoài Home Screen -->
     <link rel="apple-touch-icon" href="icon.png">
 
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(255, 255, 255, 0.1);
-            --card-border: rgba(255, 255, 255, 0.15);
+            --bg-color: #0b1120;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.12);
             --text-color: #ffffff;
         }
 
+        /* Khóa cuộn màn hình để đóng vai trò ứng dụng Native */
         html, body {
             height: 100%;
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
+            overflow-y: auto;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
         }
 
         * {
@@ -39,39 +41,38 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding-top: calc(env(safe-area-inset-top) + 20px);
+            padding-top: calc(env(safe-area-inset-top) + 16px);
             padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-left: 16px;
+            padding-right: 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         h1 {
-            font-size: 1.5rem;
-            margin-bottom: 24px;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
             font-weight: 600;
+            letter-spacing: -0.5px;
         }
 
+        /* Lưới 2 cột chứa 14 tác vụ */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 12px;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
         }
 
         .btn-action {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 16px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            padding: 14px 16px;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -80,20 +81,24 @@
         }
 
         .btn-action:active {
-            transform: scale(0.94);
-            background: rgba(255, 255, 255, 0.25);
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .btn-action img {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             object-fit: cover;
+            flex-shrink: 0;
         }
 
         .btn-action span {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     </style>
 </head>
@@ -102,42 +107,85 @@
     <h1>Control Center</h1>
 
     <div class="grid-container">
-        <div class="btn-action" onclick="runShortcut('wifi')">
-            <img src="https://img.icons8.com/color/96/wifi--v1.png" alt="Wi-Fi">
+        <!-- Đã cập nhật đường dẫn ảnh images/ và hàm truyền văn bản Tiếng Việt -->
+        <div class="btn-action" onclick="runShortcut('AssistiveTouch')">
+            <img src="images/assistivetouch.png" alt="AssistiveTouch" onerror="this.src='https://img.icons8.com/color/96/touchscreen.png'">
+            <span>AssistiveTouch</span>
+        </div>
+
+        <div class="btn-action" onclick="runShortcut('Chế độ máy bay')">
+            <img src="images/airplane.png" alt="Chế độ máy bay" onerror="this.src='https://img.icons8.com/color/96/airplane.png'">
+            <span>Chế độ máy bay</span>
+        </div>
+
+        <div class="btn-action" onclick="runShortcut('VPN')">
+            <img src="images/vpn.png" alt="VPN" onerror="this.src='https://img.icons8.com/color/96/vpn.png'">
+            <span>VPN</span>
+        </div>
+
+        <div class="btn-action" onclick="runShortcut('Wi-Fi')">
+            <img src="images/wifi.png" alt="Wi-Fi" onerror="this.src='https://img.icons8.com/color/96/wifi--v1.png'">
             <span>Wi-Fi</span>
         </div>
 
-        <div class="btn-action" onclick="runShortcut('bluetooth')">
-            <img src="https://img.icons8.com/color/96/bluetooth.png" alt="Bluetooth">
+        <div class="btn-action" onclick="runShortcut('Bluetooth')">
+            <img src="images/bluetooth.png" alt="Bluetooth" onerror="this.src='https://img.icons8.com/color/96/bluetooth.png'">
             <span>Bluetooth</span>
         </div>
 
-        <div class="btn-action" onclick="runShortcut('5g')">
-            <img src="https://img.icons8.com/color/96/5g.png" alt="5G">
+        <div class="btn-action" onclick="runShortcut('5G')">
+            <img src="images/5g.png" alt="5G" onerror="this.src='https://img.icons8.com/color/96/5g.png'">
             <span>5G</span>
         </div>
 
-        <div class="btn-action" onclick="runShortcut('flashlight')">
-            <img src="https://img.icons8.com/color/96/flashlight.png" alt="Đèn pin">
-            <span>Đèn pin</span>
+        <div class="btn-action" onclick="runShortcut('Dịch vụ định vị')">
+            <img src="images/location.png" alt="Dịch vụ định vị" onerror="this.src='https://img.icons8.com/color/96/marker.png'">
+            <span>Dịch vụ định vị</span>
         </div>
 
-        <div class="btn-action" onclick="runShortcut('lowpower')">
-            <img src="https://img.icons8.com/color/96/battery-level.png" alt="Pin yếu">
+        <div class="btn-action" onclick="runShortcut('Không làm phiền')">
+            <img src="images/dnd.png" alt="Không làm phiền" onerror="this.src='https://img.icons8.com/color/96/do-not-disturb.png'">
+            <span>Không làm phiền</span>
+        </div>
+
+        <div class="btn-action" onclick="runShortcut('Phát Wi-Fi')">
+            <img src="images/hotspot.png" alt="Phát Wi-Fi" onerror="this.src='https://img.icons8.com/color/96/wi-fi-router.png'">
+            <span>Phát Wi-Fi</span>
+        </div>
+
+        <div class="btn-action" onclick="runShortcut('Pin yếu')">
+            <img src="images/battery.png" alt="Pin yếu" onerror="this.src='https://img.icons8.com/color/96/battery-level.png'">
             <span>Pin yếu</span>
         </div>
 
-        <div class="btn-action" onclick="runShortcut('restart')">
-            <img src="https://img.icons8.com/color/96/restart.png" alt="Khởi động lại">
+        <div class="btn-action" onclick="runShortcut('Âm lượng')">
+            <img src="images/volume.png" alt="Âm lượng" onerror="this.src='https://img.icons8.com/color/96/high-volume.png'">
+            <span>Âm lượng</span>
+        </div>
+
+        <div class="btn-action" onclick="runShortcut('Đèn pin')">
+            <img src="images/flashlight.png" alt="Đèn pin" onerror="this.src='https://img.icons8.com/color/96/flashlight.png'">
+            <span>Đèn pin</span>
+        </div>
+
+        <div class="btn-action" onclick="runShortcut('Khởi động lại')">
+            <img src="images/restart.png" alt="Khởi động lại" onerror="this.src='https://img.icons8.com/color/96/restart.png'">
             <span>Khởi động lại</span>
+        </div>
+
+        <div class="btn-action" onclick="runShortcut('Tắt máy')">
+            <img src="images/shutdown.png" alt="Tắt máy" onerror="this.src='https://img.icons8.com/color/96/shutdown.png'">
+            <span>Tắt máy</span>
         </div>
     </div>
 
     <script>
-        const SHORTCUT_NAME = "Control Center";
+        // Tên Phím tắt chính xác trên iPhone của bạn
+        const SHORTCUT_NAME = "Control";
 
-        function runShortcut(actionName) {
-            const url = `shortcuts://run-shortcut?name=${encodeURIComponent(SHORTCUT_NAME)}&input=${encodeURIComponent(actionName)}`;
+        function runShortcut(textValue) {
+            // Đã đổi tham số truyền sang là 'text' khớp với Văn bản đầu vào của Phím tắt
+            const url = `shortcuts://run-shortcut?name=${encodeURIComponent(SHORTCUT_NAME)}&text=${encodeURIComponent(textValue)}`;
             window.location.href = url;
         }
     </script>
