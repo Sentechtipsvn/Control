@@ -179,15 +179,19 @@
         </div>
     </div>
 
-    <script>
-        // Tên Phím tắt chính xác trên iPhone của bạn
-        const SHORTCUT_NAME = "Control";
+<script>
+    // Tên Phím tắt trên iPhone của bạn
+    const SHORTCUT_NAME = "Control";
 
-        function runShortcut(textValue) {
-            // Đã đổi tham số truyền sang là 'text' khớp với Văn bản đầu vào của Phím tắt
-            const url = `shortcuts://run-shortcut?name=${encodeURIComponent(SHORTCUT_NAME)}&text=${encodeURIComponent(textValue)}`;
-            window.location.href = url;
-        }
-    </script>
+    function runShortcut(textValue) {
+        const encodedText = encodeURIComponent(textValue);
+        const encodedName = encodeURIComponent(SHORTCUT_NAME);
+        
+        const url = `shortcuts://run-shortcut?name=${encodedName}&input=text&text=${encodedText}`;
+        
+        // Thực thi chuyển hướng gọi Phím tắt
+        window.location.href = url;
+    }
+</script>
 </body>
 </html>
