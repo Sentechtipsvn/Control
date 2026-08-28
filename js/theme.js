@@ -1,134 +1,86 @@
-const STTV_KEYS = {
-    BG_COLOR: 'sttv_bg_color',
-    CARD_BG: 'sttv_card_bg',
-    TITLE_COLOR: 'sttv_title_color',
-    LABEL_COLOR: 'sttv_label_color',
-    CARD_SHADOW_TOGGLE: 'sttv_card_shadow_toggle',
-    ICON_SHADOW_TOGGLE: 'sttv_icon_shadow_toggle',
-    SHADOW_X: 'sttv_shadow_x',
-    SHADOW_Y: 'sttv_shadow_y',
-    SHADOW_BLUR: 'sttv_shadow_blur',
-    SHADOW_SPREAD: 'sttv_shadow_spread',
-    SHADOW_TEMP: 'sttv_shadow_temp',
-    SHADOW_COLOR: 'sttv_shadow_color'
-};
+// Lấy các phần tử DOM
+const settingsBtn = document.getElementById('open-settings');
+const settingsPanel = document.getElementById('settings-panel');
+const closeSettings = document.getElementById('close-settings');
 
-function initTheme() {
-    // Load config từ localStorage với fallback an toàn
-    const bgColor = localStorage.getItem(STTV_KEYS.BG_COLOR) || '#0b1120';
-    const cardBg = localStorage.getItem(STTV_KEYS.CARD_BG) || 'rgba(255, 255, 255, 0.08)';
-    const titleColor = localStorage.getItem(STTV_KEYS.TITLE_COLOR) || '#ffffff';
-    const labelColor = localStorage.getItem(STTV_KEYS.LABEL_COLOR) || '#ffffff';
+// Xử lý mở/đóng bảng cài đặt
+settingsBtn.addEventListener('click', () => settingsPanel.classList.add('active'));
+closeSettings.addEventListener('click', () => settingsPanel.classList.remove('active'));
 
-    const cardShadowOn = localStorage.getItem(STTV_KEYS.CARD_SHADOW_TOGGLE) === 'true';
-    const iconShadowOn = localStorage.getItem(STTV_KEYS.ICON_SHADOW_TOGGLE) === 'true';
+// Lấy biến CSS và các input
+const root = document.documentElement;
+const bgColorInput = document.getElementById('stt-bg-color');
+const cardBgInput = document.getElementById('stt-card-bg');
+const titleColorInput = document.getElementById('stt-title-color');
+const labelColorInput = document.getElementById('stt-label-color');
+const cardShadowToggle = document.getElementById('stt-card-shadow-toggle');
+const iconShadowToggle = document.getElementById('stt-icon-shadow-toggle');
 
-    const sX = localStorage.getItem(STTV_KEYS.SHADOW_X) || '0';
-    const sY = localStorage.getItem(STTV_KEYS.SHADOW_Y) || '4';
-    const sBlur = localStorage.getItem(STTV_KEYS.SHADOW_BLUR) || '10';
-    const sSpread = localStorage.getItem(STTV_KEYS.SHADOW_SPREAD) || '0';
-    const sTemp = localStorage.getItem(STTV_KEYS.SHADOW_TEMP) || '50';
-    const sColor = localStorage.getItem(STTV_KEYS.SHADOW_COLOR) || '#000000';
+// Shadow Slider Inputs
+const shadowX = document.getElementById('shadow-x');
+const shadowY = document.getElementById('shadow-y');
+const shadowBlur = document.getElementById('shadow-blur');
+const shadowSpread = document.getElementById('shadow-spread');
+const shadowColor = document.getElementById('shadow-color');
 
-    // Cập nhật DOM controls
-    document.getElementById('stt-bg-color').value = bgColor;
-    document.getElementById('stt-card-bg').value = cardBg;
-    document.getElementById('stt-title-color').value = titleColor;
-    document.getElementById('stt-label-color').value = labelColor;
-    document.getElementById('stt-card-shadow-toggle').checked = cardShadowOn;
-    document.getElementById('stt-icon-shadow-toggle').checked = iconShadowOn;
-
-    document.getElementById('shadow-x').value = sX;
-    document.getElementById('shadow-y').value = sY;
-    document.getElementById('shadow-blur').value = sBlur;
-    document.getElementById('shadow-spread').value = sSpread;
-    document.getElementById('shadow-temp').value = sTemp;
-    document.getElementById('shadow-color').value = sColor;
-
-    updateShadowValuesDisplay();
-    applyTheme();
+// Hàm lưu cấu hình
+function saveSettings() {
+    const settings = {
+        bg: bgColorInput.value,
+        cardBg: cardBgInput.value,
+        titleColor: titleColorInput.value,
+        labelColor: labelColorInput.value,
+        cardShadow: cardShadowToggle.checked,
+        iconShadow: iconShadowToggle.checked,
+        shX: shadowX.value,
+        shY: shadowY.value,
+        shBlur: shadowBlur.value,
+        shSpread: shadowSpread.value,
+        shColor: shadowColor.value
+    };
+    localStorage.setItem('cc-settings', JSON.stringify(settings));
 }
 
-function computeShadowString() {
-    const sX = document.getElementById('shadow-x').value;
-    const sY = document.getElementById('shadow-y').value;
-    const sBlur = document.getElementById('shadow-blur').value;
-    const sSpread = document.getElementById('shadow-spread').value;
-    const sTemp = parseInt(document.getElementById('shadow-temp').value, 10);
-    let sColor = document.getElementById('shadow-color').value;
-
-    // Tính toán nhiệt độ màu nếu không sửa màu thủ công
-    // Temp: 0 (lạnh/xanh) -> 50 (trung tính) -> 100 (nóng/đỏ-cam)
-    if (sTemp !== 50) {
-        const r = Math.min(255, Math.floor((sTemp / 50) * 128));
-        const b = Math.min(255, Math.floor(((100 - sTemp) / 50) * 128));
-        sColor = `rgba(${r}, 0, ${b}, 0.5)`;
+// Hàm áp dụng cấu hình
+function applySettings() {
+    // Lấy cấu hình đã lưu nếu có
+    const saved = localStorage.getItem('cc-settings');
+    if (saved) {
+        const s = JSON.parse(saved);
+        bgColorInput.value = s.bg; cardBgInput.value = s.cardBg;
+        titleColorInput.value = s.titleColor; labelColorInput.value = s.labelColor;
+        cardShadowToggle.checked = s.cardShadow; iconShadowToggle.checked = s.iconShadow;
+        shadowX.value = s.shX; shadowY.value = s.shY; shadowBlur.value = s.shBlur; shadowSpread.value = s.shSpread; shadowColor.value = s.shColor;
     }
 
-    return `${sX}px ${sY}px ${sBlur}px ${sSpread}px ${sColor}`;
+    // Apply CSS Variables
+    root.style.setProperty('--bg-color', bgColorInput.value);
+    root.style.setProperty('--card-bg', cardBgInput.value);
+    root.style.setProperty('--title-color', titleColorInput.value);
+    root.style.setProperty('--label-color', labelColorInput.value);
+
+    // Áp dụng shadow cho Card và Icon
+    const shadowValue = `${shadowX.value}px ${shadowY.value}px ${shadowBlur.value}px ${shadowSpread.value}px ${shadowColor.value}`;
+    root.style.setProperty('--card-shadow', cardShadowToggle.checked ? shadowValue : 'none');
+    root.style.setProperty('--icon-shadow', iconShadowToggle.checked ? shadowValue : 'none');
+    
+    // Cập nhật text cho các label value
+    document.getElementById('val-shadow-x').innerText = shadowX.value;
+    document.getElementById('val-shadow-y').innerText = shadowY.value;
+    document.getElementById('val-shadow-blur').innerText = shadowBlur.value;
+    document.getElementById('val-shadow-spread').innerText = shadowSpread.value;
 }
 
-function applyTheme() {
-    const root = document.documentElement;
-
-    const bgColor = document.getElementById('stt-bg-color').value;
-    const cardBg = document.getElementById('stt-card-bg').value;
-    const titleColor = document.getElementById('stt-title-color').value;
-    const labelColor = document.getElementById('stt-label-color').value;
-
-    const cardShadowOn = document.getElementById('stt-card-shadow-toggle').checked;
-    const iconShadowOn = document.getElementById('stt-icon-shadow-toggle').checked;
-
-    const shadowStr = computeShadowString();
-
-    root.style.setProperty('--bg-color', bgColor);
-    root.style.setProperty('--card-bg', cardBg);
-    root.style.setProperty('--title-color', titleColor);
-    root.style.setProperty('--label-color', labelColor);
-
-    root.style.setProperty('--card-shadow', cardShadowOn ? shadowStr : 'none');
-    root.style.setProperty('--icon-shadow', iconShadowOn ? shadowStr : 'none');
-
-    // Lưu trữ localStorage
-    localStorage.setItem(STTV_KEYS.BG_COLOR, bgColor);
-    localStorage.setItem(STTV_KEYS.CARD_BG, cardBg);
-    localStorage.setItem(STTV_KEYS.TITLE_COLOR, titleColor);
-    localStorage.setItem(STTV_KEYS.LABEL_COLOR, labelColor);
-    localStorage.setItem(STTV_KEYS.CARD_SHADOW_TOGGLE, cardShadowOn);
-    localStorage.setItem(STTV_KEYS.ICON_SHADOW_TOGGLE, iconShadowOn);
-    localStorage.setItem(STTV_KEYS.SHADOW_X, document.getElementById('shadow-x').value);
-    localStorage.setItem(STTV_KEYS.SHADOW_Y, document.getElementById('shadow-y').value);
-    localStorage.setItem(STTV_KEYS.SHADOW_BLUR, document.getElementById('shadow-blur').value);
-    localStorage.setItem(STTV_KEYS.SHADOW_SPREAD, document.getElementById('shadow-spread').value);
-    localStorage.setItem(STTV_KEYS.SHADOW_TEMP, document.getElementById('shadow-temp').value);
-    localStorage.setItem(STTV_KEYS.SHADOW_COLOR, document.getElementById('shadow-color').value);
-}
-
-function updateShadowValuesDisplay() {
-    document.getElementById('val-shadow-x').textContent = document.getElementById('shadow-x').value;
-    document.getElementById('val-shadow-y').textContent = document.getElementById('shadow-y').value;
-    document.getElementById('val-shadow-blur').textContent = document.getElementById('shadow-blur').value;
-    document.getElementById('val-shadow-spread').textContent = document.getElementById('shadow-spread').value;
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    initTheme();
-
-    const inputs = document.querySelectorAll('.settings-panel input');
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            updateShadowValuesDisplay();
-            applyTheme();
-        });
-    });
-
-    // Toggle Settings Panel
-    const openBtn = document.getElementById('open-settings');
-    const closeBtn = document.getElementById('close-settings');
-    const panel = document.getElementById('settings-panel');
-
-    if (openBtn && panel && closeBtn) {
-        openBtn.addEventListener('click', () => panel.classList.add('active'));
-        closeBtn.addEventListener('click', () => panel.classList.remove('active'));
-    }
+// Lắng nghe sự kiện thay đổi
+[bgColorInput, titleColorInput, labelColorInput, shadowColor].forEach(input => {
+    input.addEventListener('input', () => { applySettings(); saveSettings(); });
 });
+cardBgInput.addEventListener('input', () => { applySettings(); saveSettings(); });
+cardShadowToggle.addEventListener('change', () => { applySettings(); saveSettings(); });
+iconShadowToggle.addEventListener('change', () => { applySettings(); saveSettings(); });
+[shadowX, shadowY, shadowBlur, shadowSpread].forEach(input => {
+    input.addEventListener('input', () => { applySettings(); saveSettings(); });
+});
+
+// Chạy lần đầu
+applySettings();
