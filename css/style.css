@@ -11,11 +11,11 @@
 
 @media (prefers-color-scheme: light) {
     :root {
-        --bg-color: #f2f2f7;
-        --card-bg: rgba(255, 255, 255, 0.65);
-        --card-border: rgba(255, 255, 255, 0.4);
-        --title-color: #000000;
-        --label-color: #000000;
+        --bg-color: #0b1120;
+        --card-bg: rgba(255, 255, 255, 0.08);
+        --card-border: rgba(255, 255, 255, 0.12);
+        --title-color: #ffffff;
+        --label-color: #ffffff;
     }
 }
 
@@ -55,6 +55,7 @@ body {
     color: var(--title-color);
 }
 
+/* Sửa CSS Grid & Button để khớp chính xác thiết kế iOS trong ảnh mẫu */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -68,7 +69,7 @@ body {
     border: 1px solid var(--card-border);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: 30px; /* Bo tròn Pill shape */
+    border-radius: 18px; /* Bo tròn chuẩn Pill shape iOS */
     padding: 14px 16px;
     display: flex;
     align-items: center;
@@ -83,10 +84,10 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Kích thước Icon cố định 55x55, bo tròn 50% */
+/* Kích thước Icon 32x32 bo tròn khớp ảnh mẫu */
 .btn-action img {
-    width: 55px;
-    height: 55px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
