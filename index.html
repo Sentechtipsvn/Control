@@ -3,195 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Control Center</title>
+    <title>Control Center - Sentechtipvn</title>
 
     <!-- Cấu hình WebClip iOS Toàn màn hình -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Control">
+    <meta name="apple-mobile-web-app-title" content="Control Center">
 
     <!-- Icon ứng dụng ngoài Home Screen -->
-    <link rel="apple-touch-icon" href="icon.png">
-
-    <style>
-        :root {
-            --bg-color: #0b1120;
-            --card-bg: rgba(255, 255, 255, 0.08);
-            --card-border: rgba(255, 255, 255, 0.12);
-            --text-color: #ffffff;
-        }
-
-        /* Khóa cuộn màn hình để đóng vai trò ứng dụng Native */
-        html, body {
-            height: 100%;
-            overflow-y: auto;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-touch-callout: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            padding-top: calc(env(safe-area-inset-top) + 16px);
-            padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
-            padding-left: 16px;
-            padding-right: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        h1 {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-        }
-
-        /* Lưới 2 cột chứa 14 tác vụ */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            width: 100%;
-            max-width: 420px;
-        }
-
-        .btn-action {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 18px;
-            padding: 14px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: transform 0.1s ease, background 0.2s ease;
-        }
-
-        .btn-action:active {
-            transform: scale(0.95);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-action img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-
-        .btn-action span {
-            font-size: 0.9rem;
-            font-weight: 500;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    </style>
+    <link rel="apple-touch-icon" href="images/icon-setting.png">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-    <h1>Control Center</h1>
+    <h1 id="app-title" class="main-title">Control Center</h1>
 
     <div class="grid-container">
-        <!-- Đã cập nhật đường dẫn ảnh images/ và hàm truyền văn bản Tiếng Việt -->
-        <div class="btn-action" onclick="runShortcut('AssistiveTouch')">
-            <img src="images/assistivetouch.png" alt="AssistiveTouch" onerror="this.src='https://img.icons8.com/color/96/touchscreen.png'">
-            <span>AssistiveTouch</span>
+        <div class="btn-action" data-key="label_assistivetouch" onclick="runShortcut('AssistiveTouch')">
+            <img src="images/assistivetouch.png" alt="AssistiveTouch">
+            <span class="btn-label">AssistiveTouch</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('Chế độ máy bay')">
-            <img src="images/airplane.png" alt="Chế độ máy bay" onerror="this.src='https://img.icons8.com/color/96/airplane.png'">
-            <span>Chế độ máy bay</span>
+        <div class="btn-action" data-key="label_airplane" onclick="runShortcut('Chế độ máy bay')">
+            <img src="images/airplane.png" alt="Chế độ máy bay">
+            <span class="btn-label">Chế độ máy bay</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('VPN')">
-            <img src="images/vpn.png" alt="VPN" onerror="this.src='https://img.icons8.com/color/96/vpn.png'">
-            <span>VPN</span>
+        <div class="btn-action" data-key="label_vpn" onclick="runShortcut('VPN')">
+            <img src="images/vpn.png" alt="VPN">
+            <span class="btn-label">VPN</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('Wi-Fi')">
-            <img src="images/wifi.png" alt="Wi-Fi" onerror="this.src='https://img.icons8.com/color/96/wifi--v1.png'">
-            <span>Wi-Fi</span>
+        <div class="btn-action" data-key="label_wifi" onclick="runShortcut('Wi-Fi')">
+            <img src="images/wifi.png" alt="Wi-Fi">
+            <span class="btn-label">Wi-Fi</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('Bluetooth')">
-            <img src="images/bluetooth.png" alt="Bluetooth" onerror="this.src='https://img.icons8.com/color/96/bluetooth.png'">
-            <span>Bluetooth</span>
+        <div class="btn-action" data-key="label_bluetooth" onclick="runShortcut('Bluetooth')">
+            <img src="images/bluetooth.png" alt="Bluetooth">
+            <span class="btn-label">Bluetooth</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('5G')">
-            <img src="images/5g.png" alt="5G" onerror="this.src='https://img.icons8.com/color/96/5g.png'">
-            <span>5G</span>
+        <div class="btn-action" data-key="label_5g" onclick="runShortcut('5G')">
+            <img src="images/5g.png" alt="5G">
+            <span class="btn-label">5G</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('Dịch vụ định vị')">
-            <img src="images/location.png" alt="Dịch vụ định vị" onerror="this.src='https://img.icons8.com/color/96/marker.png'">
-            <span>Dịch vụ định vị</span>
+        <div class="btn-action" data-key="label_location" onclick="runShortcut('Dịch vụ định vị')">
+            <img src="images/location.png" alt="Dịch vụ định vị">
+            <span class="btn-label">Dịch vụ định vị</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('Không làm phiền')">
-            <img src="images/dnd.png" alt="Không làm phiền" onerror="this.src='https://img.icons8.com/color/96/do-not-disturb.png'">
-            <span>Không làm phiền</span>
+        <div class="btn-action" data-key="label_dnd" onclick="runShortcut('Không làm phiền')">
+            <img src="images/dnd.png" alt="Không làm phiền">
+            <span class="btn-label">Không làm phiền</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('Phát Wi-Fi')">
-            <img src="images/hotspot.png" alt="Phát Wi-Fi" onerror="this.src='https://img.icons8.com/color/96/wi-fi-router.png'">
-            <span>Phát Wi-Fi</span>
+        <div class="btn-action" data-key="label_hotspot" onclick="runShortcut('Phát Wi-Fi')">
+            <img src="images/hotspot.png" alt="Phát Wi-Fi">
+            <span class="btn-label">Phát Wi-Fi</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('Pin yếu')">
-            <img src="images/battery.png" alt="Pin yếu" onerror="this.src='https://img.icons8.com/color/96/battery-level.png'">
-            <span>Pin yếu</span>
+        <div class="btn-action" data-key="label_battery" onclick="runShortcut('Pin yếu')">
+            <img src="images/battery.png" alt="Pin yếu">
+            <span class="btn-label">Pin yếu</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('Âm lượng')">
-            <img src="images/volume.png" alt="Âm lượng" onerror="this.src='https://img.icons8.com/color/96/high-volume.png'">
-            <span>Âm lượng</span>
+        <div class="btn-action" data-key="label_volume" onclick="runShortcut('Âm lượng')">
+            <img src="images/volume.png" alt="Âm lượng">
+            <span class="btn-label">Âm lượng</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('Đèn pin')">
-            <img src="images/flashlight.png" alt="Đèn pin" onerror="this.src='https://img.icons8.com/color/96/flashlight.png'">
-            <span>Đèn pin</span>
+        <div class="btn-action" data-key="label_flashlight" onclick="runShortcut('Đèn pin')">
+            <img src="images/flashlight.png" alt="Đèn pin">
+            <span class="btn-label">Đèn pin</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('Khởi động lại')">
-            <img src="images/restart.png" alt="Khởi động lại" onerror="this.src='https://img.icons8.com/color/96/restart.png'">
-            <span>Khởi động lại</span>
+        <div class="btn-action" data-key="label_restart" onclick="runShortcut('Khởi động lại')">
+            <img src="images/restart.png" alt="Khởi động lại">
+            <span class="btn-label">Khởi động lại</span>
         </div>
-
-        <div class="btn-action" onclick="runShortcut('Tắt máy')">
-            <img src="images/shutdown.png" alt="Tắt máy" onerror="this.src='https://img.icons8.com/color/96/shutdown.png'">
-            <span>Tắt máy</span>
+        <div class="btn-action" data-key="label_shutdown" onclick="runShortcut('Tắt máy')">
+            <img src="images/shutdown.png" alt="Tắt máy">
+            <span class="btn-label">Tắt máy</span>
         </div>
     </div>
 
-<script>
-    // Tên Phím tắt trên iPhone của bạn
-    const SHORTCUT_NAME = "Control";
+    <!-- Nút Cài đặt -->
+    <button class="settings-btn" id="open-settings" aria-label="Settings">
+        <img src="icons/icon-setting.png" alt="Settings">
+    </button>
 
-    function runShortcut(textValue) {
-        const encodedText = encodeURIComponent(textValue);
-        const encodedName = encodeURIComponent(SHORTCUT_NAME);
-        
-        const url = `shortcuts://run-shortcut?name=${encodedName}&input=text&text=${encodedText}`;
-        
-        // Thực thi chuyển hướng gọi Phím tắt
-        window.location.href = url;
-    }
-</script>
+    <!-- Modal Bảng Cài đặt -->
+    <div class="settings-panel" id="settings-panel">
+        <div class="settings-header">
+            <h2 id="settings-title">Cài đặt</h2>
+            <button id="close-settings" class="close-btn">&times;</button>
+        </div>
+        <div class="settings-body">
+            <!-- 1. Màu nền hệ thống -->
+            <div class="setting-group">
+                <label for="stt-bg-color">Màu nền hệ thống</label>
+                <input type="color" id="stt-bg-color" value="#0b1120">
+            </div>
+
+            <!-- 2. Màu nền khung chứa nút -->
+            <div class="setting-group">
+                <label for="stt-card-bg">Màu nền khung nút (HEX/RGBA)</label>
+                <input type="text" id="stt-card-bg" value="rgba(255, 255, 255, 0.08)">
+            </div>
+
+            <!-- 3. Đổi màu chữ hiển thị -->
+            <div class="setting-group">
+                <label for="stt-title-color">Color of Main Title</label>
+                <input type="color" id="stt-title-color" value="#ffffff">
+            </div>
+            <div class="setting-group">
+                <label for="stt-label-color">Color of Button Labels</label>
+                <input type="color" id="stt-label-color" value="#ffffff">
+            </div>
+
+            <!-- 4. Đổ bóng Khung nút & Icon -->
+            <div class="setting-group">
+                <label><input type="checkbox" id="stt-card-shadow-toggle"> Bật đổ bóng khung nút</label>
+            </div>
+            <div class="setting-group">
+                <label><input type="checkbox" id="stt-icon-shadow-toggle"> Bật đổ bóng icon (55x55)</label>
+            </div>
+
+            <!-- Bảng điều khiển đổ bóng dùng chung -->
+            <div class="shadow-controls">
+                <h3>Tùy chỉnh Đổ bóng</h3>
+                <div class="setting-group">
+                    <label for="shadow-x">Đổ sang Trái/Phải (X offset): <span id="val-shadow-x">0</span>px</label>
+                    <input type="range" id="shadow-x" min="-50" max="50" value="0">
+                </div>
+                <div class="setting-group">
+                    <label for="shadow-y">Đổ Trên/Dưới (Y offset): <span id="val-shadow-y">4</span>px</label>
+                    <input type="range" id="shadow-y" min="-50" max="50" value="4">
+                </div>
+                <div class="setting-group">
+                    <label for="shadow-blur">Độ mờ nhạt bóng (Blur): <span id="val-shadow-blur">10</span>px</label>
+                    <input type="range" id="shadow-blur" min="0" max="100" value="10">
+                </div>
+                <div class="setting-group">
+                    <label for="shadow-spread">Độ lan bóng (Spread): <span id="val-shadow-spread">0</span>px</label>
+                    <input type="range" id="shadow-spread" min="-20" max="50" value="0">
+                </div>
+                <div class="setting-group">
+                    <label for="shadow-temp">Nhiệt độ màu (0: Lạnh - 100: Nóng)</label>
+                    <input type="range" id="shadow-temp" min="0" max="100" value="50">
+                </div>
+                <div class="setting-group">
+                    <label for="shadow-color">Màu bóng thủ công</label>
+                    <input type="color" id="shadow-color" value="#000000">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/theme.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
