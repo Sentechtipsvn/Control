@@ -1,3 +1,6 @@
+// js/main.js
+// Xử lý i18n, kết nối mạng, vibration và thực thi phím tắt iOS
+
 const SHORTCUT_NAME = "Control";
 
 // 1. Kiểm tra trạng thái kết nối mạng
@@ -21,7 +24,7 @@ function runShortcut(textValue) {
     window.location.href = url;
 }
 
-// 3. Hệ thống Đa ngôn ngữ (i18n)
+// 3. Hệ thống Đa ngôn ngữ (i18n) - Chuẩn hóa fallback đúng ngữ cảnh
 async function loadLanguage() {
     const userLang = navigator.language || 'en-GB';
     let langData = {};
@@ -51,7 +54,7 @@ async function loadLanguage() {
         langData = fallbackData;
     }
 
-    // Áp dụng dịch ngữ cảnh, fallback đúng nghĩa
+    // Áp dụng dịch ngữ cảnh, fallback đúng nghĩa ngữ cảnh
     const titleEl = document.getElementById('app-title');
     if (titleEl) {
         titleEl.textContent = langData.app_title || fallbackData.app_title || 'Control Center';
