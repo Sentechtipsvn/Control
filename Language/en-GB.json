@@ -1,0 +1,18 @@
+{
+    "app_title": "Control Center",
+    "settings_title": "Settings",
+    "label_assistivetouch": "AssistiveTouch",
+    "label_airplane": "Airplane Mode",
+    "label_vpn": "VPN",
+    "label_wifi": "Wi-Fi",
+    "label_bluetooth": "Bluetooth",
+    "label_5g": "5G",
+    "label_location": "Location Services",
+    "label_dnd": "Do Not Disturb",
+    "label_hotspot": "Personal Hotspot",
+    "label_battery": "Low Power Mode",
+    "label_volume": "Volume",
+    "label_flashlight": "Flashlight",
+    "label_restart": "Restart",
+    "label_shutdown": "Shut Down"
+}
