@@ -1,4 +1,3 @@
-// Tên shortcut trên iPhone của bạn
 const SHORTCUT_NAME = "Control";
 
 function runShortcut(textValue) {
@@ -9,19 +8,15 @@ function runShortcut(textValue) {
     window.location.href = url;
 }
 
-// Hàm tự nhận ngôn ngữ hệ thống và đọc file JSON
 async function loadLanguage() {
-    // Lấy ngôn ngữ hệ thống ví dụ: vi-VN, ja, ru, en-GB
     let lang = navigator.language || 'en-GB';
     let langFilePath = `Language/${lang}.json`;
     
     try {
-        // Kiểm tra file ngôn ngữ theo hệ thống
         let response = await fetch(langFilePath);
         if (!response.ok) throw new Error('Not found');
         return await response.json();
     } catch (error) {
-        // Nếu không có, fallback về en-GB.json
         try {
             let fallbackResponse = await fetch('Language/en-GB.json');
             if (!fallbackResponse.ok) throw new Error('Fallback not found');
@@ -33,24 +28,27 @@ async function loadLanguage() {
     }
 }
 
-// Áp dụng ngôn ngữ lên giao diện
 async function applyLanguage() {
     const texts = await loadLanguage();
     
-    // Đổi tiêu đề chính
-    if (texts.app_title) document.getElementById('app-title').innerText = texts.app_title;
+    const titleEl = document.getElementById('app-title');
+    if (titleEl) {
+        titleEl.innerText = texts.app_title || 'Control Center';
+    }
     
-    // Đổi nhãn các nút theo data-key
     document.querySelectorAll('.btn-action').forEach(btn => {
         const key = btn.getAttribute('data-key');
-        if (texts[key]) {
-            btn.querySelector('.btn-label').innerText = texts[key];
+        const labelEl = btn.querySelector('.btn-label');
+        if (labelEl) {
+            const defaultLabel = labelEl.innerText || 'Chức năng';
+            labelEl.innerText = texts[key] || defaultLabel;
         }
     });
     
-    // Đổi tiêu đề bảng cài đặt
-    if (texts.settings_title) document.querySelector('.settings-header h2').innerText = texts.settings_title;
+    const settingsHeaderEl = document.querySelector('.settings-header h2');
+    if (settingsHeaderEl) {
+        settingsHeaderEl.innerText = texts.settings_title || 'Cài đặt';
+    }
 }
 
-// Chạy khi tải trang
 document.addEventListener('DOMContentLoaded', applyLanguage);
