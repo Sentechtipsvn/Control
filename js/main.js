@@ -1,3 +1,4 @@
+// js/main.js
 const SHORTCUT_NAME = "Control";
 
 function runShortcut(textValue) {
@@ -31,6 +32,7 @@ async function loadLanguage() {
 async function applyLanguage() {
     const texts = await loadLanguage();
     
+    // Fallback strings tuân thủ tiêu chuẩn ngữ cảnh, không chứa Sentechtipvn
     const titleEl = document.getElementById('app-title');
     if (titleEl) {
         titleEl.innerText = texts.app_title || 'Control Center';
