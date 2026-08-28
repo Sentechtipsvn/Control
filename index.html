@@ -1,25 +1,23 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <!-- Đã cập nhật thẻ title chứa thương hiệu Sentechtipvn -->
-    <title>Control Center - Sentechtipvn</title>
+    <title>Control Center</title>
 
     <!-- Cấu hình WebClip iOS Toàn màn hình -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Control Center">
 
-    <!-- Icon ứng dụng ngoài Home Screen -->
-    <link rel="apple-touch-icon" href="images/icon-setting.png">
+    <!-- Liên kết CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
     <h1 id="app-title" class="main-title">Control Center</h1>
 
+    <!-- Lưới 2 cột chứa các nút chức năng -->
     <div class="grid-container">
         <div class="btn-action" data-key="label_assistivetouch" onclick="runShortcut('AssistiveTouch')">
             <img src="images/assistivetouch.png" alt="AssistiveTouch">
@@ -79,79 +77,73 @@
         </div>
     </div>
 
-    <!-- Nút Cài đặt -->
+    <!-- Nút Cài đặt (Góc phải dưới, nổi) -->
     <button class="settings-btn" id="open-settings" aria-label="Settings">
         <img src="icons/icon-setting.png" alt="Settings">
     </button>
 
-    <!-- Modal Bảng Cài đặt -->
+    <!-- Bảng Cài đặt (Modal) -->
     <div class="settings-panel" id="settings-panel">
         <div class="settings-header">
-            <h2 id="settings-title">Cài đặt</h2>
+            <h2>Cài đặt</h2>
             <button id="close-settings" class="close-btn">&times;</button>
         </div>
         <div class="settings-body">
             <!-- 1. Màu nền hệ thống -->
             <div class="setting-group">
-                <label for="stt-bg-color">Màu nền hệ thống</label>
+                <label>Màu nền hệ thống</label>
                 <input type="color" id="stt-bg-color" value="#0b1120">
             </div>
-
             <!-- 2. Màu nền khung chứa nút -->
             <div class="setting-group">
-                <label for="stt-card-bg">Màu nền khung nút (HEX/RGBA)</label>
+                <label>Màu nền khung nút (HEX/RGBA)</label>
                 <input type="text" id="stt-card-bg" value="rgba(255, 255, 255, 0.08)">
             </div>
-
             <!-- 3. Đổi màu chữ hiển thị -->
             <div class="setting-group">
-                <label for="stt-title-color">Color of Main Title</label>
+                <label>Color of Main Title</label>
                 <input type="color" id="stt-title-color" value="#ffffff">
             </div>
             <div class="setting-group">
-                <label for="stt-label-color">Color of Button Labels</label>
+                <label>Color of Button Labels</label>
                 <input type="color" id="stt-label-color" value="#ffffff">
             </div>
-
-            <!-- 4. Đổ bóng Khung nút & Icon -->
-            <div class="setting-group">
+            <!-- 4. Bật tắt đổ bóng -->
+            <div class="setting-group checkbox-group">
                 <label><input type="checkbox" id="stt-card-shadow-toggle"> Bật đổ bóng khung nút</label>
             </div>
-            <div class="setting-group">
-                <label><input type="checkbox" id="stt-icon-shadow-toggle"> Bật đổ bóng icon (32x32)</label>
+            <div class="setting-group checkbox-group">
+                <label><input type="checkbox" id="stt-icon-shadow-toggle"> Bật đổ bóng icon (55x55)</label>
             </div>
-
-            <!-- Bảng điều khiển đổ bóng dùng chung -->
+            
+            <!-- Bảng điều khiển đổ bóng nâng cao -->
             <div class="shadow-controls">
                 <h3>Tùy chỉnh Đổ bóng</h3>
                 <div class="setting-group">
-                    <label for="shadow-x">Đổ sang Trái/Phải (X offset): <span id="val-shadow-x">0</span>px</label>
+                    <label>X offset: <span id="val-shadow-x">0</span>px</label>
                     <input type="range" id="shadow-x" min="-50" max="50" value="0">
                 </div>
                 <div class="setting-group">
-                    <label for="shadow-y">Đổ Trên/Dưới (Y offset): <span id="val-shadow-y">4</span>px</label>
+                    <label>Y offset: <span id="val-shadow-y">4</span>px</label>
                     <input type="range" id="shadow-y" min="-50" max="50" value="4">
                 </div>
                 <div class="setting-group">
-                    <label for="shadow-blur">Độ mờ nhạt bóng (Blur): <span id="val-shadow-blur">10</span>px</label>
+                    <label>Blur: <span id="val-shadow-blur">10</span>px</label>
                     <input type="range" id="shadow-blur" min="0" max="100" value="10">
                 </div>
                 <div class="setting-group">
-                    <label for="shadow-spread">Độ lan bóng (Spread): <span id="val-shadow-spread">0</span>px</label>
+                    <label>Spread: <span id="val-shadow-spread">0</span>px</label>
                     <input type="range" id="shadow-spread" min="-20" max="50" value="0">
                 </div>
                 <div class="setting-group">
-                    <label for="shadow-temp">Nhiệt độ màu (0: Lạnh - 100: Nóng)</label>
-                    <input type="range" id="shadow-temp" min="0" max="100" value="50">
-                </div>
-                <div class="setting-group">
-                    <label for="shadow-color">Màu bóng thủ công</label>
+                    <label>Màu bóng thủ công</label>
                     <input type="color" id="shadow-color" value="#000000">
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Load JS -->
     <script src="js/theme.js"></script>
     <script src="js/main.js"></script>
 </body>
