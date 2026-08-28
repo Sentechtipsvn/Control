@@ -1,6 +1,6 @@
 # 🎛️ Control Center Webclip for iOS
 
-[![Platform](https://img.shields.io/badge/Platform-iOS%20Webclip-blue)](https://developer.apple.com/)
+[![Platform](https://img.shields.io/badge/Platform-iOS%20Webclip-blue)](https://developer.apple.com/documentation/devicemanagement/webclip)
 [![Language](https://img.shields.io/badge/Language-HTML%2FCSS%2FJS-brightgreen)](https://developer.mozilla.org/)
 [![License](https://img.shields.io/badge/License-MIT-orange)](LICENSE)
 
