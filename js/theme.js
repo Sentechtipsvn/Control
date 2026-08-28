@@ -1,3 +1,4 @@
+// js/theme.js
 const settingsBtn = document.getElementById('open-settings');
 const settingsPanel = document.getElementById('settings-panel');
 const closeSettings = document.getElementById('close-settings');
@@ -23,9 +24,9 @@ const shadowBlur = document.getElementById('shadow-blur');
 const shadowSpread = document.getElementById('shadow-spread');
 const shadowColor = document.getElementById('shadow-color');
 
-function saveSettings() {
-    if (!bgColorInput) return; 
-    const settings = {
+// Lấy toàn bộ cài đặt hiện tại dưới dạng Object
+function getCurrentSettingsObj() {
+    return {
         bg: bgColorInput.value,
         cardBg: cardBgInput.value,
         titleColor: titleColorInput.value,
@@ -38,32 +39,45 @@ function saveSettings() {
         shSpread: shadowSpread.value,
         shColor: shadowColor.value
     };
-    localStorage.setItem('cc-settings', JSON.stringify(settings));
 }
 
-function applySettings() {
+// Lưu cấu hình vào localStorage
+function saveSettings() {
     if (!bgColorInput) return;
-    const saved = localStorage.getItem('cc-settings');
+    const settings = getCurrentSettingsObj();
+    localStorage.setItem('sttv_cc_settings', JSON.stringify(settings));
+}
+
+// Tải cấu hình từ localStorage (Chỉ chạy khi mở web hoặc import)
+function loadSettingsFromStorage() {
+    if (!bgColorInput) return;
+    const saved = localStorage.getItem('sttv_cc_settings') || localStorage.getItem('cc-settings');
     
     if (saved) {
         try {
             const s = JSON.parse(saved);
-            bgColorInput.value = s.bg || '#0b1120'; 
-            cardBgInput.value = s.cardBg || 'rgba(255, 255, 255, 0.08)';
-            titleColorInput.value = s.titleColor || '#ffffff'; 
-            labelColorInput.value = s.labelColor || '#ffffff';
-            cardShadowToggle.checked = !!s.cardShadow; 
+            if(s.bg) bgColorInput.value = s.bg;
+            if(s.cardBg) cardBgInput.value = s.cardBg;
+            if(s.titleColor) titleColorInput.value = s.titleColor;
+            if(s.labelColor) labelColorInput.value = s.labelColor;
+            cardShadowToggle.checked = !!s.cardShadow;
             iconShadowToggle.checked = !!s.iconShadow;
-            shadowX.value = s.shX || '0'; 
-            shadowY.value = s.shY || '4'; 
-            shadowBlur.value = s.shBlur || '10'; 
-            shadowSpread.value = s.shSpread || '0'; 
-            shadowColor.value = s.shColor || '#000000';
+            if(s.shX) shadowX.value = s.shX;
+            if(s.shY) shadowY.value = s.shY;
+            if(s.shBlur) shadowBlur.value = s.shBlur;
+            if(s.shSpread) shadowSpread.value = s.shSpread;
+            if(s.shColor) shadowColor.value = s.shColor;
         } catch (e) {
             console.error('Lỗi parse settings', e);
         }
     }
+    applySettingsPreview();
+}
 
+// Áp dụng hiển thị lên giao diện ngay lập tức (Preview)
+function applySettingsPreview() {
+    if (!bgColorInput) return;
+    
     root.style.setProperty('--bg-color', bgColorInput.value);
     root.style.setProperty('--card-bg', cardBgInput.value);
     root.style.setProperty('--title-color', titleColorInput.value);
@@ -84,16 +98,50 @@ function applySettings() {
     if (valShadowSpread) valShadowSpread.innerText = shadowSpread.value;
 }
 
+// Sửa lỗi xung đột: Chỉ apply preview khi kéo slider/chọn màu, không tự động lưu/ghi đè.
 if (bgColorInput) {
-    [bgColorInput, titleColorInput, labelColorInput, shadowColor].forEach(input => {
-        input.addEventListener('input', () => { applySettings(); saveSettings(); });
+    [bgColorInput, cardBgInput, titleColorInput, labelColorInput, shadowColor].forEach(input => {
+        input.addEventListener('input', applySettingsPreview);
     });
-    cardBgInput.addEventListener('input', () => { applySettings(); saveSettings(); });
-    cardShadowToggle.addEventListener('change', () => { applySettings(); saveSettings(); });
-    iconShadowToggle.addEventListener('change', () => { applySettings(); saveSettings(); });
+    [cardShadowToggle, iconShadowToggle].forEach(input => {
+        input.addEventListener('change', applySettingsPreview);
+    });
     [shadowX, shadowY, shadowBlur, shadowSpread].forEach(input => {
-        input.addEventListener('input', () => { applySettings(); saveSettings(); });
+        input.addEventListener('input', applySettingsPreview);
     });
 
-    document.addEventListener('DOMContentLoaded', applySettings);
+    // Nút Lưu Cấu Hình
+    document.getElementById('btn-save-settings').addEventListener('click', () => {
+        saveSettings();
+        alert('Đã lưu cấu hình thành công!');
+    });
+
+    // Nút Xuất Cấu Hình (Mã hóa Base64)
+    document.getElementById('btn-export-settings').addEventListener('click', () => {
+        const settings = getCurrentSettingsObj();
+        const base64 = btoa(JSON.stringify(settings));
+        prompt("Sao chép mã cấu hình Base64 bên dưới:", base64);
+    });
+
+    // Nút Nhập Cấu Hình (Giải mã Base64)
+    document.getElementById('btn-import-settings').addEventListener('click', () => {
+        const base64 = prompt("Dán mã cấu hình Base64 vào đây:");
+        if (base64) {
+            try {
+                const json = atob(base64);
+                const s = JSON.parse(json);
+                // Ghi đè vào LocalStorage
+                localStorage.setItem('sttv_cc_settings', JSON.stringify(s));
+                // Load lại dữ liệu và apply preview
+                loadSettingsFromStorage();
+                alert("Nhập cấu hình thành công!");
+            } catch (e) {
+                alert("Mã cấu hình không hợp lệ hoặc bị lỗi!");
+                console.error("Import error:", e);
+            }
+        }
+    });
+
+    // Khởi chạy khi load trang
+    document.addEventListener('DOMContentLoaded', loadSettingsFromStorage);
 }
