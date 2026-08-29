@@ -5,17 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Control Center - Sentechtipvn</title>
 
+    <!-- Cấu hình WebClip iOS Toàn màn hình -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Control Center">
     <link rel="apple-touch-icon-precomposed" href="icon.png" />
 
+    <!-- Liên kết CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
     <h1 id="app-title" class="main-title">Control Center</h1>
 
+    <!-- Lưới 2 cột chứa các nút chức năng -->
     <div class="grid-container">
         <div class="btn-action" data-key="label_assistivetouch" onclick="runShortcut('AssistiveTouch')">
             <img src="images/assistivetouch.png" alt="AssistiveTouch">
@@ -75,24 +78,29 @@
         </div>
     </div>
 
+    <!-- Nút Cài đặt (Góc phải dưới, nổi) -->
     <button class="settings-btn" id="open-settings" aria-label="Settings">
         <img src="icons/icon-setting.png" alt="Settings">
     </button>
 
+    <!-- Bảng Cài đặt (Modal) -->
     <div class="settings-panel" id="settings-panel">
         <div class="settings-header">
             <h2>Cài đặt</h2>
             <button id="close-settings" class="close-btn">&times;</button>
         </div>
         <div class="settings-body">
+            <!-- 1. Màu nền hệ thống -->
             <div class="setting-group">
                 <label>Màu nền hệ thống</label>
                 <input type="color" id="stt-bg-color" value="#0b1120">
             </div>
+            <!-- 2. Màu nền khung chứa nút (Đổi sang color picker theo yêu cầu) -->
             <div class="setting-group">
-                <label>Màu nền khung nút (HEX/RGBA)</label>
-                <input type="text" id="stt-card-bg" value="rgba(255, 255, 255, 0.08)">
+                <label>Màu nền khung nút</label>
+                <input type="color" id="stt-card-bg" value="#333333">
             </div>
+            <!-- 3. Đổi màu chữ hiển thị -->
             <div class="setting-group">
                 <label>Color of Main Title</label>
                 <input type="color" id="stt-title-color" value="#ffffff">
@@ -101,13 +109,27 @@
                 <label>Color of Button Labels</label>
                 <input type="color" id="stt-label-color" value="#ffffff">
             </div>
-            <div class="setting-group checkbox-group">
-                <label><input type="checkbox" id="stt-card-shadow-toggle"> Bật đổ bóng khung nút</label>
+            <!-- 4. Bật tắt đổ bóng (Sử dụng nút gạt) -->
+            <div class="setting-group">
+                <label class="toggle-label">
+                    <span class="toggle-text">Bật đổ bóng khung nút</span>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="stt-card-shadow-toggle">
+                        <span class="slider"></span>
+                    </div>
+                </label>
             </div>
-            <div class="setting-group checkbox-group">
-                <label><input type="checkbox" id="stt-icon-shadow-toggle"> Bật đổ bóng icon (55x55)</label>
+            <div class="setting-group">
+                <label class="toggle-label">
+                    <span class="toggle-text">Bật đổ bóng icon (55x55)</span>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="stt-icon-shadow-toggle">
+                        <span class="slider"></span>
+                    </div>
+                </label>
             </div>
             
+            <!-- Bảng điều khiển đổ bóng nâng cao -->
             <div class="shadow-controls">
                 <h3>Tùy chỉnh Đổ bóng</h3>
                 <div class="setting-group">
@@ -131,9 +153,19 @@
                     <input type="color" id="shadow-color" value="#000000">
                 </div>
             </div>
+
+            <!-- Các nút lưu & nhập/xuất cấu hình -->
+            <div class="settings-actions">
+                <button id="btn-save-settings" class="btn-primary">Lưu cấu hình</button>
+                <div class="action-row">
+                    <button id="btn-export-settings" class="btn-secondary">📤 Xuất</button>
+                    <button id="btn-import-settings" class="btn-secondary">📥 Nhập</button>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Load JS -->
     <script src="js/theme.js"></script>
     <script src="js/main.js"></script>
 </body>
