@@ -35,10 +35,10 @@ body {
 }
 
 .main-title {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     margin-bottom: 20px;
     font-weight: 600;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.2px;
     color: var(--title-color);
 }
 
