@@ -1,7 +1,6 @@
 // js/main.js
 const SHORTCUT_NAME = "Control";
 
-// Cập nhật dùng x-callback-url để tự động quay lại WebClip
 function runShortcut(textValue) {
     const encodedText = encodeURIComponent(textValue);
     const encodedName = encodeURIComponent(SHORTCUT_NAME);
@@ -19,7 +18,6 @@ function toggleActiveAndRun(element, shortcutText) {
         const isActive = element.classList.toggle('active');
         localStorage.setItem(storageKey, isActive ? 'true' : 'false');
     }
-    // Gửi ID khoá (shortcutText) sang phím tắt thay vì chữ như cũ
     runShortcut(shortcutText);
 }
 
@@ -49,7 +47,7 @@ async function loadLanguage() {
             if (!fallbackResponse.ok) throw new Error('Fallback not found');
             return await fallbackResponse.json();
         } catch (err) {
-            console.error('Lỗi ngôn ngữ');
+            console.error('Lỗi ngôn ngữ', err);
             return {};
         }
     }
@@ -60,6 +58,7 @@ async function applyLanguage() {
     
     const titleEl = document.getElementById('app-title');
     if (titleEl) {
+        // Fallback chuẩn theo ngữ cảnh, không dùng tên thương hiệu
         titleEl.innerText = texts.app_title || 'Trung tâm điều khiển';
     }
     
@@ -80,7 +79,6 @@ async function applyLanguage() {
         }
     });
 
-    // Cập nhật đường link tải phím tắt từ JSON
     const btnShortcut = document.getElementById('btn-get-shortcut');
     if (btnShortcut) {
         const shortcutUrl = texts['url_shortcut'] || 'https://www.icloud.com/shortcuts/a8234ef368b54c59a9ce2da8c9b97365';
