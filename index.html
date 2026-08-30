@@ -4,115 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Control Center - Sentechtipvn</title>
-
-    <!-- Cấu hình WebClip iOS Toàn màn hình -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Control Center">
     <link rel="apple-touch-icon-precomposed" href="icon.png" />
 
-    <!-- Liên kết CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
     <h1 id="app-title" class="main-title">Control Center</h1>
 
-    <!-- Lưới 2 cột chứa các nút chức năng -->
     <div class="grid-container">
-        <div class="btn-action" data-key="label_assistivetouch" onclick="runShortcut('AssistiveTouch')">
+        <div class="btn-action" data-key="label_assistivetouch" data-id="assistivetouch" onclick="toggleActiveAndRun(this, 'AssistiveTouch')">
             <img src="images/assistivetouch.png" alt="AssistiveTouch">
             <span class="btn-label">AssistiveTouch</span>
         </div>
-        <div class="btn-action" data-key="label_airplane" onclick="runShortcut('Chế độ máy bay')">
+        <div class="btn-action" data-key="label_airplane" data-id="airplane" onclick="toggleActiveAndRun(this, 'Chế độ máy bay')">
             <img src="images/airplane.png" alt="Chế độ máy bay">
             <span class="btn-label">Chế độ máy bay</span>
         </div>
-        <div class="btn-action" data-key="label_vpn" onclick="runShortcut('VPN')">
+        <div class="btn-action" data-key="label_vpn" data-id="vpn" onclick="toggleActiveAndRun(this, 'VPN')">
             <img src="images/vpn.png" alt="VPN">
             <span class="btn-label">VPN</span>
         </div>
-        <div class="btn-action" data-key="label_wifi" onclick="runShortcut('Wi-Fi')">
+        <div class="btn-action" data-key="label_wifi" data-id="wifi" onclick="toggleActiveAndRun(this, 'Wi-Fi')">
             <img src="images/wifi.png" alt="Wi-Fi">
             <span class="btn-label">Wi-Fi</span>
         </div>
-        <div class="btn-action" data-key="label_bluetooth" onclick="runShortcut('Bluetooth')">
+        <div class="btn-action" data-key="label_bluetooth" data-id="bluetooth" onclick="toggleActiveAndRun(this, 'Bluetooth')">
             <img src="images/bluetooth.png" alt="Bluetooth">
             <span class="btn-label">Bluetooth</span>
         </div>
-        <div class="btn-action" data-key="label_5g" onclick="runShortcut('5G')">
+        <div class="btn-action" data-key="label_5g" data-id="5g" onclick="toggleActiveAndRun(this, '5G')">
             <img src="images/5g.png" alt="5G">
             <span class="btn-label">5G</span>
         </div>
-        <div class="btn-action" data-key="label_location" onclick="runShortcut('Dịch vụ định vị')">
+        <div class="btn-action" data-key="label_location" data-id="location" onclick="toggleActiveAndRun(this, 'Dịch vụ định vị')">
             <img src="images/location.png" alt="Dịch vụ định vị">
             <span class="btn-label">Dịch vụ định vị</span>
         </div>
-        <div class="btn-action" data-key="label_dnd" onclick="runShortcut('Không làm phiền')">
+        <div class="btn-action" data-key="label_dnd" data-id="dnd" onclick="toggleActiveAndRun(this, 'Không làm phiền')">
             <img src="images/dnd.png" alt="Không làm phiền">
             <span class="btn-label">Không làm phiền</span>
         </div>
-        <div class="btn-action" data-key="label_hotspot" onclick="runShortcut('Phát Wi-Fi')">
+        <div class="btn-action" data-key="label_hotspot" data-id="hotspot" onclick="toggleActiveAndRun(this, 'Phát Wi-Fi')">
             <img src="images/hotspot.png" alt="Phát Wi-Fi">
             <span class="btn-label">Phát Wi-Fi</span>
         </div>
-        <div class="btn-action" data-key="label_battery" onclick="runShortcut('Pin yếu')">
+        <div class="btn-action" data-key="label_battery" data-id="battery" onclick="toggleActiveAndRun(this, 'Pin yếu')">
             <img src="images/battery.png" alt="Pin yếu">
             <span class="btn-label">Pin yếu</span>
         </div>
-        <div class="btn-action" data-key="label_volume" onclick="runShortcut('Âm lượng')">
+        <div class="btn-action" data-key="label_volume" data-id="volume" onclick="toggleActiveAndRun(this, 'Âm lượng')">
             <img src="images/volume.png" alt="Âm lượng">
             <span class="btn-label">Âm lượng</span>
         </div>
-        <div class="btn-action" data-key="label_flashlight" onclick="runShortcut('Đèn pin')">
+        <div class="btn-action" data-key="label_flashlight" data-id="flashlight" onclick="toggleActiveAndRun(this, 'Đèn pin')">
             <img src="images/flashlight.png" alt="Đèn pin">
             <span class="btn-label">Đèn pin</span>
         </div>
-        <div class="btn-action" data-key="label_restart" onclick="runShortcut('Khởi động lại')">
+        <div class="btn-action" data-key="label_restart" data-id="restart" onclick="toggleActiveAndRun(this, 'Khởi động lại')">
             <img src="images/restart.png" alt="Khởi động lại">
             <span class="btn-label">Khởi động lại</span>
         </div>
-        <div class="btn-action" data-key="label_shutdown" onclick="runShortcut('Tắt máy')">
+        <div class="btn-action" data-key="label_shutdown" data-id="shutdown" onclick="toggleActiveAndRun(this, 'Tắt máy')">
             <img src="images/shutdown.png" alt="Tắt máy">
             <span class="btn-label">Tắt máy</span>
         </div>
     </div>
 
-    <!-- Nút Cài đặt (Góc phải dưới, nổi) -->
     <button class="settings-btn" id="open-settings" aria-label="Settings">
         <img src="icons/icon-setting.png" alt="Settings">
     </button>
 
-    <!-- Bảng Cài đặt (Modal) -->
     <div class="settings-panel" id="settings-panel">
         <div class="settings-header">
-            <h2>Cài đặt</h2>
+            <h2 data-key="settings_title">Cài đặt</h2>
             <button id="close-settings" class="close-btn">&times;</button>
         </div>
         <div class="settings-body">
-            <!-- 1. Màu nền hệ thống -->
             <div class="setting-group">
-                <label>Màu nền hệ thống</label>
+                <label data-key="setting_bg_color">Màu nền hệ thống</label>
                 <input type="color" id="stt-bg-color" value="#0b1120">
             </div>
-            <!-- 2. Màu nền khung chứa nút (Đổi sang color picker theo yêu cầu) -->
             <div class="setting-group">
-                <label>Màu nền khung nút</label>
+                <label data-key="setting_card_bg">Màu nền khung nút</label>
                 <input type="color" id="stt-card-bg" value="#333333">
             </div>
-            <!-- 3. Đổi màu chữ hiển thị -->
             <div class="setting-group">
-                <label>Color of Main Title</label>
+                <label data-key="setting_title_color">Color of Main Title</label>
                 <input type="color" id="stt-title-color" value="#ffffff">
             </div>
             <div class="setting-group">
-                <label>Color of Button Labels</label>
+                <label data-key="setting_label_color">Color of Button Labels</label>
                 <input type="color" id="stt-label-color" value="#ffffff">
             </div>
-            <!-- 4. Bật tắt đổ bóng (Sử dụng nút gạt) -->
             <div class="setting-group">
                 <label class="toggle-label">
-                    <span class="toggle-text">Bật đổ bóng khung nút</span>
+                    <span class="toggle-text" data-key="setting_card_shadow">Bật đổ bóng khung nút</span>
                     <div class="toggle-switch">
                         <input type="checkbox" id="stt-card-shadow-toggle">
                         <span class="slider"></span>
@@ -121,7 +111,7 @@
             </div>
             <div class="setting-group">
                 <label class="toggle-label">
-                    <span class="toggle-text">Bật đổ bóng icon (55x55)</span>
+                    <span class="toggle-text" data-key="setting_icon_shadow">Bật đổ bóng icon (55x55)</span>
                     <div class="toggle-switch">
                         <input type="checkbox" id="stt-icon-shadow-toggle">
                         <span class="slider"></span>
@@ -129,9 +119,8 @@
                 </label>
             </div>
             
-            <!-- Bảng điều khiển đổ bóng nâng cao -->
             <div class="shadow-controls">
-                <h3>Tùy chỉnh Đổ bóng</h3>
+                <h3 data-key="setting_shadow_title">Tùy chỉnh Đổ bóng</h3>
                 <div class="setting-group">
                     <label>X offset: <span id="val-shadow-x">0</span>px</label>
                     <input type="range" id="shadow-x" min="-50" max="50" value="0">
@@ -149,23 +138,24 @@
                     <input type="range" id="shadow-spread" min="-20" max="50" value="0">
                 </div>
                 <div class="setting-group">
-                    <label>Màu bóng thủ công</label>
+                    <label data-key="setting_shadow_color">Màu bóng thủ công</label>
                     <input type="color" id="shadow-color" value="#000000">
                 </div>
             </div>
 
-            <!-- Các nút lưu & nhập/xuất cấu hình -->
             <div class="settings-actions">
-                <button id="btn-save-settings" class="btn-primary">Lưu cấu hình</button>
+                <button id="btn-save-settings" class="btn-primary" data-key="btn_save">Lưu cấu hình</button>
                 <div class="action-row">
-                    <button id="btn-export-settings" class="btn-secondary">📤 Xuất</button>
-                    <button id="btn-import-settings" class="btn-secondary">📥 Nhập</button>
+                    <button id="btn-export-settings" class="btn-secondary" data-key="btn_export">📤 Xuất</button>
+                    <button id="btn-import-settings" class="btn-secondary" data-key="btn_import">📥 Nhập</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Load JS -->
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="toast-notification">Đã lưu cấu hình</div>
+
     <script src="js/theme.js"></script>
     <script src="js/main.js"></script>
 </body>
