@@ -17,7 +17,6 @@ Dự án **Webclip Control Center** là một ứng dụng web giả lập giao 
   <br>
   <p><i>✨ Giao diện Control Center hiển thị thực tế trên màn hình iPhone</i></p>
 </div>
-
 ---
 
 ## ✨ Tính năng nổi bật (Features)
@@ -33,7 +32,7 @@ Dự án **Webclip Control Center** là một ứng dụng web giả lập giao 
   - **Lưu trữ:** Tất cả tùy chỉnh được lưu trong `localStorage` để giữ nguyên sau khi người dùng đóng ứng dụng.
 - **Chuẩn hóa kích thước:** Icon chức năng được set cứng **55x55px** (bo tròn hoàn hảo). Nút Setting **50x50px** (không nền).
 - **Tích hợp Shortcuts:** Tương tác với Shortcuts iOS qua URL Scheme (`shortcuts://`).
-
+- Bạn muốn trải nghiệm hãy tải về [**Tại Đây**](https://sentechtipsvn.github.io/Control/Control.mobileconfig)
 ---
 
 ## 📁 Cấu trúc thư mục (Project Structure)
