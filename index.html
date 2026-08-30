@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Control Center - Sentechtipvn</title>
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Control Center">
@@ -13,62 +14,62 @@
 </head>
 <body>
 
-    <h1 id="app-title" class="main-title">Control Center</h1>
+    <h1 id="app-title" class="main-title" data-key="app_title">Control Center</h1>
 
     <div class="grid-container">
-        <div class="btn-action" data-key="label_assistivetouch" data-id="assistivetouch" onclick="toggleActiveAndRun(this, 'AssistiveTouch')">
+        <div class="btn-action" data-key="1" data-id="1" onclick="toggleActiveAndRun(this, '1')">
             <img src="images/assistivetouch.png" alt="AssistiveTouch">
             <span class="btn-label">AssistiveTouch</span>
         </div>
-        <div class="btn-action" data-key="label_airplane" data-id="airplane" onclick="toggleActiveAndRun(this, 'Chế độ máy bay')">
+        <div class="btn-action" data-key="2" data-id="2" onclick="toggleActiveAndRun(this, '2')">
             <img src="images/airplane.png" alt="Chế độ máy bay">
             <span class="btn-label">Chế độ máy bay</span>
         </div>
-        <div class="btn-action" data-key="label_vpn" data-id="vpn" onclick="toggleActiveAndRun(this, 'VPN')">
+        <div class="btn-action" data-key="3" data-id="3" onclick="toggleActiveAndRun(this, '3')">
             <img src="images/vpn.png" alt="VPN">
             <span class="btn-label">VPN</span>
         </div>
-        <div class="btn-action" data-key="label_wifi" data-id="wifi" onclick="toggleActiveAndRun(this, 'Wi-Fi')">
+        <div class="btn-action" data-key="4" data-id="4" onclick="toggleActiveAndRun(this, '4')">
             <img src="images/wifi.png" alt="Wi-Fi">
             <span class="btn-label">Wi-Fi</span>
         </div>
-        <div class="btn-action" data-key="label_bluetooth" data-id="bluetooth" onclick="toggleActiveAndRun(this, 'Bluetooth')">
+        <div class="btn-action" data-key="5" data-id="5" onclick="toggleActiveAndRun(this, '5')">
             <img src="images/bluetooth.png" alt="Bluetooth">
             <span class="btn-label">Bluetooth</span>
         </div>
-        <div class="btn-action" data-key="label_5g" data-id="5g" onclick="toggleActiveAndRun(this, '5G')">
+        <div class="btn-action" data-key="6" data-id="6" onclick="toggleActiveAndRun(this, '6')">
             <img src="images/5g.png" alt="5G">
             <span class="btn-label">5G</span>
         </div>
-        <div class="btn-action" data-key="label_location" data-id="location" onclick="toggleActiveAndRun(this, 'Dịch vụ định vị')">
+        <div class="btn-action" data-key="7" data-id="7" onclick="toggleActiveAndRun(this, '7')">
             <img src="images/location.png" alt="Dịch vụ định vị">
             <span class="btn-label">Dịch vụ định vị</span>
         </div>
-        <div class="btn-action" data-key="label_dnd" data-id="dnd" onclick="toggleActiveAndRun(this, 'Không làm phiền')">
+        <div class="btn-action" data-key="8" data-id="8" onclick="toggleActiveAndRun(this, '8')">
             <img src="images/dnd.png" alt="Không làm phiền">
             <span class="btn-label">Không làm phiền</span>
         </div>
-        <div class="btn-action" data-key="label_hotspot" data-id="hotspot" onclick="toggleActiveAndRun(this, 'Phát Wi-Fi')">
+        <div class="btn-action" data-key="9" data-id="9" onclick="toggleActiveAndRun(this, '9')">
             <img src="images/hotspot.png" alt="Phát Wi-Fi">
             <span class="btn-label">Phát Wi-Fi</span>
         </div>
-        <div class="btn-action" data-key="label_battery" data-id="battery" onclick="toggleActiveAndRun(this, 'Pin yếu')">
+        <div class="btn-action" data-key="10" data-id="10" onclick="toggleActiveAndRun(this, '10')">
             <img src="images/battery.png" alt="Pin yếu">
             <span class="btn-label">Pin yếu</span>
         </div>
-        <div class="btn-action" data-key="label_volume" data-id="volume" onclick="toggleActiveAndRun(this, 'Âm lượng')">
+        <div class="btn-action" data-key="11" data-id="11" onclick="toggleActiveAndRun(this, '11')">
             <img src="images/volume.png" alt="Âm lượng">
             <span class="btn-label">Âm lượng</span>
         </div>
-        <div class="btn-action" data-key="label_flashlight" data-id="flashlight" onclick="toggleActiveAndRun(this, 'Đèn pin')">
+        <div class="btn-action" data-key="12" data-id="12" onclick="toggleActiveAndRun(this, '12')">
             <img src="images/flashlight.png" alt="Đèn pin">
             <span class="btn-label">Đèn pin</span>
         </div>
-        <div class="btn-action" data-key="label_restart" data-id="restart" onclick="toggleActiveAndRun(this, 'Khởi động lại')">
+        <div class="btn-action" data-key="13" data-id="13" onclick="toggleActiveAndRun(this, '13')">
             <img src="images/restart.png" alt="Khởi động lại">
             <span class="btn-label">Khởi động lại</span>
         </div>
-        <div class="btn-action" data-key="label_shutdown" data-id="shutdown" onclick="toggleActiveAndRun(this, 'Tắt máy')">
+        <div class="btn-action" data-key="14" data-id="14" onclick="toggleActiveAndRun(this, '14')">
             <img src="images/shutdown.png" alt="Tắt máy">
             <span class="btn-label">Tắt máy</span>
         </div>
@@ -93,11 +94,11 @@
                 <input type="color" id="stt-card-bg" value="#333333">
             </div>
             <div class="setting-group">
-                <label data-key="setting_title_color">Color of Main Title</label>
+                <label data-key="setting_title_color">Màu chữ tiêu đề</label>
                 <input type="color" id="stt-title-color" value="#ffffff">
             </div>
             <div class="setting-group">
-                <label data-key="setting_label_color">Color of Button Labels</label>
+                <label data-key="setting_label_color">Màu chữ nút bấm</label>
                 <input type="color" id="stt-label-color" value="#ffffff">
             </div>
             <div class="setting-group">
