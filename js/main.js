@@ -1,4 +1,3 @@
-// js/main.js
 const SHORTCUT_NAME = "Control";
 
 function runShortcut(textValue) {
@@ -7,6 +6,30 @@ function runShortcut(textValue) {
     
     const url = `shortcuts://run-shortcut?name=${encodedName}&input=text&text=${encodedText}`;
     window.location.href = url;
+}
+
+// Active State Status Toggle & Execution
+function toggleActiveAndRun(element, shortcutText) {
+    const btnId = element.getAttribute('data-id');
+    if (btnId) {
+        const storageKey = `sttv_state_${btnId}`;
+        const isActive = element.classList.toggle('active');
+        localStorage.setItem(storageKey, isActive ? 'true' : 'false');
+    }
+    runShortcut(shortcutText);
+}
+
+// Restore Active States from localStorage
+function restoreActiveStates() {
+    document.querySelectorAll('.btn-action').forEach(btn => {
+        const btnId = btn.getAttribute('data-id');
+        if (btnId) {
+            const state = localStorage.getItem(`sttv_state_${btnId}`);
+            if (state === 'true') {
+                btn.classList.add('active');
+            }
+        }
+    });
 }
 
 async function loadLanguage() {
@@ -32,7 +55,6 @@ async function loadLanguage() {
 async function applyLanguage() {
     const texts = await loadLanguage();
     
-    // Fallback strings tuân thủ tiêu chuẩn ngữ cảnh, không chứa Sentechtipvn
     const titleEl = document.getElementById('app-title');
     if (titleEl) {
         titleEl.innerText = texts.app_title || 'Control Center';
@@ -41,16 +63,20 @@ async function applyLanguage() {
     document.querySelectorAll('.btn-action').forEach(btn => {
         const key = btn.getAttribute('data-key');
         const labelEl = btn.querySelector('.btn-label');
-        if (labelEl) {
-            const defaultLabel = labelEl.innerText || 'Chức năng';
-            labelEl.innerText = texts[key] || defaultLabel;
+        if (labelEl && key && texts[key]) {
+            labelEl.innerText = texts[key];
         }
     });
-    
-    const settingsHeaderEl = document.querySelector('.settings-header h2');
-    if (settingsHeaderEl) {
-        settingsHeaderEl.innerText = texts.settings_title || 'Cài đặt';
-    }
+
+    document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (texts[key]) {
+            el.innerText = texts[key];
+        }
+    });
 }
 
-document.addEventListener('DOMContentLoaded', applyLanguage);
+document.addEventListener('DOMContentLoaded', () => {
+    applyLanguage();
+    restoreActiveStates();
+});
