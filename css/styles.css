@@ -36,9 +36,8 @@ body {
 .main-title {
     font-size: 1.4rem;
     margin-bottom: 20px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5)
     font-weight: 600;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.5px;
     color: var(--title-color);
 }
 
@@ -88,7 +87,7 @@ body {
 }
 
 .btn-action span.btn-label {
-    font-size: 0.72rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--label-color);
     white-space: nowrap;
@@ -136,9 +135,35 @@ body {
     padding: calc(env(safe-area-inset-top) + 20px) 20px calc(env(safe-area-inset-bottom) + 20px);
     color: #fff;
     overflow-y: auto;
+    transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
 .settings-panel.active { display: flex; }
+
+/* Hiệu ứng mờ khi kéo thanh trượt Shadow */
+.settings-panel.faded {
+    background: rgba(0, 0, 0, 0.15) !important;
+    backdrop-filter: blur(2px) !important;
+    -webkit-backdrop-filter: blur(2px) !important;
+}
+
+.settings-panel.faded .settings-header,
+.settings-panel.faded .settings-body > .setting-group,
+.settings-panel.faded .settings-actions,
+.settings-panel.faded .shadow-controls > h3,
+.settings-panel.faded .shadow-controls .setting-group:not(.active-slider) {
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+.settings-panel.faded .active-slider {
+    opacity: 1;
+    transform: scale(1.02);
+}
+
+.settings-panel * {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
 
 .settings-header {
     display: flex;
@@ -263,6 +288,10 @@ input:checked + .slider:before {
 }
 .action-row button { 
     flex: 1; 
+}
+.btn-full {
+    width: 100%;
+    margin-top: 4px;
 }
 
 /* Toast Notification */
