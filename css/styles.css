@@ -35,11 +35,11 @@ body {
 }
 
 .main-title {
-    font-size: 1.0rem;
+    font-size: 1.4rem;
     margin-bottom: 20px;
     text-shadow: 0 1px 2px rgba(0,0,0,0.5)
     font-weight: 600;
-    letter-spacing: -0.1px;
+    letter-spacing: -0.3px;
     color: var(--title-color);
 }
 
@@ -82,8 +82,9 @@ body {
     background-color: transparent;
 }
 
-.btn-action span.btn-label {
-    font-size: 0.9rem;
+.btn-action .btn-label {
+    font-size: 0.72rem;
+    letter-spacing: -0.3px;
     font-weight: 500;
     color: var(--label-color);
     white-space: nowrap;
