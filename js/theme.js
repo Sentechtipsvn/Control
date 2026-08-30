@@ -1,7 +1,16 @@
-// js/theme.js
 const settingsBtn = document.getElementById('open-settings');
 const settingsPanel = document.getElementById('settings-panel');
 const closeSettings = document.getElementById('close-settings');
+const toastNotification = document.getElementById('toast-notification');
+
+function showToast(message) {
+    if (!toastNotification) return;
+    toastNotification.innerText = message;
+    toastNotification.classList.add('show');
+    setTimeout(() => {
+        toastNotification.classList.remove('show');
+    }, 2500);
+}
 
 if (settingsBtn && settingsPanel) {
     settingsBtn.addEventListener('click', () => settingsPanel.classList.add('active'));
@@ -24,7 +33,6 @@ const shadowBlur = document.getElementById('shadow-blur');
 const shadowSpread = document.getElementById('shadow-spread');
 const shadowColor = document.getElementById('shadow-color');
 
-// Lấy toàn bộ cài đặt hiện tại dưới dạng Object
 function getCurrentSettingsObj() {
     return {
         bg: bgColorInput.value,
@@ -41,14 +49,13 @@ function getCurrentSettingsObj() {
     };
 }
 
-// Lưu cấu hình vào localStorage
 function saveSettings() {
     if (!bgColorInput) return;
     const settings = getCurrentSettingsObj();
     localStorage.setItem('sttv_cc_settings', JSON.stringify(settings));
+    showToast('Đã lưu cấu hình');
 }
 
-// Tải cấu hình từ localStorage (Chỉ chạy khi mở web hoặc import)
 function loadSettingsFromStorage() {
     if (!bgColorInput) return;
     const saved = localStorage.getItem('sttv_cc_settings') || localStorage.getItem('cc-settings');
@@ -74,7 +81,6 @@ function loadSettingsFromStorage() {
     applySettingsPreview();
 }
 
-// Áp dụng hiển thị lên giao diện ngay lập tức (Preview)
 function applySettingsPreview() {
     if (!bgColorInput) return;
     
@@ -98,7 +104,6 @@ function applySettingsPreview() {
     if (valShadowSpread) valShadowSpread.innerText = shadowSpread.value;
 }
 
-// Sửa lỗi xung đột: Chỉ apply preview khi kéo slider/chọn màu, không tự động lưu/ghi đè.
 if (bgColorInput) {
     [bgColorInput, cardBgInput, titleColorInput, labelColorInput, shadowColor].forEach(input => {
         input.addEventListener('input', applySettingsPreview);
@@ -110,31 +115,26 @@ if (bgColorInput) {
         input.addEventListener('input', applySettingsPreview);
     });
 
-    // Nút Lưu Cấu Hình
     document.getElementById('btn-save-settings').addEventListener('click', () => {
         saveSettings();
-        alert('Đã lưu cấu hình thành công!');
     });
 
-    // Nút Xuất Cấu Hình (Mã hóa Base64)
     document.getElementById('btn-export-settings').addEventListener('click', () => {
         const settings = getCurrentSettingsObj();
         const base64 = btoa(JSON.stringify(settings));
         prompt("Sao chép mã cấu hình Base64 bên dưới:", base64);
+        showToast('Đã lưu cấu hình');
     });
 
-    // Nút Nhập Cấu Hình (Giải mã Base64)
     document.getElementById('btn-import-settings').addEventListener('click', () => {
         const base64 = prompt("Dán mã cấu hình Base64 vào đây:");
         if (base64) {
             try {
                 const json = atob(base64);
                 const s = JSON.parse(json);
-                // Ghi đè vào LocalStorage
                 localStorage.setItem('sttv_cc_settings', JSON.stringify(s));
-                // Load lại dữ liệu và apply preview
                 loadSettingsFromStorage();
-                alert("Nhập cấu hình thành công!");
+                showToast('Nhập cấu hình thành công!');
             } catch (e) {
                 alert("Mã cấu hình không hợp lệ hoặc bị lỗi!");
                 console.error("Import error:", e);
@@ -142,6 +142,5 @@ if (bgColorInput) {
         }
     });
 
-    // Khởi chạy khi load trang
     document.addEventListener('DOMContentLoaded', loadSettingsFromStorage);
 }
