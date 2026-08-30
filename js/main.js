@@ -4,7 +4,7 @@ const SHORTCUT_NAME = "Control";
 function runShortcut(textValue) {
     const encodedText = encodeURIComponent(textValue);
     const encodedName = encodeURIComponent(SHORTCUT_NAME);
-    const callbackUrl = encodeURIComponent(window.location.href);
+    const callbackUrl = encodeURIComponent(Control://);
     
     // x-callback-url cấu trúc chuẩn của Apple Shortcuts
     const url = `shortcuts://x-callback-url/run-shortcut?name=${encodedName}&input=text&text=${encodedText}&x-success=${callbackUrl}&x-cancel=${callbackUrl}&x-error=${callbackUrl}`;
