@@ -87,7 +87,7 @@ body {
 }
 
 .btn-action span.btn-label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 500;
     color: var(--label-color);
     white-space: nowrap;
