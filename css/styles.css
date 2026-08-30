@@ -120,8 +120,11 @@ body {
     background-color: transparent;
 }
 
+/* Modal Cài đặt: Thêm Animation bung ra/thu vào */
 .settings-panel {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0.95);
     position: fixed;
     top: 0;
     left: 0;
@@ -131,20 +134,26 @@ body {
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     z-index: 200;
+    display: flex;
     flex-direction: column;
     padding: calc(env(safe-area-inset-top) + 20px) 20px calc(env(safe-area-inset-bottom) + 20px);
     color: #fff;
     overflow-y: auto;
-    transition: background 0.3s ease, backdrop-filter 0.3s ease;
+    /* Hiệu ứng bung mượt mà (Cubic-bezier) */
+    transition: visibility 0.3s, opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
-.settings-panel.active { display: flex; }
+.settings-panel.active { 
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+}
 
-/* Hiệu ứng mờ khi kéo thanh trượt Shadow */
+/* Hiệu ứng mờ mạnh khi kéo thanh trượt Shadow để nhìn rõ nền */
 .settings-panel.faded {
-    background: rgba(0, 0, 0, 0.15) !important;
-    backdrop-filter: blur(2px) !important;
-    -webkit-backdrop-filter: blur(2px) !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+    backdrop-filter: blur(0px) !important;
+    -webkit-backdrop-filter: blur(0px) !important;
 }
 
 .settings-panel.faded .settings-header,
@@ -152,7 +161,7 @@ body {
 .settings-panel.faded .settings-actions,
 .settings-panel.faded .shadow-controls > h3,
 .settings-panel.faded .shadow-controls .setting-group:not(.active-slider) {
-    opacity: 0.15;
+    opacity: 0.05;
     pointer-events: none;
 }
 
