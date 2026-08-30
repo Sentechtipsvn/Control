@@ -1,15 +1,17 @@
 // js/main.js
 const SHORTCUT_NAME = "Control";
 
+// Cập nhật dùng x-callback-url để tự động quay lại WebClip
 function runShortcut(textValue) {
     const encodedText = encodeURIComponent(textValue);
     const encodedName = encodeURIComponent(SHORTCUT_NAME);
+    const callbackUrl = encodeURIComponent(window.location.href);
     
-    const url = `shortcuts://run-shortcut?name=${encodedName}&input=text&text=${encodedText}`;
+    // x-callback-url cấu trúc chuẩn của Apple Shortcuts
+    const url = `shortcuts://x-callback-url/run-shortcut?name=${encodedName}&input=text&text=${encodedText}&x-success=${callbackUrl}&x-cancel=${callbackUrl}&x-error=${callbackUrl}`;
     window.location.href = url;
 }
 
-// Chế độ Bật/Tắt động & Gửi lệnh tới Shortcut
 function toggleActiveAndRun(element, shortcutText) {
     const btnId = element.getAttribute('data-id');
     if (btnId) {
@@ -17,10 +19,10 @@ function toggleActiveAndRun(element, shortcutText) {
         const isActive = element.classList.toggle('active');
         localStorage.setItem(storageKey, isActive ? 'true' : 'false');
     }
+    // Gửi ID khoá (shortcutText) sang phím tắt thay vì chữ như cũ
     runShortcut(shortcutText);
 }
 
-// Khôi phục trạng thái từ localStorage
 function restoreActiveStates() {
     document.querySelectorAll('.btn-action').forEach(btn => {
         const btnId = btn.getAttribute('data-id');
@@ -33,7 +35,6 @@ function restoreActiveStates() {
     });
 }
 
-// Đọc file JSON ngôn ngữ
 async function loadLanguage() {
     let lang = navigator.language || 'en-GB';
     let langFilePath = `Language/${lang}.json`;
@@ -48,23 +49,20 @@ async function loadLanguage() {
             if (!fallbackResponse.ok) throw new Error('Fallback not found');
             return await fallbackResponse.json();
         } catch (err) {
-            console.error('Không tìm thấy file ngôn ngữ nào');
+            console.error('Lỗi ngôn ngữ');
             return {};
         }
     }
 }
 
-// Áp dụng đa ngôn ngữ vào các nhãn hiển thị và fix lỗi mất Icon
 async function applyLanguage() {
     const texts = await loadLanguage();
     
-    // Tiêu đề trang
     const titleEl = document.getElementById('app-title');
     if (titleEl) {
         titleEl.innerText = texts.app_title || 'Trung tâm điều khiển';
     }
     
-    // Label trong các nút bấm (Sử dụng selector chính xác để không ghi đè img bên trong btn-action)
     document.querySelectorAll('.btn-action').forEach(btn => {
         const key = btn.getAttribute('data-key');
         const labelEl = btn.querySelector('.btn-label');
@@ -73,19 +71,23 @@ async function applyLanguage() {
         }
     });
 
-    // Label trong phần cài đặt (Loại trừ .btn-action để tránh xoá code cấu trúc html của nút)
     document.querySelectorAll('[data-key]:not(.btn-action)').forEach(el => {
         const key = el.getAttribute('data-key');
         if (texts[key]) {
-            // Không ghi đè các element con nếu là thẻ label bọc toggle
             if (el.tagName.toLowerCase() !== 'label' || !el.classList.contains('toggle-label')) {
                  el.innerText = texts[key] || 'Cài đặt';
             }
         }
     });
+
+    // Cập nhật đường link tải phím tắt từ JSON
+    const btnShortcut = document.getElementById('btn-get-shortcut');
+    if (btnShortcut) {
+        const shortcutUrl = texts['url_shortcut'] || 'https://www.icloud.com/shortcuts/a8234ef368b54c59a9ce2da8c9b97365';
+        btnShortcut.onclick = () => window.location.href = shortcutUrl;
+    }
 }
 
-// Chạy khi trang web đã được load xong
 document.addEventListener('DOMContentLoaded', () => {
     applyLanguage();
     restoreActiveStates();
