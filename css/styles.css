@@ -1,4 +1,3 @@
-/* css/styles.css */
 :root {
     --bg-color: #0b1120;
     --card-bg: rgba(255, 255, 255, 0.08);
@@ -63,13 +62,19 @@ body {
     gap: 12px;
     cursor: pointer;
     box-shadow: var(--card-shadow);
-    transition: transform 0.1s ease, background 0.2s ease;
+    transition: transform 0.1s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     overflow: hidden;
 }
 
 .btn-action:active {
     transform: scale(0.95);
     background: rgba(255, 255, 255, 0.2);
+}
+
+/* Active State Status: Neon Glow */
+.btn-action.active {
+    border-color: #34c759;
+    box-shadow: 0 0 12px rgba(52, 199, 89, 0.6), var(--card-shadow);
 }
 
 .btn-action img {
@@ -82,9 +87,8 @@ body {
     background-color: transparent;
 }
 
-.btn-action .btn-label {
+.btn-action span.btn-label {
     font-size: 0.72rem;
-    letter-spacing: -0.3px;
     font-weight: 500;
     color: var(--label-color);
     white-space: nowrap;
@@ -169,7 +173,6 @@ body {
 .setting-group label:not(.toggle-label) { font-size: 0.85rem; opacity: 0.9; }
 .setting-group input[type="text"], .setting-group input[type="range"] { width: 100%; }
 
-/* --- Tùy chỉnh Nút Gạt (Toggle Switch) --- */
 .toggle-label {
     display: flex;
     justify-content: space-between;
@@ -214,7 +217,7 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 input:checked + .slider {
-    background-color: #34c759; /* Màu xanh chuẩn iOS */
+    background-color: #34c759;
 }
 input:checked + .slider:before {
     transform: translateX(20px);
@@ -229,7 +232,6 @@ input:checked + .slider:before {
     gap: 12px;
 }
 
-/* --- Khu vực Nút Lưu và Nhập/Xuất --- */
 .settings-actions {
     display: flex;
     flex-direction: column;
@@ -251,7 +253,7 @@ input:checked + .slider:before {
     transition: background 0.2s;
 }
 .btn-primary { 
-    background: #007aff; /* Xanh nước biển iOS */
+    background: #007aff;
 }
 .btn-primary:active { background: #005bb5; }
 .btn-secondary:active { background: rgba(255, 255, 255, 0.25); }
@@ -261,4 +263,27 @@ input:checked + .slider:before {
 }
 .action-row button { 
     flex: 1; 
+}
+
+/* Toast Notification */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(50px);
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+.toast-notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
 }
