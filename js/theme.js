@@ -1,3 +1,4 @@
+// js/theme.js
 const settingsBtn = document.getElementById('open-settings');
 const settingsPanel = document.getElementById('settings-panel');
 const closeSettings = document.getElementById('close-settings');
@@ -58,7 +59,7 @@ function saveSettings() {
 
 function loadSettingsFromStorage() {
     if (!bgColorInput) return;
-    const saved = localStorage.getItem('sttv_cc_settings') || localStorage.getItem('cc-settings');
+    const saved = localStorage.getItem('sttv_cc_settings');
     
     if (saved) {
         try {
@@ -75,7 +76,7 @@ function loadSettingsFromStorage() {
             if(s.shSpread) shadowSpread.value = s.shSpread;
             if(s.shColor) shadowColor.value = s.shColor;
         } catch (e) {
-            console.error('Lỗi parse settings', e);
+            console.error('Lỗi parse', e);
         }
     }
     applySettingsPreview();
@@ -111,12 +112,45 @@ if (bgColorInput) {
     [cardShadowToggle, iconShadowToggle].forEach(input => {
         input.addEventListener('change', applySettingsPreview);
     });
+
+    // Cập nhật tính năng làm mờ popup khi điều chỉnh thanh gạt đổ bóng
     [shadowX, shadowY, shadowBlur, shadowSpread].forEach(input => {
         input.addEventListener('input', applySettingsPreview);
+        
+        const handleStartDrag = (e) => {
+            settingsPanel.classList.add('faded');
+            e.target.closest('.setting-group').classList.add('active-slider');
+        };
+        const handleEndDrag = (e) => {
+            settingsPanel.classList.remove('faded');
+            e.target.closest('.setting-group').classList.remove('active-slider');
+        };
+
+        input.addEventListener('mousedown', handleStartDrag);
+        input.addEventListener('touchstart', handleStartDrag, {passive: true});
+        
+        input.addEventListener('mouseup', handleEndDrag);
+        input.addEventListener('touchend', handleEndDrag);
+    });
+    
+    // Đảm bảo không bị kẹt trạng thái mờ khi kéo thả chuột ra ngoài
+    document.addEventListener('mouseup', () => {
+        if(settingsPanel.classList.contains('faded')) {
+            settingsPanel.classList.remove('faded');
+            document.querySelectorAll('.active-slider').forEach(el => el.classList.remove('active-slider'));
+        }
+    });
+    document.addEventListener('touchend', () => {
+        if(settingsPanel.classList.contains('faded')) {
+            settingsPanel.classList.remove('faded');
+            document.querySelectorAll('.active-slider').forEach(el => el.classList.remove('active-slider'));
+        }
     });
 
     document.getElementById('btn-save-settings').addEventListener('click', () => {
         saveSettings();
+        // Cập nhật đóng popup sau khi bấm lưu
+        settingsPanel.classList.remove('active');
     });
 
     document.getElementById('btn-export-settings').addEventListener('click', () => {
@@ -137,7 +171,7 @@ if (bgColorInput) {
                 showToast('Nhập cấu hình thành công!');
             } catch (e) {
                 alert("Mã cấu hình không hợp lệ hoặc bị lỗi!");
-                console.error("Import error:", e);
+                console.error("Lỗi nhập:", e);
             }
         }
     });
