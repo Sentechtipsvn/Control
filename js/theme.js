@@ -113,7 +113,6 @@ if (bgColorInput) {
         input.addEventListener('change', applySettingsPreview);
     });
 
-    // Cập nhật tính năng làm mờ popup khi điều chỉnh thanh gạt đổ bóng
     [shadowX, shadowY, shadowBlur, shadowSpread].forEach(input => {
         input.addEventListener('input', applySettingsPreview);
         
@@ -133,7 +132,6 @@ if (bgColorInput) {
         input.addEventListener('touchend', handleEndDrag);
     });
     
-    // Đảm bảo không bị kẹt trạng thái mờ khi kéo thả chuột ra ngoài
     document.addEventListener('mouseup', () => {
         if(settingsPanel.classList.contains('faded')) {
             settingsPanel.classList.remove('faded');
@@ -149,7 +147,6 @@ if (bgColorInput) {
 
     document.getElementById('btn-save-settings').addEventListener('click', () => {
         saveSettings();
-        // Cập nhật đóng popup sau khi bấm lưu
         settingsPanel.classList.remove('active');
     });
 
