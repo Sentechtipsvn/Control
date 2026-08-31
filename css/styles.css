@@ -89,6 +89,7 @@ body {
 .btn-action span.btn-label {
     font-size: 0.72rem;
     font-weight: 500;
+    letter-spacing: -0.3px;
     color: var(--label-color);
     white-space: nowrap;
     overflow: hidden;
