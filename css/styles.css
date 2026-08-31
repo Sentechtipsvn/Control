@@ -1,3 +1,4 @@
+/* css/styles.css */
 :root {
     --bg-color: #0b1120;
     --card-bg: rgba(255, 255, 255, 0.08);
@@ -7,7 +8,6 @@
     --card-shadow: none;
     --icon-shadow: none;
     
-    /* Biến hệ thống mới */
     --icon-size: 48px;
     --icon-radius: 50%;
     --btn-padding-v: 8px;
@@ -180,21 +180,51 @@ body {
     transform: scale(1);
 }
 
-/* Fix lỗi độ trong suốt (Giảm mờ tối đa khi kéo) */
-.settings-panel.faded {
+/* Sửa lỗi độ mờ cho popup Cài đặt Hệ thống khi kéo slider bên trong nó */
+#sys-settings-panel.faded {
     background: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
 
-.settings-panel.faded .settings-header,
-.settings-panel.faded .settings-body > .setting-group:not(.active-slider),
-.settings-panel.faded .settings-actions,
-.settings-panel.faded .shadow-controls > h3,
-.settings-panel.faded .shadow-controls .setting-group:not(.active-slider),
-.settings-panel.faded .sys-settings-btn {
-    opacity: 0;
-    pointer-events: none;
+#sys-settings-panel.faded:not(.has-active-slider) > * {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+#sys-settings-panel.has-active-slider .settings-header,
+#sys-settings-panel.has-active-slider .settings-body > .setting-group:not(.active-slider) {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Giữ nguyên logic faded cũ cho popup chính */
+.settings-panel:not(#sys-settings-panel).faded {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.settings-panel:not(#sys-settings-panel).faded:not(.has-active-slider) > * {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.settings-panel:not(#sys-settings-panel).has-active-slider .settings-header,
+.settings-panel:not(#sys-settings-panel).has-active-slider .settings-body > .setting-group:not(.active-slider),
+.settings-panel:not(#sys-settings-panel).has-active-slider .settings-actions,
+.settings-panel:not(#sys-settings-panel).has-active-slider .sys-settings-btn {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.settings-panel.has-active-slider .shadow-controls {
+    border-top-color: transparent !important;
+}
+.settings-panel.has-active-slider .shadow-controls > h3,
+.settings-panel.has-active-slider .shadow-controls .setting-group:not(.active-slider) {
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 .settings-panel.faded .active-slider {
@@ -203,7 +233,7 @@ body {
 }
 
 .settings-panel * {
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
 .settings-header {
@@ -238,7 +268,6 @@ body {
 .setting-group { display: flex; flex-direction: column; gap: 6px; }
 .setting-group label:not(.toggle-label) { font-size: 0.85rem; opacity: 0.9; }
 
-/* Fix lỗi thanh màu bị vỡ kích thước full width */
 .setting-group input[type="text"], .setting-group input[type="range"] { 
     width: 100%; 
 }
