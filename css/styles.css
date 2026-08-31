@@ -44,9 +44,9 @@ body {
 .grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
     width: 100%;
-    max-width: 420px;
+    max-width: 400px;
 }
 
 .btn-action {
@@ -77,8 +77,8 @@ body {
 }
 
 .btn-action img {
-    width: 55px;
-    height: 55px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
@@ -101,8 +101,8 @@ body {
     position: fixed;
     bottom: calc(env(safe-area-inset-bottom) + 16px);
     right: calc(env(safe-area-inset-right) + 16px);
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background: transparent;
     border: none;
@@ -114,8 +114,8 @@ body {
 }
 
 .settings-btn img {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     object-fit: contain;
     background-color: transparent;
@@ -141,7 +141,7 @@ body {
     color: #fff;
     overflow-y: auto;
     /* Hiệu ứng bung mượt mà (Cubic-bezier) */
-    transition: visibility 0.3s, opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease, backdrop-filter 0.3s ease;
+    transition: visibility 0.4s, opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s ease, backdrop-filter 0.4s ease;
 }
 
 .settings-panel.active { 
