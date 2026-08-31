@@ -25,7 +25,7 @@ Dự án **Webclip Control Center** là một ứng dụng web giả lập giao 
 <hr style="border: none; height: 1px; background-color: #e1e4e8; width: 80%; margin: 20px auto;" />
 
 <p align="center">
-  <img src="icons/demo-2" width="600" alt="Ảnh 3">
+  <img src="icons/demo-2.png" width="600" alt="Ảnh 3">
 </p>
 ---
 
