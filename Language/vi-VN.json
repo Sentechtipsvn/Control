@@ -34,5 +34,14 @@
   "sys_btn_size": "Kích thước Nút bấm",
   "sys_btn_radius": "Bo góc Nút bấm",
   "sys_setting_size": "Kích thước Nút Cài đặt",
-  "sys_setting_radius": "Bo góc Nút Cài đặt"
+  "sys_setting_radius": "Bo góc Nút Cài đặt",
+  "sys_title_size": "Kích thước Tiêu đề",
+  "sys_title_spacing": "Khoảng cách Tiêu đề",
+  "sys_label_size": "Kích thước Nhãn",
+  "sys_label_spacing": "Khoảng cách Nhãn",
+  "info_title": "Thông tin",
+  "info_app_name": "Webclip Control Center",
+  "info_version_label": "Phiên bản",
+  "info_author_label": "Phát triển bởi",
+  "info_description": "Công cụ mạnh mẽ giúp bạn tùy biến trung tâm điều khiển cá nhân hóa trên iOS. Tích hợp trực tiếp với Phím tắt (Shortcuts) thông qua giao thức x-callback-url, mang lại trải nghiệm mượt mà, tiện lợi, an toàn và hoàn toàn bảo mật."
 }
