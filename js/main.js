@@ -1,3 +1,4 @@
+
 // js/main.js
 const SHORTCUT_NAME = "Control";
 
