@@ -6,6 +6,15 @@
     --label-color: #ffffff;
     --card-shadow: none;
     --icon-shadow: none;
+    
+    /* Biến hệ thống mới */
+    --icon-size: 48px;
+    --icon-radius: 50%;
+    --btn-padding-v: 8px;
+    --btn-padding-h: 16px;
+    --btn-radius: 50px;
+    --setting-size: 48px;
+    --setting-radius: 50%;
 }
 
 * {
@@ -34,7 +43,7 @@ body {
 }
 
 .main-title {
-    font-size: 1.4rem;
+    font-size: 1.4rem; 
     margin-bottom: 20px;
     font-weight: 600;
     letter-spacing: -0.5px;
@@ -46,7 +55,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
 }
 
 .btn-action {
@@ -54,11 +63,11 @@ body {
     border: 1px solid var(--card-border);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: 50px; 
-    padding: 8px 16px 8px 8px;
+    border-radius: var(--btn-radius); 
+    padding: var(--btn-padding-v) var(--btn-padding-h) var(--btn-padding-v) var(--btn-padding-v);
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     cursor: pointer;
     box-shadow: var(--card-shadow);
     transition: transform 0.1s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
@@ -70,16 +79,15 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Active State Status: Neon Glow */
 .btn-action.active {
     border-color: #34c759;
     box-shadow: 0 0 12px rgba(52, 199, 89, 0.6), var(--card-shadow);
 }
 
 .btn-action img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    border-radius: var(--icon-radius);
     object-fit: cover;
     flex-shrink: 0;
     box-shadow: var(--icon-shadow);
@@ -87,9 +95,8 @@ body {
 }
 
 .btn-action span.btn-label {
-    font-size: 0.75rem;
+    font-size: 0.9rem; 
     font-weight: 500;
-    letter-spacing: -0.2px;
     color: var(--label-color);
     white-space: nowrap;
     overflow: hidden;
@@ -101,9 +108,9 @@ body {
     position: fixed;
     bottom: calc(env(safe-area-inset-bottom) + 16px);
     right: calc(env(safe-area-inset-right) + 16px);
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    width: var(--setting-size);
+    height: var(--setting-size);
+    border-radius: var(--setting-radius);
     background: transparent;
     border: none;
     cursor: pointer;
@@ -114,14 +121,35 @@ body {
 }
 
 .settings-btn img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    width: var(--setting-size);
+    height: var(--setting-size);
+    border-radius: var(--setting-radius);
     object-fit: contain;
     background-color: transparent;
 }
 
-/* Modal Cài đặt: Thêm Animation bung ra/thu vào */
+/* Nút mở System Settings nằm trong Panel Settings */
+.sys-settings-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 46px;
+    height: 46px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 250;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sys-settings-btn img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+}
+
 .settings-panel {
     visibility: hidden;
     opacity: 0;
@@ -140,8 +168,12 @@ body {
     padding: calc(env(safe-area-inset-top) + 20px) 20px calc(env(safe-area-inset-bottom) + 20px);
     color: #fff;
     overflow-y: auto;
-    /* Hiệu ứng bung mượt mà (Cubic-bezier) */
-    transition: visibility 0.4s, opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s ease, backdrop-filter 0.4s ease;
+    transition: visibility 0.3s, opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* Layer popup thứ hai nổi lên trên */
+#sys-settings-panel {
+    z-index: 300;
 }
 
 .settings-panel.active { 
@@ -150,7 +182,6 @@ body {
     transform: scale(1);
 }
 
-/* Hiệu ứng mờ mạnh khi kéo thanh trượt Shadow để nhìn rõ nền */
 .settings-panel.faded {
     background: rgba(0, 0, 0, 0.05) !important;
     backdrop-filter: blur(0px) !important;
@@ -201,12 +232,40 @@ body {
     max-width: 420px;
     width: 100%;
     margin: 0 auto;
-    padding-bottom: 40px;
+    padding-bottom: 80px; /* Thêm khoảng trống để không bị che bởi nút sys-settings */
 }
 
 .setting-group { display: flex; flex-direction: column; gap: 6px; }
 .setting-group label:not(.toggle-label) { font-size: 0.85rem; opacity: 0.9; }
-.setting-group input[type="text"], .setting-group input[type="range"] { width: 100%; }
+.setting-group input[type="color"] { width: 100%; }
+
+/* --- Cấu hình hiển thị dot icon cho Slider --- */
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 25px;
+    width: 25px;
+    background: url('../icons/icon-dot.png') center/cover no-repeat;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    margin-top: -10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+}
 
 .toggle-label {
     display: flex;
@@ -304,7 +363,6 @@ input:checked + .slider:before {
     margin-top: 4px;
 }
 
-/* Toast Notification */
 .toast-notification {
     position: fixed;
     bottom: 30px;
