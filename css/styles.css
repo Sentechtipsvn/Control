@@ -180,21 +180,36 @@ body {
     transform: scale(1);
 }
 
-/* Fix lỗi độ trong suốt (Giảm mờ tối đa khi kéo) */
+/* Fix lỗi độ trong suốt: Ẩn hoàn toàn các lớp khi kéo slider */
 .settings-panel.faded {
     background: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
 
-.settings-panel.faded .settings-header,
-.settings-panel.faded .settings-body > .setting-group:not(.active-slider),
-.settings-panel.faded .settings-actions,
-.settings-panel.faded .shadow-controls > h3,
-.settings-panel.faded .shadow-controls .setting-group:not(.active-slider),
-.settings-panel.faded .sys-settings-btn {
-    opacity: 0;
-    pointer-events: none;
+/* Ẩn hoàn toàn nội dung của panel KHÔNG chứa slider đang tương tác */
+.settings-panel.faded:not(.has-active-slider) > * {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Ẩn các phần tử không liên quan trong panel CÓ chứa slider đang tương tác */
+.settings-panel.has-active-slider .settings-header,
+.settings-panel.has-active-slider .settings-body > .setting-group:not(.active-slider),
+.settings-panel.has-active-slider .settings-actions,
+.settings-panel.has-active-slider .sys-settings-btn {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Ẩn chi tiết khung Đổ bóng nếu tương tác bên trong */
+.settings-panel.has-active-slider .shadow-controls {
+    border-top-color: transparent !important;
+}
+.settings-panel.has-active-slider .shadow-controls > h3,
+.settings-panel.has-active-slider .shadow-controls .setting-group:not(.active-slider) {
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 .settings-panel.faded .active-slider {
@@ -203,7 +218,7 @@ body {
 }
 
 .settings-panel * {
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
 .settings-header {
@@ -238,7 +253,6 @@ body {
 .setting-group { display: flex; flex-direction: column; gap: 6px; }
 .setting-group label:not(.toggle-label) { font-size: 0.85rem; opacity: 0.9; }
 
-/* Fix lỗi thanh màu bị vỡ kích thước full width */
 .setting-group input[type="text"], .setting-group input[type="range"] { 
     width: 100%; 
 }
