@@ -79,7 +79,6 @@
         <img src="icons/icon-setting.png" alt="Settings">
     </button>
 
-    <!-- Popup Cài đặt chính -->
     <div class="settings-panel" id="settings-panel">
         <div class="settings-header">
             <h2 data-key="settings_title">Cài đặt</h2>
@@ -113,7 +112,7 @@
             </div>
             <div class="setting-group">
                 <label class="toggle-label">
-                    <span class="toggle-text" data-key="setting_icon_shadow">Bật đổ bóng icon</span>
+                    <span class="toggle-text" data-key="setting_icon_shadow">Bật đổ bóng icon (55x55)</span>
                     <div class="toggle-switch">
                         <input type="checkbox" id="stt-icon-shadow-toggle">
                         <span class="slider"></span>
@@ -152,45 +151,6 @@
                     <button id="btn-import-settings" class="btn-secondary" data-key="btn_import">📥 Nhập</button>
                 </div>
                 <button id="btn-get-shortcut" class="btn-secondary btn-full" data-key="btn_shortcut">Phím tắt</button>
-            </div>
-        </div>
-
-        <!-- Nút mở popup Cài đặt hệ thống (Góc dưới phải của Popup Settings) -->
-        <button class="sys-settings-btn" id="open-sys-settings" aria-label="System Settings">
-            <img src="icons/icon_setting_system.png" alt="System Settings">
-        </button>
-    </div>
-
-    <!-- Popup Cài đặt Hệ thống -->
-    <div class="settings-panel" id="sys-settings-panel">
-        <div class="settings-header">
-            <h2 data-key="sys_settings_title">Cài đặt Hệ thống</h2>
-            <button id="close-sys-settings" class="close-btn">&times;</button>
-        </div>
-        <div class="settings-body">
-            <div class="setting-group">
-                <label><span data-key="sys_icon_size">Kích thước Icon</span>: <span id="val-sys-icon-size">48</span>px</label>
-                <input type="range" id="sys-icon-size" min="20" max="100" value="48">
-            </div>
-            <div class="setting-group">
-                <label><span data-key="sys_icon_radius">Bo góc Icon</span>: <span id="val-sys-icon-radius">50</span>%</label>
-                <input type="range" id="sys-icon-radius" min="0" max="50" value="50">
-            </div>
-            <div class="setting-group">
-                <label><span data-key="sys_btn_size">Kích thước Nút bấm</span>: <span id="val-sys-btn-size">8</span>px</label>
-                <input type="range" id="sys-btn-size" min="0" max="30" value="8">
-            </div>
-            <div class="setting-group">
-                <label><span data-key="sys_btn_radius">Bo góc Nút bấm</span>: <span id="val-sys-btn-radius">50</span>px</label>
-                <input type="range" id="sys-btn-radius" min="0" max="50" value="50">
-            </div>
-            <div class="setting-group">
-                <label><span data-key="sys_setting_size">Kích thước Nút Cài đặt</span>: <span id="val-sys-setting-size">48</span>px</label>
-                <input type="range" id="sys-setting-size" min="20" max="100" value="48">
-            </div>
-            <div class="setting-group">
-                <label><span data-key="sys_setting_radius">Bo góc Nút Cài đặt</span>: <span id="val-sys-setting-radius">50</span>%</label>
-                <input type="range" id="sys-setting-radius" min="0" max="50" value="50">
             </div>
         </div>
     </div>
