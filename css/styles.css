@@ -132,8 +132,8 @@ body {
     position: absolute;
     bottom: 20px;
     right: 20px;
-    width: 46px;
-    height: 46px;
+    width: 40px;
+    height: 40px;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -144,8 +144,8 @@ body {
 }
 
 .sys-settings-btn img {
-    width: 46px;
-    height: 46px;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
 }
 
