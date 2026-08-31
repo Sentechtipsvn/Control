@@ -3,9 +3,9 @@ const settingsBtn = document.getElementById('open-settings');
 const settingsPanel = document.getElementById('settings-panel');
 const closeSettings = document.getElementById('close-settings');
 
-const sysSettingsBtn = document.getElementById('open-sys-settings');
-const sysSettingsPanel = document.getElementById('sys-settings-panel');
-const closeSysSettings = document.getElementById('close-sys-settings');
+const infoBtn = document.getElementById('open-info-panel');
+const infoPanel = document.getElementById('info-panel');
+const closeInfoPanel = document.getElementById('close-info-panel');
 
 const toastNotification = document.getElementById('toast-notification');
 
@@ -25,11 +25,11 @@ if (closeSettings && settingsPanel) {
     closeSettings.addEventListener('click', () => settingsPanel.classList.remove('active'));
 }
 
-if (sysSettingsBtn && sysSettingsPanel) {
-    sysSettingsBtn.addEventListener('click', () => sysSettingsPanel.classList.add('active'));
+if (infoBtn && infoPanel) {
+    infoBtn.addEventListener('click', () => infoPanel.classList.add('active'));
 }
-if (closeSysSettings && sysSettingsPanel) {
-    closeSysSettings.addEventListener('click', () => sysSettingsPanel.classList.remove('active'));
+if (closeInfoPanel && infoPanel) {
+    closeInfoPanel.addEventListener('click', () => infoPanel.classList.remove('active'));
 }
 
 const root = document.documentElement;
@@ -53,6 +53,11 @@ const sysBtnRadius = document.getElementById('sys-btn-radius');
 const sysSettingSize = document.getElementById('sys-setting-size');
 const sysSettingRadius = document.getElementById('sys-setting-radius');
 
+const sysTitleSize = document.getElementById('sys-title-size');
+const sysTitleSpacing = document.getElementById('sys-title-spacing');
+const sysLabelSize = document.getElementById('sys-label-size');
+const sysLabelSpacing = document.getElementById('sys-label-spacing');
+
 function getCurrentSettingsObj() {
     return {
         bg: bgColorInput.value,
@@ -71,7 +76,11 @@ function getCurrentSettingsObj() {
         sysBtnSize: sysBtnSize.value,
         sysBtnRadius: sysBtnRadius.value,
         sysSettingSize: sysSettingSize.value,
-        sysSettingRadius: sysSettingRadius.value
+        sysSettingRadius: sysSettingRadius.value,
+        sysTitleSize: sysTitleSize.value,
+        sysTitleSpacing: sysTitleSpacing.value,
+        sysLabelSize: sysLabelSize.value,
+        sysLabelSpacing: sysLabelSpacing.value
     };
 }
 
@@ -106,6 +115,11 @@ function loadSettingsFromStorage() {
             if(s.sysBtnRadius) sysBtnRadius.value = s.sysBtnRadius;
             if(s.sysSettingSize) sysSettingSize.value = s.sysSettingSize;
             if(s.sysSettingRadius) sysSettingRadius.value = s.sysSettingRadius;
+
+            if(s.sysTitleSize) sysTitleSize.value = s.sysTitleSize;
+            if(s.sysTitleSpacing) sysTitleSpacing.value = s.sysTitleSpacing;
+            if(s.sysLabelSize) sysLabelSize.value = s.sysLabelSize;
+            if(s.sysLabelSpacing) sysLabelSpacing.value = s.sysLabelSpacing;
         } catch (e) {
             console.error('Lỗi parse cấu hình', e);
         }
@@ -133,6 +147,11 @@ function applySettingsPreview() {
     root.style.setProperty('--setting-size', sysSettingSize.value + 'px');
     root.style.setProperty('--setting-radius', sysSettingRadius.value + '%');
     
+    root.style.setProperty('--title-size', sysTitleSize.value + 'px');
+    root.style.setProperty('--title-spacing', sysTitleSpacing.value + 'px');
+    root.style.setProperty('--label-size', sysLabelSize.value + 'px');
+    root.style.setProperty('--label-spacing', sysLabelSpacing.value + 'px');
+
     if (document.getElementById('val-shadow-x')) document.getElementById('val-shadow-x').innerText = shadowX.value;
     if (document.getElementById('val-shadow-y')) document.getElementById('val-shadow-y').innerText = shadowY.value;
     if (document.getElementById('val-shadow-blur')) document.getElementById('val-shadow-blur').innerText = shadowBlur.value;
@@ -144,6 +163,11 @@ function applySettingsPreview() {
     if (document.getElementById('val-sys-btn-radius')) document.getElementById('val-sys-btn-radius').innerText = sysBtnRadius.value;
     if (document.getElementById('val-sys-setting-size')) document.getElementById('val-sys-setting-size').innerText = sysSettingSize.value;
     if (document.getElementById('val-sys-setting-radius')) document.getElementById('val-sys-setting-radius').innerText = sysSettingRadius.value;
+
+    if (document.getElementById('val-sys-title-size')) document.getElementById('val-sys-title-size').innerText = sysTitleSize.value;
+    if (document.getElementById('val-sys-title-spacing')) document.getElementById('val-sys-title-spacing').innerText = sysTitleSpacing.value;
+    if (document.getElementById('val-sys-label-size')) document.getElementById('val-sys-label-size').innerText = sysLabelSize.value;
+    if (document.getElementById('val-sys-label-spacing')) document.getElementById('val-sys-label-spacing').innerText = sysLabelSpacing.value;
 }
 
 function hexToBytes(hex) {
@@ -177,6 +201,11 @@ function encodeSettings(s) {
     bytes.push(parseInt(s.sysSettingSize) || 48);
     bytes.push(parseInt(s.sysSettingRadius) || 50);
 
+    bytes.push(parseInt(s.sysTitleSize) || 22);
+    bytes.push((parseInt(s.sysTitleSpacing) || 0) + 10);
+    bytes.push(parseInt(s.sysLabelSize) || 14);
+    bytes.push((parseInt(s.sysLabelSpacing) || 0) + 10);
+
     let str = String.fromCharCode.apply(null, bytes);
     return btoa(str).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 }
@@ -185,7 +214,7 @@ function decodeSettings(code) {
     let base64 = code.trim().replace(/-/g, '+').replace(/_/g, '/');
     while(base64.length % 4) base64 += '=';
     let str = atob(base64);
-    if(str.length !== 20 && str.length !== 26) throw new Error("Chiều dài mã không đúng định dạng");
+    if(str.length < 20) throw new Error("Chiều dài mã không đúng định dạng");
     
     let b = [];
     for(let i = 0; i < str.length; i++) b.push(str.charCodeAt(i));
@@ -204,7 +233,7 @@ function decodeSettings(code) {
         shSpread: (b[19] - 20).toString()
     };
 
-    if (b.length === 26) {
+    if (b.length >= 26) {
         out.sysIconSize = b[20].toString();
         out.sysIconRadius = b[21].toString();
         out.sysBtnSize = b[22].toString();
@@ -219,6 +248,19 @@ function decodeSettings(code) {
         out.sysSettingSize = '48';
         out.sysSettingRadius = '50';
     }
+
+    if (b.length >= 30) {
+        out.sysTitleSize = b[26].toString();
+        out.sysTitleSpacing = (b[27] - 10).toString();
+        out.sysLabelSize = b[28].toString();
+        out.sysLabelSpacing = (b[29] - 10).toString();
+    } else {
+        out.sysTitleSize = '22';
+        out.sysTitleSpacing = '0';
+        out.sysLabelSize = '14';
+        out.sysLabelSpacing = '0';
+    }
+
     return out;
 }
 
@@ -232,19 +274,26 @@ if (bgColorInput) {
 
     const sysSliders = [sysIconSize, sysIconRadius, sysBtnSize, sysBtnRadius, sysSettingSize, sysSettingRadius];
     const shadowSliders = [shadowX, shadowY, shadowBlur, shadowSpread];
+    const textSliders = [sysTitleSize, sysTitleSpacing, sysLabelSize, sysLabelSpacing];
     
-    [...shadowSliders, ...sysSliders].forEach(input => {
+    [...shadowSliders, ...sysSliders, ...textSliders].forEach(input => {
         input.addEventListener('input', applySettingsPreview);
         
         const handleStartDrag = (e) => {
+            document.querySelectorAll('.settings-panel').forEach(p => p.classList.add('faded'));
             const panel = e.target.closest('.settings-panel');
-            if(panel) panel.classList.add('faded');
-            e.target.closest('.setting-group').classList.add('active-slider');
+            if(panel) panel.classList.add('has-active-slider');
+            
+            const group = e.target.closest('.setting-group');
+            if(group) group.classList.add('active-slider');
         };
+        
         const handleEndDrag = (e) => {
-            const panel = e.target.closest('.settings-panel');
-            if(panel) panel.classList.remove('faded');
-            e.target.closest('.setting-group').classList.remove('active-slider');
+            document.querySelectorAll('.settings-panel').forEach(p => {
+                p.classList.remove('faded', 'has-active-slider');
+            });
+            const group = e.target.closest('.setting-group');
+            if(group) group.classList.remove('active-slider');
         };
 
         input.addEventListener('mousedown', handleStartDrag);
@@ -254,22 +303,26 @@ if (bgColorInput) {
     });
     
     const clearFade = () => {
-        document.querySelectorAll('.settings-panel.faded').forEach(p => p.classList.remove('faded'));
+        document.querySelectorAll('.settings-panel').forEach(p => {
+            p.classList.remove('faded', 'has-active-slider');
+        });
         document.querySelectorAll('.active-slider').forEach(el => el.classList.remove('active-slider'));
     };
+    
     document.addEventListener('mouseup', clearFade);
     document.addEventListener('touchend', clearFade);
 
     document.getElementById('btn-save-settings').addEventListener('click', () => {
         saveSettings();
         settingsPanel.classList.remove('active');
+        if (infoPanel) infoPanel.classList.remove('active');
     });
 
     document.getElementById('btn-export-settings').addEventListener('click', () => {
         const settings = getCurrentSettingsObj();
         try {
             const compactCode = encodeSettings(settings);
-            prompt("Sao chép mã cấu hình (Tối đa 28 ký tự):", compactCode);
+            prompt("Sao chép mã cấu hình:", compactCode);
             showToast('Đã tạo mã xuất');
         } catch (e) {
             console.error("Lỗi đóng gói mã cấu hình:", e);
