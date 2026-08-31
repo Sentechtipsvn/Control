@@ -2,6 +2,11 @@
 const settingsBtn = document.getElementById('open-settings');
 const settingsPanel = document.getElementById('settings-panel');
 const closeSettings = document.getElementById('close-settings');
+
+const sysSettingsBtn = document.getElementById('open-sys-settings');
+const sysSettingsPanel = document.getElementById('sys-settings-panel');
+const closeSysSettings = document.getElementById('close-sys-settings');
+
 const toastNotification = document.getElementById('toast-notification');
 
 function showToast(message) {
@@ -20,6 +25,13 @@ if (closeSettings && settingsPanel) {
     closeSettings.addEventListener('click', () => settingsPanel.classList.remove('active'));
 }
 
+if (sysSettingsBtn && sysSettingsPanel) {
+    sysSettingsBtn.addEventListener('click', () => sysSettingsPanel.classList.add('active'));
+}
+if (closeSysSettings && sysSettingsPanel) {
+    closeSysSettings.addEventListener('click', () => sysSettingsPanel.classList.remove('active'));
+}
+
 const root = document.documentElement;
 const bgColorInput = document.getElementById('stt-bg-color');
 const cardBgInput = document.getElementById('stt-card-bg');
@@ -34,6 +46,13 @@ const shadowBlur = document.getElementById('shadow-blur');
 const shadowSpread = document.getElementById('shadow-spread');
 const shadowColor = document.getElementById('shadow-color');
 
+const sysIconSize = document.getElementById('sys-icon-size');
+const sysIconRadius = document.getElementById('sys-icon-radius');
+const sysBtnSize = document.getElementById('sys-btn-size');
+const sysBtnRadius = document.getElementById('sys-btn-radius');
+const sysSettingSize = document.getElementById('sys-setting-size');
+const sysSettingRadius = document.getElementById('sys-setting-radius');
+
 function getCurrentSettingsObj() {
     return {
         bg: bgColorInput.value,
@@ -46,7 +65,13 @@ function getCurrentSettingsObj() {
         shY: shadowY.value,
         shBlur: shadowBlur.value,
         shSpread: shadowSpread.value,
-        shColor: shadowColor.value
+        shColor: shadowColor.value,
+        sysIconSize: sysIconSize.value,
+        sysIconRadius: sysIconRadius.value,
+        sysBtnSize: sysBtnSize.value,
+        sysBtnRadius: sysBtnRadius.value,
+        sysSettingSize: sysSettingSize.value,
+        sysSettingRadius: sysSettingRadius.value
     };
 }
 
@@ -60,7 +85,6 @@ function saveSettings() {
 function loadSettingsFromStorage() {
     if (!bgColorInput) return;
     const saved = localStorage.getItem('sttv_cc_settings');
-    
     if (saved) {
         try {
             const s = JSON.parse(saved);
@@ -75,6 +99,13 @@ function loadSettingsFromStorage() {
             if(s.shBlur) shadowBlur.value = s.shBlur;
             if(s.shSpread) shadowSpread.value = s.shSpread;
             if(s.shColor) shadowColor.value = s.shColor;
+            
+            if(s.sysIconSize) sysIconSize.value = s.sysIconSize;
+            if(s.sysIconRadius) sysIconRadius.value = s.sysIconRadius;
+            if(s.sysBtnSize) sysBtnSize.value = s.sysBtnSize;
+            if(s.sysBtnRadius) sysBtnRadius.value = s.sysBtnRadius;
+            if(s.sysSettingSize) sysSettingSize.value = s.sysSettingSize;
+            if(s.sysSettingRadius) sysSettingRadius.value = s.sysSettingRadius;
         } catch (e) {
             console.error('Lỗi parse cấu hình', e);
         }
@@ -93,19 +124,28 @@ function applySettingsPreview() {
     const shadowValue = `${shadowX.value}px ${shadowY.value}px ${shadowBlur.value}px ${shadowSpread.value}px ${shadowColor.value}`;
     root.style.setProperty('--card-shadow', cardShadowToggle.checked ? shadowValue : 'none');
     root.style.setProperty('--icon-shadow', iconShadowToggle.checked ? shadowValue : 'none');
+
+    root.style.setProperty('--icon-size', sysIconSize.value + 'px');
+    root.style.setProperty('--icon-radius', sysIconRadius.value + '%');
+    root.style.setProperty('--btn-padding-v', sysBtnSize.value + 'px');
+    root.style.setProperty('--btn-padding-h', (parseInt(sysBtnSize.value) + 8) + 'px');
+    root.style.setProperty('--btn-radius', sysBtnRadius.value + 'px');
+    root.style.setProperty('--setting-size', sysSettingSize.value + 'px');
+    root.style.setProperty('--setting-radius', sysSettingRadius.value + '%');
     
-    const valShadowX = document.getElementById('val-shadow-x');
-    const valShadowY = document.getElementById('val-shadow-y');
-    const valShadowBlur = document.getElementById('val-shadow-blur');
-    const valShadowSpread = document.getElementById('val-shadow-spread');
-    
-    if (valShadowX) valShadowX.innerText = shadowX.value;
-    if (valShadowY) valShadowY.innerText = shadowY.value;
-    if (valShadowBlur) valShadowBlur.innerText = shadowBlur.value;
-    if (valShadowSpread) valShadowSpread.innerText = shadowSpread.value;
+    if (document.getElementById('val-shadow-x')) document.getElementById('val-shadow-x').innerText = shadowX.value;
+    if (document.getElementById('val-shadow-y')) document.getElementById('val-shadow-y').innerText = shadowY.value;
+    if (document.getElementById('val-shadow-blur')) document.getElementById('val-shadow-blur').innerText = shadowBlur.value;
+    if (document.getElementById('val-shadow-spread')) document.getElementById('val-shadow-spread').innerText = shadowSpread.value;
+
+    if (document.getElementById('val-sys-icon-size')) document.getElementById('val-sys-icon-size').innerText = sysIconSize.value;
+    if (document.getElementById('val-sys-icon-radius')) document.getElementById('val-sys-icon-radius').innerText = sysIconRadius.value;
+    if (document.getElementById('val-sys-btn-size')) document.getElementById('val-sys-btn-size').innerText = sysBtnSize.value;
+    if (document.getElementById('val-sys-btn-radius')) document.getElementById('val-sys-btn-radius').innerText = sysBtnRadius.value;
+    if (document.getElementById('val-sys-setting-size')) document.getElementById('val-sys-setting-size').innerText = sysSettingSize.value;
+    if (document.getElementById('val-sys-setting-radius')) document.getElementById('val-sys-setting-radius').innerText = sysSettingRadius.value;
 }
 
-// --- THUẬT TOÁN NÉN CẤU HÌNH (Rút gọn mã xuất nhập tối đa 28 ký tự) ---
 function hexToBytes(hex) {
     let h = (hex || '#000000').replace('#', '');
     if(h.length === 3) h = h.split('').map(x => x+x).join('');
@@ -119,23 +159,24 @@ function bytesToHex(r, g, b) {
 
 function encodeSettings(s) {
     let bytes = [];
-    // 5 Màu sắc x 3 bytes = 15 bytes
     bytes.push(...hexToBytes(s.bg));
     bytes.push(...hexToBytes(s.cardBg));
     bytes.push(...hexToBytes(s.titleColor));
     bytes.push(...hexToBytes(s.labelColor));
     bytes.push(...hexToBytes(s.shColor));
-    
-    // Đóng gói Bool (1 byte)
     bytes.push((s.cardShadow ? 2 : 0) | (s.iconShadow ? 1 : 0));
-    
-    // Đóng gói tham số đổ bóng (4 bytes offset tránh số âm)
     bytes.push((parseInt(s.shX) || 0) + 50);
     bytes.push((parseInt(s.shY) || 0) + 50);
     bytes.push((parseInt(s.shBlur) || 0));
     bytes.push((parseInt(s.shSpread) || 0) + 20);
 
-    // Chuyển 20 bytes thành chuỗi an toàn (Chữ hoa, chữ thường, số)
+    bytes.push(parseInt(s.sysIconSize) || 48);
+    bytes.push(parseInt(s.sysIconRadius) || 50);
+    bytes.push(parseInt(s.sysBtnSize) || 8);
+    bytes.push(parseInt(s.sysBtnRadius) || 50);
+    bytes.push(parseInt(s.sysSettingSize) || 48);
+    bytes.push(parseInt(s.sysSettingRadius) || 50);
+
     let str = String.fromCharCode.apply(null, bytes);
     return btoa(str).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 }
@@ -144,12 +185,12 @@ function decodeSettings(code) {
     let base64 = code.trim().replace(/-/g, '+').replace(/_/g, '/');
     while(base64.length % 4) base64 += '=';
     let str = atob(base64);
-    if(str.length !== 20) throw new Error("Chiều dài mã không đúng định dạng");
+    if(str.length !== 20 && str.length !== 26) throw new Error("Chiều dài mã không đúng định dạng");
     
     let b = [];
-    for(let i = 0; i < 20; i++) b.push(str.charCodeAt(i));
+    for(let i = 0; i < str.length; i++) b.push(str.charCodeAt(i));
 
-    return {
+    let out = {
         bg: bytesToHex(b[0], b[1], b[2]),
         cardBg: bytesToHex(b[3], b[4], b[5]),
         titleColor: bytesToHex(b[6], b[7], b[8]),
@@ -162,8 +203,24 @@ function decodeSettings(code) {
         shBlur: (b[18]).toString(),
         shSpread: (b[19] - 20).toString()
     };
+
+    if (b.length === 26) {
+        out.sysIconSize = b[20].toString();
+        out.sysIconRadius = b[21].toString();
+        out.sysBtnSize = b[22].toString();
+        out.sysBtnRadius = b[23].toString();
+        out.sysSettingSize = b[24].toString();
+        out.sysSettingRadius = b[25].toString();
+    } else {
+        out.sysIconSize = '48';
+        out.sysIconRadius = '50';
+        out.sysBtnSize = '8';
+        out.sysBtnRadius = '50';
+        out.sysSettingSize = '48';
+        out.sysSettingRadius = '50';
+    }
+    return out;
 }
-// ----------------------------------------------------------------------
 
 if (bgColorInput) {
     [bgColorInput, cardBgInput, titleColorInput, labelColorInput, shadowColor].forEach(input => {
@@ -173,37 +230,35 @@ if (bgColorInput) {
         input.addEventListener('change', applySettingsPreview);
     });
 
-    [shadowX, shadowY, shadowBlur, shadowSpread].forEach(input => {
+    const sysSliders = [sysIconSize, sysIconRadius, sysBtnSize, sysBtnRadius, sysSettingSize, sysSettingRadius];
+    const shadowSliders = [shadowX, shadowY, shadowBlur, shadowSpread];
+    
+    [...shadowSliders, ...sysSliders].forEach(input => {
         input.addEventListener('input', applySettingsPreview);
         
         const handleStartDrag = (e) => {
-            settingsPanel.classList.add('faded');
+            const panel = e.target.closest('.settings-panel');
+            if(panel) panel.classList.add('faded');
             e.target.closest('.setting-group').classList.add('active-slider');
         };
         const handleEndDrag = (e) => {
-            settingsPanel.classList.remove('faded');
+            const panel = e.target.closest('.settings-panel');
+            if(panel) panel.classList.remove('faded');
             e.target.closest('.setting-group').classList.remove('active-slider');
         };
 
         input.addEventListener('mousedown', handleStartDrag);
         input.addEventListener('touchstart', handleStartDrag, {passive: true});
-        
         input.addEventListener('mouseup', handleEndDrag);
         input.addEventListener('touchend', handleEndDrag);
     });
     
-    document.addEventListener('mouseup', () => {
-        if(settingsPanel.classList.contains('faded')) {
-            settingsPanel.classList.remove('faded');
-            document.querySelectorAll('.active-slider').forEach(el => el.classList.remove('active-slider'));
-        }
-    });
-    document.addEventListener('touchend', () => {
-        if(settingsPanel.classList.contains('faded')) {
-            settingsPanel.classList.remove('faded');
-            document.querySelectorAll('.active-slider').forEach(el => el.classList.remove('active-slider'));
-        }
-    });
+    const clearFade = () => {
+        document.querySelectorAll('.settings-panel.faded').forEach(p => p.classList.remove('faded'));
+        document.querySelectorAll('.active-slider').forEach(el => el.classList.remove('active-slider'));
+    };
+    document.addEventListener('mouseup', clearFade);
+    document.addEventListener('touchend', clearFade);
 
     document.getElementById('btn-save-settings').addEventListener('click', () => {
         saveSettings();
@@ -237,5 +292,9 @@ if (bgColorInput) {
         }
     });
 
-    document.addEventListener('DOMContentLoaded', loadSettingsFromStorage);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadSettingsFromStorage);
+    } else {
+        loadSettingsFromStorage();
+    }
 }
