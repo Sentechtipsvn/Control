@@ -4,7 +4,8 @@ const SHORTCUT_NAME = "Control";
 function runShortcut(textValue) {
     const encodedText = encodeURIComponent(textValue);
     const encodedName = encodeURIComponent(SHORTCUT_NAME);
-    const url = `shortcuts://run-shortcut?name=${encodedName}&input=text&text=${encodedText}`;
+    const callbackUrl = encodeURIComponent(window.location.href);
+    const url = `shortcuts://x-callback-url/run-shortcut?name=${encodedName}&input=text&text=${encodedText}&x-success=${callbackUrl}&x-cancel=${callbackUrl}&x-error=${callbackUrl}`;
     window.location.href = url;
 }
 
@@ -55,8 +56,7 @@ async function applyLanguage() {
     
     const titleEl = document.getElementById('app-title');
     if (titleEl) {
-        // Fallback chuẩn theo ngữ cảnh, không dùng tên thương hiệu
-        titleEl.innerText = texts.app_title || 'Trung tâm điều khiển';
+        titleEl.innerText = texts.app_title || 'Bảng điều khiển';
     }
     
     document.querySelectorAll('.btn-action').forEach(btn => {
@@ -83,7 +83,13 @@ async function applyLanguage() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initMain() {
     applyLanguage();
     restoreActiveStates();
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMain);
+} else {
+    initMain();
+}
