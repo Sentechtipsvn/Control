@@ -128,7 +128,6 @@ body {
     background-color: transparent;
 }
 
-/* Nút mở System Settings nằm trong Panel Settings */
 .sys-settings-btn {
     position: absolute;
     bottom: 20px;
@@ -171,7 +170,6 @@ body {
     transition: visibility 0.3s, opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
-/* Layer popup thứ hai nổi lên trên */
 #sys-settings-panel {
     z-index: 300;
 }
@@ -182,18 +180,20 @@ body {
     transform: scale(1);
 }
 
+/* Fix lỗi độ trong suốt (Giảm mờ tối đa khi kéo) */
 .settings-panel.faded {
-    background: rgba(0, 0, 0, 0.05) !important;
-    backdrop-filter: blur(0px) !important;
-    -webkit-backdrop-filter: blur(0px) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 .settings-panel.faded .settings-header,
-.settings-panel.faded .settings-body > .setting-group,
+.settings-panel.faded .settings-body > .setting-group:not(.active-slider),
 .settings-panel.faded .settings-actions,
 .settings-panel.faded .shadow-controls > h3,
-.settings-panel.faded .shadow-controls .setting-group:not(.active-slider) {
-    opacity: 0.05;
+.settings-panel.faded .shadow-controls .setting-group:not(.active-slider),
+.settings-panel.faded .sys-settings-btn {
+    opacity: 0;
     pointer-events: none;
 }
 
@@ -232,14 +232,32 @@ body {
     max-width: 420px;
     width: 100%;
     margin: 0 auto;
-    padding-bottom: 80px; /* Thêm khoảng trống để không bị che bởi nút sys-settings */
+    padding-bottom: 80px; 
 }
 
 .setting-group { display: flex; flex-direction: column; gap: 6px; }
 .setting-group label:not(.toggle-label) { font-size: 0.85rem; opacity: 0.9; }
-.setting-group input[type="color"] { width: 100%; }
 
-/* --- Cấu hình hiển thị dot icon cho Slider --- */
+/* Fix lỗi thanh màu bị vỡ kích thước full width */
+.setting-group input[type="text"], .setting-group input[type="range"] { 
+    width: 100%; 
+}
+.setting-group input[type="color"] {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.setting-group input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+.setting-group input[type="color"]::-webkit-color-swatch {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
 input[type=range] {
     -webkit-appearance: none;
     width: 100%;
