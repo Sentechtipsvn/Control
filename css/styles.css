@@ -134,11 +134,11 @@ body {
 }
 
 .info-btn {
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 46px;
-    height: 46px;
+    width: 40px;
+    height: 40px;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -149,8 +149,8 @@ body {
 }
 
 .info-btn img {
-    width: 46px;
-    height: 46px;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
 }
 
@@ -205,13 +205,16 @@ body {
 }
 
 .settings-panel.has-active-slider .shadow-controls,
-.settings-panel.has-active-slider .sys-controls {
+.settings-panel.has-active-slider .sys-controls,
+.settings-panel.has-active-slider .shadow-setting-group {
     border-top-color: transparent !important;
 }
+
 .settings-panel.has-active-slider .shadow-controls > h3,
-.settings-panel.has-active-slider .shadow-controls .setting-group:not(.active-slider),
+.settings-panel.has-active-slider .shadow-controls > .setting-group:not(.active-slider),
+.settings-panel.has-active-slider .shadow-setting-group > .setting-group:not(.active-slider),
 .settings-panel.has-active-slider .sys-controls > h3,
-.settings-panel.has-active-slider .sys-controls .setting-group:not(.active-slider) {
+.settings-panel.has-active-slider .sys-controls > .setting-group:not(.active-slider) {
     opacity: 0 !important;
     pointer-events: none !important;
 }
@@ -275,6 +278,19 @@ body {
 
 .setting-group { display: flex; flex-direction: column; gap: 6px; }
 .setting-group label:not(.toggle-label) { font-size: 0.85rem; opacity: 0.9; }
+
+.shadow-setting-group {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 2px solid rgba(255, 255, 255, 0.15);
+}
+.shadow-setting-group.active {
+    display: flex;
+}
 
 .setting-group input[type="text"], .setting-group input[type="range"] { 
     width: 100%; 
