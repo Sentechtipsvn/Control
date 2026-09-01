@@ -11,7 +11,7 @@
   "8": "Không làm phiền",
   "9": "Phát Wi-Fi",
   "10": "Pin yếu",
-  "11": "Âm lượng",
+  "11": "Âm báo",
   "12": "Đèn pin",
   "13": "Khởi động lại",
   "14": "Tắt máy",
@@ -46,5 +46,5 @@
   "info_app_name": "Webclip Control Center",
   "info_version_label": "Phiên bản",
   "info_author_label": "Phát triển bởi",
-  "info_description": "Công cụ mạnh mẽ giúp bạn tùy biến trung tâm điều khiển cá nhân hóa trên iOS. Tích hợp trực tiếp với Phím tắt (Shortcuts) thông qua giao thức x-callback-url, mang lại trải nghiệm mượt mà, tiện lợi, an toàn và hoàn toàn bảo mật."
+  "info_description": "Công cụ mạnh mẽ giúp bạn tùy biến trung tâm điều khiển cá nhân hóa trên iOS. Tích hợp trực tiếp với Phím tắt (Shortcuts) th ông qua giao thức x-callback-url, mang lại trải nghiệm mượt mà, tiện lợi, an toàn và hoàn toàn bảo mật."
 }
