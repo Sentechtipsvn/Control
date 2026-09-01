@@ -134,19 +134,23 @@ body {
     height: 100%;
 }
 
+/* Sửa lỗi vạch ngang thanh tiến trình, độc lập hoàn toàn với input[type=range] chung */
 .sys-custom-slider {
     -webkit-appearance: none;
+    appearance: none;
     width: 100%;
     height: 8px;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2); /* Vạch trắng mờ cho chế độ tối */
     border-radius: 4px;
     outline: none;
+    border: none;
     --val: 50%; 
     background-image: linear-gradient(to right, #34c759 var(--val), transparent var(--val));
 }
 
 .sys-custom-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
+    appearance: none;
     width: 28px;
     height: 28px;
     background-color: transparent;
@@ -155,8 +159,13 @@ body {
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    margin-top: -10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Ẩn track native bị trùng lấp gây lỗi vạch ngang trên sys-custom-slider */
+.sys-custom-slider::-webkit-slider-runnable-track {
+    background: transparent;
+    border: none;
 }
 
 #vol-slider::-webkit-slider-thumb { background-image: url('../icons/volume-dot.png'); }
@@ -184,7 +193,6 @@ body {
     opacity: 1;
 }
 
-/* Nút cài đặt đẩy sát góc phải dưới cùng, hỗ trợ safe area */
 .settings-btn {
     position: fixed;
     bottom: max(16px, env(safe-area-inset-bottom));
@@ -254,10 +262,11 @@ body {
     transition: visibility 0.3s, opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
-/* Tự nhận diện giao diện sáng tối theo hệ thống */
+/* Nhận diện giao diện sáng tối theo hệ thống */
 @media (prefers-color-scheme: light) {
+    /* Đóng khung Settings đẹp hơn cho Light Mode */
     .settings-panel {
-        background: rgba(242, 242, 247, 0.85);
+        background: rgba(240, 240, 245, 0.95);
         color: #000;
     }
     .close-btn { color: #000 !important; }
@@ -265,15 +274,11 @@ body {
     .settings-panel label { color: #000; }
     .shadow-setting-group { border-left-color: rgba(0, 0, 0, 0.15) !important; }
     .slider { background-color: rgba(0, 0, 0, 0.1) !important; }
-    .settings-panel input[type="range"]::-webkit-slider-runnable-track { background: rgba(0, 0, 0, 0.2); }
     .info-body a { color: #007aff; }
     .info-desc { opacity: 0.7; }
     
-    /* Điều chỉnh thanh tiến trình của âm lượng & độ sáng khi ở chế độ sáng */
+    /* Vạch đen mờ cho chế độ sáng */
     .sys-custom-slider { background-color: rgba(0, 0, 0, 0.15); }
-    
-    /* Nút xuất/nhập/phím tắt ở chế độ sáng */
-    .btn-secondary { background: rgba(0, 0, 0, 0.08); }
 }
 
 #info-panel {
@@ -399,7 +404,7 @@ body {
     100% { opacity: 1; transform: translateY(0); }
 }
 
-.setting-group input[type="text"], .setting-group input[type="range"] { 
+.setting-group input[type="text"], .setting-group input[type="color"] { 
     width: 100%; 
 }
 .setting-group input[type="color"] {
@@ -418,15 +423,16 @@ body {
     border-radius: 50%;
 }
 
-input[type=range] {
+/* Giới hạn CSS input range chỉ áp dụng cho các slider trong bảng cài đặt, tránh xung đột */
+input[type=range]:not(.sys-custom-slider) {
     -webkit-appearance: none;
     width: 100%;
     background: transparent;
 }
-input[type=range]:focus {
+input[type=range]:not(.sys-custom-slider):focus {
     outline: none;
 }
-input[type=range]::-webkit-slider-thumb {
+input[type=range]:not(.sys-custom-slider)::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 25px;
     width: 25px;
@@ -437,12 +443,17 @@ input[type=range]::-webkit-slider-thumb {
     margin-top: -10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
-input[type=range]::-webkit-slider-runnable-track {
+input[type=range]:not(.sys-custom-slider)::-webkit-slider-runnable-track {
     width: 100%;
     height: 4px;
     cursor: pointer;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 2px;
+}
+@media (prefers-color-scheme: light) {
+    input[type=range]:not(.sys-custom-slider)::-webkit-slider-runnable-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
 }
 
 .toggle-label {
@@ -529,9 +540,12 @@ input[type="checkbox"]:checked + .slider:before {
 }
 .btn-primary:active { background: #005bb5; }
 .btn-secondary { 
-    color: #0dcaf0; /* Cập nhật màu xanh ngọc cho nút thứ cấp */
+    color: #0dcaf0 !important; /* Xanh ngọc - Cố định cho cả 2 chế độ */
 }
-.btn-secondary:active { background: rgba(255, 255, 255, 0.25); }
+@media (prefers-color-scheme: light) {
+    .btn-secondary { background: rgba(0, 0, 0, 0.08); }
+}
+.btn-secondary:active { background: rgba(13, 202, 240, 0.2); }
 .action-row { 
     display: flex; 
     gap: 12px; 
