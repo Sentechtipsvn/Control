@@ -79,6 +79,7 @@
         <img src="icons/icon-setting.png" alt="Settings">
     </button>
 
+    <!-- Popup Cài đặt chính -->
     <div class="settings-panel" id="settings-panel">
         <div class="settings-header">
             <h2 data-key="settings_title">Cài đặt</h2>
@@ -112,7 +113,7 @@
             </div>
             <div class="setting-group">
                 <label class="toggle-label">
-                    <span class="toggle-text" data-key="setting_icon_shadow">Bật đổ bóng icon (55x55)</span>
+                    <span class="toggle-text" data-key="setting_icon_shadow">Bật đổ bóng icon</span>
                     <div class="toggle-switch">
                         <input type="checkbox" id="stt-icon-shadow-toggle">
                         <span class="slider"></span>
@@ -144,6 +145,50 @@
                 </div>
             </div>
 
+            <div class="sys-controls">
+                <h3 data-key="sys_settings_title">Cài đặt Hệ thống</h3>
+                <div class="setting-group">
+                    <label><span data-key="sys_title_size">Kích thước Tiêu đề</span>: <span id="val-sys-title-size">22</span>px</label>
+                    <input type="range" id="sys-title-size" min="10" max="40" value="22">
+                </div>
+                <div class="setting-group">
+                    <label><span data-key="sys_title_spacing">Khoảng cách Tiêu đề</span>: <span id="val-sys-title-spacing">0</span>px</label>
+                    <input type="range" id="sys-title-spacing" min="-5" max="10" value="0">
+                </div>
+                <div class="setting-group">
+                    <label><span data-key="sys_label_size">Kích thước Nhãn</span>: <span id="val-sys-label-size">14</span>px</label>
+                    <input type="range" id="sys-label-size" min="8" max="24" value="14">
+                </div>
+                <div class="setting-group">
+                    <label><span data-key="sys_label_spacing">Khoảng cách Nhãn</span>: <span id="val-sys-label-spacing">0</span>px</label>
+                    <input type="range" id="sys-label-spacing" min="-5" max="10" value="0">
+                </div>
+                <div class="setting-group">
+                    <label><span data-key="sys_icon_size">Kích thước Icon</span>: <span id="val-sys-icon-size">48</span>px</label>
+                    <input type="range" id="sys-icon-size" min="20" max="100" value="48">
+                </div>
+                <div class="setting-group">
+                    <label><span data-key="sys_icon_radius">Bo góc Icon</span>: <span id="val-sys-icon-radius">50</span>%</label>
+                    <input type="range" id="sys-icon-radius" min="0" max="50" value="50">
+                </div>
+                <div class="setting-group">
+                    <label><span data-key="sys_btn_size">Kích thước Nút bấm</span>: <span id="val-sys-btn-size">8</span>px</label>
+                    <input type="range" id="sys-btn-size" min="0" max="30" value="8">
+                </div>
+                <div class="setting-group">
+                    <label><span data-key="sys_btn_radius">Bo góc Nút bấm</span>: <span id="val-sys-btn-radius">50</span>px</label>
+                    <input type="range" id="sys-btn-radius" min="0" max="50" value="50">
+                </div>
+                <div class="setting-group">
+                    <label><span data-key="sys_setting_size">Kích thước Nút Cài đặt</span>: <span id="val-sys-setting-size">48</span>px</label>
+                    <input type="range" id="sys-setting-size" min="20" max="100" value="48">
+                </div>
+                <div class="setting-group">
+                    <label><span data-key="sys_setting_radius">Bo góc Nút Cài đặt</span>: <span id="val-sys-setting-radius">50</span>%</label>
+                    <input type="range" id="sys-setting-radius" min="0" max="50" value="50">
+                </div>
+            </div>
+
             <div class="settings-actions">
                 <button id="btn-save-settings" class="btn-primary" data-key="btn_save">Lưu cấu hình</button>
                 <div class="action-row">
@@ -153,9 +198,28 @@
                 <button id="btn-get-shortcut" class="btn-secondary btn-full" data-key="btn_shortcut">Phím tắt</button>
             </div>
         </div>
+
+        <button class="info-btn" id="open-info-panel" aria-label="Information">
+            <img src="icons/icon_info.png" alt="Info">
+        </button>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- Popup Thông tin -->
+    <div class="settings-panel" id="info-panel">
+        <div class="settings-header">
+            <h2 data-key="info_title">Thông tin</h2>
+            <button id="close-info-panel" class="close-btn">&times;</button>
+        </div>
+        <div class="settings-body info-body">
+            <h3 data-key="info_app_name">Webclip Control Center</h3>
+            <p><span data-key="info_version_label">Phiên bản</span>: 2.1.0</p>
+            <p><span data-key="info_author_label">Phát triển bởi</span>: <a href="https://browse.shortcuty.app/user/Sentechtipsvn" target="_blank" rel="noopener noreferrer">Sentechtipsvn</a></p>
+            <div class="info-desc" data-key="info_description">
+                Công cụ mạnh mẽ giúp bạn tùy biến trung tâm điều khiển cá nhân hóa trên iOS. Tích hợp trực tiếp với Phím tắt (Shortcuts) thông qua giao thức x-callback-url, mang lại trải nghiệm mượt mà, tiện lợi, an toàn và hoàn toàn bảo mật.
+            </div>
+        </div>
+    </div>
+
     <div id="toast-notification" class="toast-notification">Đã lưu cấu hình</div>
 
     <script src="js/theme.js"></script>
