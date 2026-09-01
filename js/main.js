@@ -56,14 +56,14 @@ async function applyLanguage() {
     
     const titleEl = document.getElementById('app-title');
     if (titleEl) {
-        titleEl.innerText = texts.app_title || 'Bảng điều khiển';
+        titleEl.innerText = texts.app_title || titleEl.innerText;
     }
     
     document.querySelectorAll('.btn-action').forEach(btn => {
         const key = btn.getAttribute('data-key');
         const labelEl = btn.querySelector('.btn-label');
         if (labelEl && key && texts[key]) {
-            labelEl.innerText = texts[key] || 'Chức năng';
+            labelEl.innerText = texts[key] || labelEl.innerText;
         }
     });
 
@@ -71,7 +71,7 @@ async function applyLanguage() {
         const key = el.getAttribute('data-key');
         if (texts[key]) {
             if (el.tagName.toLowerCase() !== 'label' || !el.classList.contains('toggle-label')) {
-                 el.innerText = texts[key] || 'Cài đặt';
+                 el.innerText = texts[key] || el.innerText;
             }
         }
     });
