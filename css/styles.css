@@ -138,7 +138,7 @@ body {
     -webkit-appearance: none;
     width: 100%;
     height: 8px;
-    background: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     outline: none;
     --val: 50%; 
@@ -153,7 +153,7 @@ body {
     background-size: cover;
     background-position: center;
     border: none;
-    border-radius: 50%; /* Tròn icon slider thumb */
+    border-radius: 50%;
     cursor: pointer;
     margin-top: -10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -241,9 +241,9 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100dvh; /* Sửa vệt nền dưới chân ở Safari */
+    height: 100dvh;
     background: rgba(0, 0, 0, 0.85);
-    color: #fff; /* Chế độ tối mặc định */
+    color: #fff;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     z-index: 200;
@@ -267,9 +267,13 @@ body {
     .slider { background-color: rgba(0, 0, 0, 0.1) !important; }
     .settings-panel input[type="range"]::-webkit-slider-runnable-track { background: rgba(0, 0, 0, 0.2); }
     .info-body a { color: #007aff; }
-    .btn-primary { color: #fff; }
-    .btn-secondary { background: rgba(0, 0, 0, 0.08); color: #000; }
     .info-desc { opacity: 0.7; }
+    
+    /* Điều chỉnh thanh tiến trình của âm lượng & độ sáng khi ở chế độ sáng */
+    .sys-custom-slider { background-color: rgba(0, 0, 0, 0.15); }
+    
+    /* Nút xuất/nhập/phím tắt ở chế độ sáng */
+    .btn-secondary { background: rgba(0, 0, 0, 0.08); }
 }
 
 #info-panel {
@@ -511,7 +515,6 @@ input[type="checkbox"]:checked + .slider:before {
 .btn-primary, .btn-secondary {
     background: rgba(255, 255, 255, 0.15);
     border: none;
-    color: #fff;
     padding: 14px;
     border-radius: 12px;
     font-size: 1rem;
@@ -522,8 +525,12 @@ input[type="checkbox"]:checked + .slider:before {
 }
 .btn-primary { 
     background: #007aff;
+    color: #fff;
 }
 .btn-primary:active { background: #005bb5; }
+.btn-secondary { 
+    color: #0dcaf0; /* Cập nhật màu xanh ngọc cho nút thứ cấp */
+}
 .btn-secondary:active { background: rgba(255, 255, 255, 0.25); }
 .action-row { 
     display: flex; 
