@@ -123,25 +123,79 @@
             
             <div class="shadow-controls">
                 <h3 data-key="setting_shadow_title">Tùy chỉnh Đổ bóng</h3>
+                
+                <!-- Đổ bóng ngoài (Drop Shadow) -->
                 <div class="setting-group">
-                    <label>X offset: <span id="val-shadow-x">0</span>px</label>
-                    <input type="range" id="shadow-x" min="-50" max="50" value="0">
+                    <label class="toggle-label">
+                        <span class="toggle-text" data-key="setting_drop_shadow">Đổ bóng ngoài</span>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="stt-drop-shadow-toggle" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </label>
                 </div>
-                <div class="setting-group">
-                    <label>Y offset: <span id="val-shadow-y">4</span>px</label>
-                    <input type="range" id="shadow-y" min="-50" max="50" value="4">
+                <div id="drop-shadow-settings" class="shadow-setting-group">
+                    <div class="setting-group">
+                        <label>X offset: <span id="val-shadow-x">0</span>px</label>
+                        <input type="range" id="shadow-x" min="-50" max="50" value="0">
+                    </div>
+                    <div class="setting-group">
+                        <label>Y offset: <span id="val-shadow-y">4</span>px</label>
+                        <input type="range" id="shadow-y" min="-50" max="50" value="4">
+                    </div>
+                    <div class="setting-group">
+                        <label>Blur: <span id="val-shadow-blur">10</span>px</label>
+                        <input type="range" id="shadow-blur" min="0" max="100" value="10">
+                    </div>
+                    <div class="setting-group">
+                        <label>Spread: <span id="val-shadow-spread">0</span>px</label>
+                        <input type="range" id="shadow-spread" min="-20" max="50" value="0">
+                    </div>
+                    <div class="setting-group">
+                        <label><span data-key="setting_shadow_opacity">Độ đậm nhạt</span>: <span id="val-shadow-opacity">100</span>%</label>
+                        <input type="range" id="shadow-opacity" min="0" max="100" value="100">
+                    </div>
+                    <div class="setting-group">
+                        <label data-key="setting_shadow_color">Màu bóng thủ công</label>
+                        <input type="color" id="shadow-color" value="#000000">
+                    </div>
                 </div>
+
+                <!-- Đổ bóng trong (Inset Shadow) -->
                 <div class="setting-group">
-                    <label>Blur: <span id="val-shadow-blur">10</span>px</label>
-                    <input type="range" id="shadow-blur" min="0" max="100" value="10">
+                    <label class="toggle-label">
+                        <span class="toggle-text" data-key="setting_inset_shadow">Đổ bóng trong</span>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="stt-inset-shadow-toggle">
+                            <span class="slider"></span>
+                        </div>
+                    </label>
                 </div>
-                <div class="setting-group">
-                    <label>Spread: <span id="val-shadow-spread">0</span>px</label>
-                    <input type="range" id="shadow-spread" min="-20" max="50" value="0">
-                </div>
-                <div class="setting-group">
-                    <label data-key="setting_shadow_color">Màu bóng thủ công</label>
-                    <input type="color" id="shadow-color" value="#000000">
+                <div id="inset-shadow-settings" class="shadow-setting-group">
+                    <div class="setting-group">
+                        <label>X offset: <span id="val-in-shadow-x">0</span>px</label>
+                        <input type="range" id="in-shadow-x" min="-50" max="50" value="0">
+                    </div>
+                    <div class="setting-group">
+                        <label>Y offset: <span id="val-in-shadow-y">2</span>px</label>
+                        <input type="range" id="in-shadow-y" min="-50" max="50" value="2">
+                    </div>
+                    <div class="setting-group">
+                        <label>Blur: <span id="val-in-shadow-blur">5</span>px</label>
+                        <input type="range" id="in-shadow-blur" min="0" max="100" value="5">
+                    </div>
+                    <div class="setting-group">
+                        <label>Spread: <span id="val-in-shadow-spread">0</span>px</label>
+                        <input type="range" id="in-shadow-spread" min="-20" max="50" value="0">
+                    </div>
+                    <div class="setting-group">
+                        <label><span data-key="setting_shadow_opacity">Độ đậm nhạt</span>: <span id="val-in-shadow-opacity">40</span>%</label>
+                        <input type="range" id="in-shadow-opacity" min="0" max="100" value="40">
+                    </div>
+                    <div class="setting-group">
+                        <label data-key="setting_shadow_color">Màu bóng thủ công</label>
+                        <input type="color" id="in-shadow-color" value="#000000">
+                    </div>
                 </div>
             </div>
 
@@ -212,7 +266,7 @@
         </div>
         <div class="settings-body info-body">
             <h3 data-key="info_app_name">Webclip Control Center</h3>
-            <p><span data-key="info_version_label">Phiên bản</span>: 1.0</p>
+            <p><span data-key="info_version_label">Phiên bản</span>: 2.1.0</p>
             <p><span data-key="info_author_label">Phát triển bởi</span>: <a href="https://browse.shortcuty.app/user/Sentechtipsvn" target="_blank" rel="noopener noreferrer">Sentechtipsvn</a></p>
             <div class="info-desc" data-key="info_description">
                 Công cụ mạnh mẽ giúp bạn tùy biến trung tâm điều khiển cá nhân hóa trên iOS. Tích hợp trực tiếp với Phím tắt (Shortcuts) thông qua giao thức x-callback-url, mang lại trải nghiệm mượt mà, tiện lợi, an toàn và hoàn toàn bảo mật.
