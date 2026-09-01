@@ -3,7 +3,9 @@ const SHORTCUT_NAME = "Control";
 
 function runShortcut(textValue) {
     const encodedText = encodeURIComponent(textValue);
-    const url = `shortcuts://run-shortcut?name=${encodeURIComponent(SHORTCUT_NAME)}&input=text&text=${encodedText}`;
+    const encodedName = encodeURIComponent(SHORTCUT_NAME);
+    // Đã gỡ bỏ cấu trúc x-callback-url, gọi trực tiếp để mở Shortcuts mượt mà
+    const url = `shortcuts://run-shortcut?name=${encodedName}&input=text&text=${encodedText}`;
     window.location.href = url;
 }
 
@@ -43,7 +45,7 @@ async function loadLanguage() {
             if (!fallbackResponse.ok) throw new Error('Fallback not found');
             return await fallbackResponse.json();
         } catch (err) {
-            console.error('Lỗi ngôn ngữ', err);
+            console.error('Lỗi tải ngôn ngữ', err);
             return {};
         }
     }
@@ -103,7 +105,6 @@ function initSystemSliders() {
             slider.style.setProperty('--val', `${percent}%`);
             tooltip.innerText = val;
             
-            // Tính toán vị trí tooltip theo percent (Trừ đi offset nhỏ của thumb width 28px)
             const thumbWidth = 28;
             const offset = (percent / 100) * (slider.clientWidth - thumbWidth) + (thumbWidth / 2);
             tooltip.style.left = `${offset}px`;
@@ -127,7 +128,6 @@ function initSystemSliders() {
         slider.addEventListener('change', handleRelease);
         slider.addEventListener('touchend', handleRelease);
         
-        // Init state
         updateSliderView();
     });
 }
