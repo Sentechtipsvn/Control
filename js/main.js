@@ -4,7 +4,6 @@ const SHORTCUT_NAME = "Control";
 function runShortcut(textValue) {
     const encodedText = encodeURIComponent(textValue);
     const encodedName = encodeURIComponent(SHORTCUT_NAME);
-    // Đã gỡ bỏ cấu trúc x-callback-url, gọi trực tiếp để mở Shortcuts mượt mà
     const url = `shortcuts://run-shortcut?name=${encodedName}&input=text&text=${encodedText}`;
     window.location.href = url;
 }
