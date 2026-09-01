@@ -177,6 +177,7 @@ function applySettingsPreview() {
     root.style.setProperty('--title-color', titleColorInput.value);
     root.style.setProperty('--label-color', labelColorInput.value);
 
+    // Xử lý đóng/mở ngăn kéo đổ bóng
     if(dropSettingsContainer) dropSettingsContainer.classList.toggle('active', dropToggle.checked);
     if(insetSettingsContainer) insetSettingsContainer.classList.toggle('active', insetToggle.checked);
 
