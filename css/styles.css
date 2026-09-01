@@ -168,8 +168,8 @@ body {
     background: transparent;
     color: #fff;
     padding: 6px 10px;
-    border-radius: 8px;
-    font-size: 13px;
+    border-radius: 50px;
+    font-size: 12px;
     font-weight: 600;
     opacity: 0;
     pointer-events: none;
@@ -185,7 +185,7 @@ body {
 /* Nút cài đặt đẩy góc phải dưới */
 .settings-btn {
     position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 8px);
+    bottom: calc(env(safe-area-inset-bottom) + 20px);
     right: calc(env(safe-area-inset-right) + 8px);
     width: var(--setting-size);
     height: var(--setting-size);
