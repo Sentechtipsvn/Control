@@ -1,3 +1,4 @@
+/* css/styles.css */
 :root {
     --bg-color: #0b1120;
     --card-bg: rgba(255, 255, 255, 0.08);
@@ -133,16 +134,20 @@ body {
     background-color: transparent;
 }
 
+/* Container bọc nút info nằm cuối màn hình cài đặt */
+.info-btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 15px;
+}
+
 .info-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
     width: 40px;
     height: 40px;
     background: transparent;
     border: none;
     cursor: pointer;
-    z-index: 250;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -199,7 +204,7 @@ body {
 .settings-panel.has-active-slider .settings-header,
 .settings-panel.has-active-slider .settings-body > .setting-group:not(.active-slider),
 .settings-panel.has-active-slider .settings-actions,
-.settings-panel.has-active-slider .info-btn {
+.settings-panel.has-active-slider .info-btn-wrapper {
     opacity: 0 !important;
     pointer-events: none !important;
 }
@@ -254,7 +259,7 @@ body {
     max-width: 420px;
     width: 100%;
     margin: 0 auto;
-    padding-bottom: 80px; 
+    padding-bottom: 40px; 
 }
 
 .info-body h3 {
@@ -279,6 +284,7 @@ body {
 .setting-group { display: flex; flex-direction: column; gap: 6px; }
 .setting-group label:not(.toggle-label) { font-size: 0.85rem; opacity: 0.9; }
 
+/* Animation mở ngăn kéo mượt mà */
 .shadow-setting-group {
     display: none;
     flex-direction: column;
@@ -287,9 +293,15 @@ body {
     margin-bottom: 15px;
     padding-left: 10px;
     border-left: 2px solid rgba(255, 255, 255, 0.15);
+    animation: slideDrawer 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 .shadow-setting-group.active {
     display: flex;
+}
+
+@keyframes slideDrawer {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 .setting-group input[type="text"], .setting-group input[type="range"] { 
