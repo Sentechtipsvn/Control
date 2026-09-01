@@ -73,6 +73,23 @@
             <img src="images/shutdown.png" alt="Tắt máy">
             <span class="btn-label">Tắt máy</span>
         </div>
+
+        <!-- System Sliders (Volume & Brightness) -->
+        <div class="slider-action-container">
+            <img src="images/volume-icon.png" alt="Volume">
+            <div class="slider-wrapper">
+                <input type="range" class="sys-custom-slider" id="vol-slider" min="0" max="100" value="50">
+                <span class="tooltip-val" id="vol-tooltip">50</span>
+            </div>
+        </div>
+
+        <div class="slider-action-container">
+            <img src="images/brightness-icon.png" alt="Brightness">
+            <div class="slider-wrapper">
+                <input type="range" class="sys-custom-slider" id="bri-slider" min="0" max="100" value="50">
+                <span class="tooltip-val" id="bri-tooltip">50</span>
+            </div>
+        </div>
     </div>
 
     <button class="settings-btn" id="open-settings" aria-label="Settings">
@@ -124,7 +141,6 @@
             <div class="shadow-controls">
                 <h3 data-key="setting_shadow_title">Tùy chỉnh Đổ bóng</h3>
                 
-                <!-- Đổ bóng ngoài (Drop Shadow) -->
                 <div class="setting-group">
                     <label class="toggle-label">
                         <span class="toggle-text" data-key="setting_drop_shadow">Đổ bóng ngoài</span>
@@ -161,7 +177,6 @@
                     </div>
                 </div>
 
-                <!-- Đổ bóng trong (Inset Shadow) -->
                 <div class="setting-group">
                     <label class="toggle-label">
                         <span class="toggle-text" data-key="setting_inset_shadow">Đổ bóng trong</span>
@@ -252,7 +267,6 @@
                 <button id="btn-get-shortcut" class="btn-secondary btn-full" data-key="btn_shortcut">Phím tắt</button>
             </div>
             
-            <!-- Nút info được di chuyển vào cuối popup Settings, căn phải -->
             <div class="info-btn-wrapper">
                 <button class="info-btn" id="open-info-panel" aria-label="Information">
                     <img src="icons/icon_info.png" alt="Info">
