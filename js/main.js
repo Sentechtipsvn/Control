@@ -83,9 +83,61 @@ async function applyLanguage() {
     }
 }
 
+function initSystemSliders() {
+    const sliders = [
+        { id: 'vol-slider', prefix: 'volume-' },
+        { id: 'bri-slider', prefix: 'brightness-' }
+    ];
+
+    sliders.forEach(s => {
+        const slider = document.getElementById(s.id);
+        if (!slider) return;
+        
+        const tooltip = slider.nextElementSibling;
+        let hideTimeout;
+
+        const updateSliderView = () => {
+            const val = slider.value;
+            const min = slider.min ? parseFloat(slider.min) : 0;
+            const max = slider.max ? parseFloat(slider.max) : 100;
+            const percent = ((val - min) / (max - min)) * 100;
+            
+            slider.style.setProperty('--val', `${percent}%`);
+            tooltip.innerText = val;
+            
+            // Tính toán vị trí tooltip theo percent (Trừ đi offset nhỏ của thumb width 28px)
+            const thumbWidth = 28;
+            const offset = (percent / 100) * (slider.clientWidth - thumbWidth) + (thumbWidth / 2);
+            tooltip.style.left = `${offset}px`;
+        };
+
+        slider.addEventListener('input', () => {
+            updateSliderView();
+            tooltip.classList.add('show');
+            if (hideTimeout) clearTimeout(hideTimeout);
+        });
+
+        const handleRelease = () => {
+            if (hideTimeout) clearTimeout(hideTimeout);
+            hideTimeout = setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 1000);
+            
+            runShortcut(`${s.prefix}${slider.value}`);
+        };
+
+        slider.addEventListener('change', handleRelease);
+        slider.addEventListener('touchend', handleRelease);
+        
+        // Init state
+        updateSliderView();
+    });
+}
+
 function initMain() {
     applyLanguage();
     restoreActiveStates();
+    initSystemSliders();
 }
 
 if (document.readyState === 'loading') {
