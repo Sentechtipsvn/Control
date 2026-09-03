@@ -540,7 +540,7 @@ input[type="checkbox"]:checked + .slider:before {
 }
 .btn-primary:active { background: #005bb5; }
 .btn-secondary { 
-    color: #0dcaf0 !important; /* Xanh ngọc - Cố định cho cả 2 chế độ */
+    color: #a14cf6 !important; /* Xanh ngọc - Cố định cho cả 2 chế độ */
 }
 @media (prefers-color-scheme: light) {
     .btn-secondary { background: rgba(0, 0, 0, 0.08); }
