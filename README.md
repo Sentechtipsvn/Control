@@ -12,11 +12,21 @@ Dự án **Webclip Control Center** là một ứng dụng web giả lập giao 
 
 ## 📸 Demo & Giao diện mẫu (Preview)
 
-<div align="center">
-  <img src="icons/demo.png" alt="Control Center Demo Preview" width="360" style="border-radius: 24px; box-shadow: 0 12px 40px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2);">
-  <br>
-  <p><i>✨ Giao diện Control Center hiển thị thực tế trên màn hình iPhone</i></p>
-</div>
+<p align="center">
+  <img src="icons/demo.png" width="600" alt="Team xanh">
+</p>
+
+<hr style="border: none; height: 1px; background-color: #e1e4e8; width: 80%; margin: 20px auto;" />
+
+<p align="center">
+  <img src="icons/demo-1.png" width="600" alt="Ảnh 2">
+</p>
+
+<hr style="border: none; height: 1px; background-color: #e1e4e8; width: 80%; margin: 20px auto;" />
+
+<p align="center">
+  <img src="icons/demo-2.png" width="600" alt="Ảnh 3">
+</p>
 ---
 
 ## ✨ Tính năng nổi bật (Features)

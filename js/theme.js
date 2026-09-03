@@ -2,6 +2,11 @@
 const settingsBtn = document.getElementById('open-settings');
 const settingsPanel = document.getElementById('settings-panel');
 const closeSettings = document.getElementById('close-settings');
+
+const infoBtn = document.getElementById('open-info-panel');
+const infoPanel = document.getElementById('info-panel');
+const closeInfoPanel = document.getElementById('close-info-panel');
+
 const toastNotification = document.getElementById('toast-notification');
 
 function showToast(message) {
@@ -20,6 +25,13 @@ if (closeSettings && settingsPanel) {
     closeSettings.addEventListener('click', () => settingsPanel.classList.remove('active'));
 }
 
+if (infoBtn && infoPanel) {
+    infoBtn.addEventListener('click', () => infoPanel.classList.add('active'));
+}
+if (closeInfoPanel && infoPanel) {
+    closeInfoPanel.addEventListener('click', () => infoPanel.classList.remove('active'));
+}
+
 const root = document.documentElement;
 const bgColorInput = document.getElementById('stt-bg-color');
 const cardBgInput = document.getElementById('stt-card-bg');
@@ -28,11 +40,35 @@ const labelColorInput = document.getElementById('stt-label-color');
 const cardShadowToggle = document.getElementById('stt-card-shadow-toggle');
 const iconShadowToggle = document.getElementById('stt-icon-shadow-toggle');
 
+const dropToggle = document.getElementById('stt-drop-shadow-toggle');
+const dropSettingsContainer = document.getElementById('drop-shadow-settings');
 const shadowX = document.getElementById('shadow-x');
 const shadowY = document.getElementById('shadow-y');
 const shadowBlur = document.getElementById('shadow-blur');
 const shadowSpread = document.getElementById('shadow-spread');
+const shadowOpacity = document.getElementById('shadow-opacity');
 const shadowColor = document.getElementById('shadow-color');
+
+const insetToggle = document.getElementById('stt-inset-shadow-toggle');
+const insetSettingsContainer = document.getElementById('inset-shadow-settings');
+const inX = document.getElementById('in-shadow-x');
+const inY = document.getElementById('in-shadow-y');
+const inBlur = document.getElementById('in-shadow-blur');
+const inSpread = document.getElementById('in-shadow-spread');
+const inOpacity = document.getElementById('in-shadow-opacity');
+const inColor = document.getElementById('in-shadow-color');
+
+const sysIconSize = document.getElementById('sys-icon-size');
+const sysIconRadius = document.getElementById('sys-icon-radius');
+const sysBtnSize = document.getElementById('sys-btn-size');
+const sysBtnRadius = document.getElementById('sys-btn-radius');
+const sysSettingSize = document.getElementById('sys-setting-size');
+const sysSettingRadius = document.getElementById('sys-setting-radius');
+
+const sysTitleSize = document.getElementById('sys-title-size');
+const sysTitleSpacing = document.getElementById('sys-title-spacing');
+const sysLabelSize = document.getElementById('sys-label-size');
+const sysLabelSpacing = document.getElementById('sys-label-spacing');
 
 function getCurrentSettingsObj() {
     return {
@@ -42,11 +78,30 @@ function getCurrentSettingsObj() {
         labelColor: labelColorInput.value,
         cardShadow: cardShadowToggle.checked,
         iconShadow: iconShadowToggle.checked,
+        dropShadow: dropToggle.checked,
+        insetShadow: insetToggle.checked,
         shX: shadowX.value,
         shY: shadowY.value,
         shBlur: shadowBlur.value,
         shSpread: shadowSpread.value,
-        shColor: shadowColor.value
+        shOpacity: shadowOpacity.value,
+        shColor: shadowColor.value,
+        inX: inX.value,
+        inY: inY.value,
+        inBlur: inBlur.value,
+        inSpread: inSpread.value,
+        inOpacity: inOpacity.value,
+        inColor: inColor.value,
+        sysIconSize: sysIconSize.value,
+        sysIconRadius: sysIconRadius.value,
+        sysBtnSize: sysBtnSize.value,
+        sysBtnRadius: sysBtnRadius.value,
+        sysSettingSize: sysSettingSize.value,
+        sysSettingRadius: sysSettingRadius.value,
+        sysTitleSize: sysTitleSize.value,
+        sysTitleSpacing: sysTitleSpacing.value,
+        sysLabelSize: sysLabelSize.value,
+        sysLabelSpacing: sysLabelSpacing.value
     };
 }
 
@@ -60,7 +115,6 @@ function saveSettings() {
 function loadSettingsFromStorage() {
     if (!bgColorInput) return;
     const saved = localStorage.getItem('sttv_cc_settings');
-    
     if (saved) {
         try {
             const s = JSON.parse(saved);
@@ -70,16 +124,49 @@ function loadSettingsFromStorage() {
             if(s.labelColor) labelColorInput.value = s.labelColor;
             cardShadowToggle.checked = !!s.cardShadow;
             iconShadowToggle.checked = !!s.iconShadow;
+            dropToggle.checked = (s.dropShadow !== undefined) ? !!s.dropShadow : true;
+            insetToggle.checked = !!s.insetShadow;
+            
             if(s.shX) shadowX.value = s.shX;
             if(s.shY) shadowY.value = s.shY;
             if(s.shBlur) shadowBlur.value = s.shBlur;
             if(s.shSpread) shadowSpread.value = s.shSpread;
+            if(s.shOpacity) shadowOpacity.value = s.shOpacity;
             if(s.shColor) shadowColor.value = s.shColor;
+
+            if(s.inX) inX.value = s.inX;
+            if(s.inY) inY.value = s.inY;
+            if(s.inBlur) inBlur.value = s.inBlur;
+            if(s.inSpread) inSpread.value = s.inSpread;
+            if(s.inOpacity) inOpacity.value = s.inOpacity;
+            if(s.inColor) inColor.value = s.inColor;
+            
+            if(s.sysIconSize) sysIconSize.value = s.sysIconSize;
+            if(s.sysIconRadius) sysIconRadius.value = s.sysIconRadius;
+            if(s.sysBtnSize) sysBtnSize.value = s.sysBtnSize;
+            if(s.sysBtnRadius) sysBtnRadius.value = s.sysBtnRadius;
+            if(s.sysSettingSize) sysSettingSize.value = s.sysSettingSize;
+            if(s.sysSettingRadius) sysSettingRadius.value = s.sysSettingRadius;
+
+            if(s.sysTitleSize) sysTitleSize.value = s.sysTitleSize;
+            if(s.sysTitleSpacing) sysTitleSpacing.value = s.sysTitleSpacing;
+            if(s.sysLabelSize) sysLabelSize.value = s.sysLabelSize;
+            if(s.sysLabelSpacing) sysLabelSpacing.value = s.sysLabelSpacing;
         } catch (e) {
             console.error('Lỗi parse cấu hình', e);
         }
     }
     applySettingsPreview();
+}
+
+function hexToRgba(hex, opacityPercent) {
+    let h = (hex || '#000000').replace('#', '');
+    if(h.length === 3) h = h.split('').map(x => x+x).join('');
+    let r = parseInt(h.substring(0,2), 16) || 0;
+    let g = parseInt(h.substring(2,4), 16) || 0;
+    let b = parseInt(h.substring(4,6), 16) || 0;
+    let a = ((opacityPercent !== undefined ? opacityPercent : 100) / 100).toFixed(2);
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
 function applySettingsPreview() {
@@ -90,22 +177,67 @@ function applySettingsPreview() {
     root.style.setProperty('--title-color', titleColorInput.value);
     root.style.setProperty('--label-color', labelColorInput.value);
 
-    const shadowValue = `${shadowX.value}px ${shadowY.value}px ${shadowBlur.value}px ${shadowSpread.value}px ${shadowColor.value}`;
-    root.style.setProperty('--card-shadow', cardShadowToggle.checked ? shadowValue : 'none');
-    root.style.setProperty('--icon-shadow', iconShadowToggle.checked ? shadowValue : 'none');
+    if(dropSettingsContainer) dropSettingsContainer.classList.toggle('active', dropToggle.checked);
+    if(insetSettingsContainer) insetSettingsContainer.classList.toggle('active', insetToggle.checked);
+
+    let dropStr = '';
+    if (dropToggle.checked) {
+        let rgba = hexToRgba(shadowColor.value, shadowOpacity.value);
+        dropStr = `${shadowX.value}px ${shadowY.value}px ${shadowBlur.value}px ${shadowSpread.value}px ${rgba}`;
+    }
+
+    let insetStr = '';
+    if (insetToggle.checked) {
+        let rgba = hexToRgba(inColor.value, inOpacity.value);
+        insetStr = `inset ${inX.value}px ${inY.value}px ${inBlur.value}px ${inSpread.value}px ${rgba}`;
+    }
+
+    let finalShadow = 'none';
+    if (dropStr && insetStr) finalShadow = `${dropStr}, ${insetStr}`;
+    else if (dropStr) finalShadow = dropStr;
+    else if (insetStr) finalShadow = insetStr;
+
+    root.style.setProperty('--card-shadow', cardShadowToggle.checked ? finalShadow : 'none');
+    root.style.setProperty('--icon-shadow', iconShadowToggle.checked ? finalShadow : 'none');
+
+    root.style.setProperty('--icon-size', sysIconSize.value + 'px');
+    root.style.setProperty('--icon-radius', sysIconRadius.value + '%');
+    root.style.setProperty('--btn-padding-v', sysBtnSize.value + 'px');
+    root.style.setProperty('--btn-padding-h', (parseInt(sysBtnSize.value) + 8) + 'px');
+    root.style.setProperty('--btn-radius', sysBtnRadius.value + 'px');
+    root.style.setProperty('--setting-size', sysSettingSize.value + 'px');
+    root.style.setProperty('--setting-radius', sysSettingRadius.value + '%');
     
-    const valShadowX = document.getElementById('val-shadow-x');
-    const valShadowY = document.getElementById('val-shadow-y');
-    const valShadowBlur = document.getElementById('val-shadow-blur');
-    const valShadowSpread = document.getElementById('val-shadow-spread');
-    
-    if (valShadowX) valShadowX.innerText = shadowX.value;
-    if (valShadowY) valShadowY.innerText = shadowY.value;
-    if (valShadowBlur) valShadowBlur.innerText = shadowBlur.value;
-    if (valShadowSpread) valShadowSpread.innerText = shadowSpread.value;
+    root.style.setProperty('--title-size', sysTitleSize.value + 'px');
+    root.style.setProperty('--title-spacing', sysTitleSpacing.value + 'px');
+    root.style.setProperty('--label-size', sysLabelSize.value + 'px');
+    root.style.setProperty('--label-spacing', sysLabelSpacing.value + 'px');
+
+    if (document.getElementById('val-shadow-x')) document.getElementById('val-shadow-x').innerText = shadowX.value;
+    if (document.getElementById('val-shadow-y')) document.getElementById('val-shadow-y').innerText = shadowY.value;
+    if (document.getElementById('val-shadow-blur')) document.getElementById('val-shadow-blur').innerText = shadowBlur.value;
+    if (document.getElementById('val-shadow-spread')) document.getElementById('val-shadow-spread').innerText = shadowSpread.value;
+    if (document.getElementById('val-shadow-opacity')) document.getElementById('val-shadow-opacity').innerText = shadowOpacity.value;
+
+    if (document.getElementById('val-in-shadow-x')) document.getElementById('val-in-shadow-x').innerText = inX.value;
+    if (document.getElementById('val-in-shadow-y')) document.getElementById('val-in-shadow-y').innerText = inY.value;
+    if (document.getElementById('val-in-shadow-blur')) document.getElementById('val-in-shadow-blur').innerText = inBlur.value;
+    if (document.getElementById('val-in-shadow-spread')) document.getElementById('val-in-shadow-spread').innerText = inSpread.value;
+    if (document.getElementById('val-in-shadow-opacity')) document.getElementById('val-in-shadow-opacity').innerText = inOpacity.value;
+
+    if (document.getElementById('val-sys-icon-size')) document.getElementById('val-sys-icon-size').innerText = sysIconSize.value;
+    if (document.getElementById('val-sys-icon-radius')) document.getElementById('val-sys-icon-radius').innerText = sysIconRadius.value;
+    if (document.getElementById('val-sys-btn-size')) document.getElementById('val-sys-btn-size').innerText = sysBtnSize.value;
+    if (document.getElementById('val-sys-btn-radius')) document.getElementById('val-sys-btn-radius').innerText = sysBtnRadius.value;
+    if (document.getElementById('val-sys-setting-size')) document.getElementById('val-sys-setting-size').innerText = sysSettingSize.value;
+    if (document.getElementById('val-sys-setting-radius')) document.getElementById('val-sys-setting-radius').innerText = sysSettingRadius.value;
+
+    if (document.getElementById('val-sys-title-size')) document.getElementById('val-sys-title-size').innerText = sysTitleSize.value;
+    if (document.getElementById('val-sys-title-spacing')) document.getElementById('val-sys-title-spacing').innerText = sysTitleSpacing.value;
+    if (document.getElementById('val-sys-label-size')) document.getElementById('val-sys-label-size').innerText = sysLabelSize.value;
+    if (document.getElementById('val-sys-label-spacing')) document.getElementById('val-sys-label-spacing').innerText = sysLabelSpacing.value;
 }
 
-// --- THUẬT TOÁN NÉN CẤU HÌNH (Rút gọn mã xuất nhập tối đa 28 ký tự) ---
 function hexToBytes(hex) {
     let h = (hex || '#000000').replace('#', '');
     if(h.length === 3) h = h.split('').map(x => x+x).join('');
@@ -119,23 +251,40 @@ function bytesToHex(r, g, b) {
 
 function encodeSettings(s) {
     let bytes = [];
-    // 5 Màu sắc x 3 bytes = 15 bytes
     bytes.push(...hexToBytes(s.bg));
     bytes.push(...hexToBytes(s.cardBg));
     bytes.push(...hexToBytes(s.titleColor));
     bytes.push(...hexToBytes(s.labelColor));
     bytes.push(...hexToBytes(s.shColor));
     
-    // Đóng gói Bool (1 byte)
-    bytes.push((s.cardShadow ? 2 : 0) | (s.iconShadow ? 1 : 0));
+    let bitmask = (s.cardShadow ? 1 : 0) | (s.iconShadow ? 2 : 0) | (s.dropShadow ? 4 : 0) | (s.insetShadow ? 8 : 0);
+    bytes.push(bitmask);
     
-    // Đóng gói tham số đổ bóng (4 bytes offset tránh số âm)
     bytes.push((parseInt(s.shX) || 0) + 50);
     bytes.push((parseInt(s.shY) || 0) + 50);
     bytes.push((parseInt(s.shBlur) || 0));
     bytes.push((parseInt(s.shSpread) || 0) + 20);
 
-    // Chuyển 20 bytes thành chuỗi an toàn (Chữ hoa, chữ thường, số)
+    bytes.push(parseInt(s.sysIconSize) || 48);
+    bytes.push(parseInt(s.sysIconRadius) || 50);
+    bytes.push(parseInt(s.sysBtnSize) || 8);
+    bytes.push(parseInt(s.sysBtnRadius) || 50);
+    bytes.push(parseInt(s.sysSettingSize) || 48);
+    bytes.push(parseInt(s.sysSettingRadius) || 50);
+
+    bytes.push(parseInt(s.sysTitleSize) || 22);
+    bytes.push((parseInt(s.sysTitleSpacing) || 0) + 10);
+    bytes.push(parseInt(s.sysLabelSize) || 14);
+    bytes.push((parseInt(s.sysLabelSpacing) || 0) + 10);
+
+    bytes.push(parseInt(s.shOpacity) || 100);
+    bytes.push(...hexToBytes(s.inColor));
+    bytes.push((parseInt(s.inX) || 0) + 50);
+    bytes.push((parseInt(s.inY) || 0) + 50);
+    bytes.push((parseInt(s.inBlur) || 0));
+    bytes.push((parseInt(s.inSpread) || 0) + 20);
+    bytes.push(parseInt(s.inOpacity) || 100);
+
     let str = String.fromCharCode.apply(null, bytes);
     return btoa(str).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 }
@@ -144,77 +293,140 @@ function decodeSettings(code) {
     let base64 = code.trim().replace(/-/g, '+').replace(/_/g, '/');
     while(base64.length % 4) base64 += '=';
     let str = atob(base64);
-    if(str.length !== 20) throw new Error("Chiều dài mã không đúng định dạng");
+    if(str.length < 20) throw new Error("Chiều dài mã không đúng định dạng");
     
     let b = [];
-    for(let i = 0; i < 20; i++) b.push(str.charCodeAt(i));
+    for(let i = 0; i < str.length; i++) b.push(str.charCodeAt(i));
 
-    return {
+    let out = {
         bg: bytesToHex(b[0], b[1], b[2]),
         cardBg: bytesToHex(b[3], b[4], b[5]),
         titleColor: bytesToHex(b[6], b[7], b[8]),
         labelColor: bytesToHex(b[9], b[10], b[11]),
         shColor: bytesToHex(b[12], b[13], b[14]),
-        cardShadow: !!(b[15] & 2),
-        iconShadow: !!(b[15] & 1),
+        cardShadow: !!(b[15] & 1),
+        iconShadow: !!(b[15] & 2),
+        dropShadow: !!(b[15] & 4),
+        insetShadow: !!(b[15] & 8),
         shX: (b[16] - 50).toString(),
         shY: (b[17] - 50).toString(),
         shBlur: (b[18]).toString(),
         shSpread: (b[19] - 20).toString()
     };
+    
+    if (b.length <= 30 && (b[15] & 4) === 0 && (b[15] & 8) === 0) {
+        out.dropShadow = true;
+    }
+
+    if (b.length >= 26) {
+        out.sysIconSize = b[20].toString();
+        out.sysIconRadius = b[21].toString();
+        out.sysBtnSize = b[22].toString();
+        out.sysBtnRadius = b[23].toString();
+        out.sysSettingSize = b[24].toString();
+        out.sysSettingRadius = b[25].toString();
+    } else {
+        out.sysIconSize = '48';
+        out.sysIconRadius = '50';
+        out.sysBtnSize = '8';
+        out.sysBtnRadius = '50';
+        out.sysSettingSize = '48';
+        out.sysSettingRadius = '50';
+    }
+
+    if (b.length >= 30) {
+        out.sysTitleSize = b[26].toString();
+        out.sysTitleSpacing = (b[27] - 10).toString();
+        out.sysLabelSize = b[28].toString();
+        out.sysLabelSpacing = (b[29] - 10).toString();
+    } else {
+        out.sysTitleSize = '22';
+        out.sysTitleSpacing = '0';
+        out.sysLabelSize = '14';
+        out.sysLabelSpacing = '0';
+    }
+
+    if (b.length >= 39) {
+        out.shOpacity = b[30].toString();
+        out.inColor = bytesToHex(b[31], b[32], b[33]);
+        out.inX = (b[34] - 50).toString();
+        out.inY = (b[35] - 50).toString();
+        out.inBlur = b[36].toString();
+        out.inSpread = (b[37] - 20).toString();
+        out.inOpacity = b[38].toString();
+    } else {
+        out.shOpacity = '100';
+        out.inColor = '#000000';
+        out.inX = '0';
+        out.inY = '2';
+        out.inBlur = '5';
+        out.inSpread = '0';
+        out.inOpacity = '40';
+    }
+
+    return out;
 }
-// ----------------------------------------------------------------------
 
 if (bgColorInput) {
-    [bgColorInput, cardBgInput, titleColorInput, labelColorInput, shadowColor].forEach(input => {
+    [bgColorInput, cardBgInput, titleColorInput, labelColorInput, shadowColor, inColor].forEach(input => {
         input.addEventListener('input', applySettingsPreview);
     });
-    [cardShadowToggle, iconShadowToggle].forEach(input => {
+    [cardShadowToggle, iconShadowToggle, dropToggle, insetToggle].forEach(input => {
         input.addEventListener('change', applySettingsPreview);
     });
 
-    [shadowX, shadowY, shadowBlur, shadowSpread].forEach(input => {
+    const sysSliders = [sysIconSize, sysIconRadius, sysBtnSize, sysBtnRadius, sysSettingSize, sysSettingRadius];
+    const shadowSliders = [shadowX, shadowY, shadowBlur, shadowSpread, shadowOpacity];
+    const insetSliders = [inX, inY, inBlur, inSpread, inOpacity];
+    const textSliders = [sysTitleSize, sysTitleSpacing, sysLabelSize, sysLabelSpacing];
+    
+    [...shadowSliders, ...insetSliders, ...sysSliders, ...textSliders].forEach(input => {
         input.addEventListener('input', applySettingsPreview);
         
         const handleStartDrag = (e) => {
-            settingsPanel.classList.add('faded');
-            e.target.closest('.setting-group').classList.add('active-slider');
+            document.querySelectorAll('.settings-panel').forEach(p => p.classList.add('faded'));
+            const panel = e.target.closest('.settings-panel');
+            if(panel) panel.classList.add('has-active-slider');
+            
+            const group = e.target.closest('.setting-group');
+            if(group) group.classList.add('active-slider');
         };
+        
         const handleEndDrag = (e) => {
-            settingsPanel.classList.remove('faded');
-            e.target.closest('.setting-group').classList.remove('active-slider');
+            document.querySelectorAll('.settings-panel').forEach(p => {
+                p.classList.remove('faded', 'has-active-slider');
+            });
+            const group = e.target.closest('.setting-group');
+            if(group) group.classList.remove('active-slider');
         };
 
         input.addEventListener('mousedown', handleStartDrag);
         input.addEventListener('touchstart', handleStartDrag, {passive: true});
-        
         input.addEventListener('mouseup', handleEndDrag);
         input.addEventListener('touchend', handleEndDrag);
     });
     
-    document.addEventListener('mouseup', () => {
-        if(settingsPanel.classList.contains('faded')) {
-            settingsPanel.classList.remove('faded');
-            document.querySelectorAll('.active-slider').forEach(el => el.classList.remove('active-slider'));
-        }
-    });
-    document.addEventListener('touchend', () => {
-        if(settingsPanel.classList.contains('faded')) {
-            settingsPanel.classList.remove('faded');
-            document.querySelectorAll('.active-slider').forEach(el => el.classList.remove('active-slider'));
-        }
-    });
+    const clearFade = () => {
+        document.querySelectorAll('.settings-panel').forEach(p => {
+            p.classList.remove('faded', 'has-active-slider');
+        });
+        document.querySelectorAll('.active-slider').forEach(el => el.classList.remove('active-slider'));
+    };
+    
+    document.addEventListener('mouseup', clearFade);
+    document.addEventListener('touchend', clearFade);
 
     document.getElementById('btn-save-settings').addEventListener('click', () => {
         saveSettings();
         settingsPanel.classList.remove('active');
+        if (infoPanel) infoPanel.classList.remove('active');
     });
 
     document.getElementById('btn-export-settings').addEventListener('click', () => {
         const settings = getCurrentSettingsObj();
         try {
             const compactCode = encodeSettings(settings);
-            prompt("Sao chép mã cấu hình (Tối đa 28 ký tự):", compactCode);
+            prompt("Sao chép mã cấu hình:", compactCode);
             showToast('Đã tạo mã xuất');
         } catch (e) {
             console.error("Lỗi đóng gói mã cấu hình:", e);
@@ -237,5 +449,9 @@ if (bgColorInput) {
         }
     });
 
-    document.addEventListener('DOMContentLoaded', loadSettingsFromStorage);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadSettingsFromStorage);
+    } else {
+        loadSettingsFromStorage();
+    }
 }

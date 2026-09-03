@@ -44,7 +44,7 @@ async function loadLanguage() {
             if (!fallbackResponse.ok) throw new Error('Fallback not found');
             return await fallbackResponse.json();
         } catch (err) {
-            console.error('Lỗi ngôn ngữ', err);
+            console.error('Lỗi tải ngôn ngữ', err);
             return {};
         }
     }
@@ -55,8 +55,7 @@ async function applyLanguage() {
     
     const titleEl = document.getElementById('app-title');
     if (titleEl) {
-        // Fallback chuẩn theo ngữ cảnh, không dùng tên thương hiệu
-        titleEl.innerText = texts.app_title || 'Trung tâm điều khiển';
+        titleEl.innerText = texts.app_title || 'Bảng điều khiển';
     }
     
     document.querySelectorAll('.btn-action').forEach(btn => {
@@ -83,7 +82,63 @@ async function applyLanguage() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initSystemSliders() {
+    const sliders = [
+        { id: 'vol-slider', prefix: 'volume-' },
+        { id: 'bri-slider', prefix: 'brightness-' }
+    ];
+
+    sliders.forEach(s => {
+        const slider = document.getElementById(s.id);
+        if (!slider) return;
+        
+        const tooltip = slider.nextElementSibling;
+        let hideTimeout;
+
+        const updateSliderView = () => {
+            const val = slider.value;
+            const min = slider.min ? parseFloat(slider.min) : 0;
+            const max = slider.max ? parseFloat(slider.max) : 100;
+            const percent = ((val - min) / (max - min)) * 100;
+            
+            slider.style.setProperty('--val', `${percent}%`);
+            tooltip.innerText = val;
+            
+            const thumbWidth = 28;
+            const offset = (percent / 100) * (slider.clientWidth - thumbWidth) + (thumbWidth / 2);
+            tooltip.style.left = `${offset}px`;
+        };
+
+        slider.addEventListener('input', () => {
+            updateSliderView();
+            tooltip.classList.add('show');
+            if (hideTimeout) clearTimeout(hideTimeout);
+        });
+
+        const handleRelease = () => {
+            if (hideTimeout) clearTimeout(hideTimeout);
+            hideTimeout = setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 1000);
+            
+            runShortcut(`${s.prefix}${slider.value}`);
+        };
+
+        slider.addEventListener('change', handleRelease);
+        slider.addEventListener('touchend', handleRelease);
+        
+        updateSliderView();
+    });
+}
+
+function initMain() {
     applyLanguage();
     restoreActiveStates();
-});
+    initSystemSliders();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMain);
+} else {
+    initMain();
+}

@@ -1,5 +1,5 @@
 {
-  "app_title": "Control Centre",
+  "app_title": "Control Center",
   "settings_title": "Settings",
   "1": "AssistiveTouch",
   "2": "Airplane Mode",
@@ -15,17 +15,17 @@
   "12": "Flashlight",
   "13": "Restart",
   "14": "Shut Down",
-  "setting_bg_color": "System Background Colour",
-  "setting_card_bg": "Button Background Colour",
-  "setting_title_color": "Title Text Colour",
-  "setting_label_color": "Button Text Colour",
+  "setting_bg_color": "System Background Color",
+  "setting_card_bg": "Button Background Color",
+  "setting_title_color": "Title Text Color",
+  "setting_label_color": "Button Text Color",
   "setting_card_shadow": "Enable Button Shadow",
   "setting_icon_shadow": "Enable Icon Shadow",
-  "setting_shadow_title": "Customise Shadow",
+  "setting_shadow_title": "Customize Shadow",
   "setting_drop_shadow": "Outer Shadow",
   "setting_inset_shadow": "Inner Shadow",
   "setting_shadow_opacity": "Opacity",
-  "setting_shadow_color": "Manual Shadow Colour",
+  "setting_shadow_color": "Manual Shadow Color",
   "btn_save": "Save Configuration",
   "btn_export": "Export",
   "btn_import": "Import",
@@ -46,5 +46,5 @@
   "info_app_name": "Webclip Control Center",
   "info_version_label": "Version",
   "info_author_label": "Developed by",
-  "info_description": "Powerful tool to customise your personal control centre on iOS. Integrates directly with Shortcuts via x-callback-url protocol, providing a smooth, convenient, secure and completely private experience."
+  "info_description": "Powerful tool to customize your personal control center on iOS. Integrates directly with Shortcuts via x-callback-url protocol, providing a smooth, convenient, secure and completely private experience."
 }

@@ -1,3 +1,4 @@
+/* css/styles.css */
 :root {
     --bg-color: #0b1120;
     --card-bg: rgba(255, 255, 255, 0.08);
@@ -6,6 +7,19 @@
     --label-color: #ffffff;
     --card-shadow: none;
     --icon-shadow: none;
+    
+    --icon-size: 48px;
+    --icon-radius: 50%;
+    --btn-padding-v: 8px;
+    --btn-padding-h: 16px;
+    --btn-radius: 50px;
+    --setting-size: 48px;
+    --setting-radius: 50%;
+    
+    --title-size: 22px;
+    --title-spacing: 0px;
+    --label-size: 14px;
+    --label-spacing: 0px;
 }
 
 * {
@@ -34,10 +48,10 @@ body {
 }
 
 .main-title {
-    font-size: 1.4rem;
+    font-size: var(--title-size); 
     margin-bottom: 20px;
     font-weight: 600;
-    letter-spacing: -0.5px;
+    letter-spacing: var(--title-spacing);
     color: var(--title-color);
 }
 
@@ -54,8 +68,8 @@ body {
     border: 1px solid var(--card-border);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: 50px; 
-    padding: 8px 16px 8px 8px;
+    border-radius: var(--btn-radius); 
+    padding: var(--btn-padding-v) var(--btn-padding-h) var(--btn-padding-v) var(--btn-padding-v);
     display: flex;
     align-items: center;
     gap: 12px;
@@ -70,16 +84,15 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Active State Status: Neon Glow */
 .btn-action.active {
     border-color: #34c759;
     box-shadow: 0 0 12px rgba(52, 199, 89, 0.6), var(--card-shadow);
 }
 
-.btn-action img {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
+.btn-action img, .slider-action-container img {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    border-radius: var(--icon-radius);
     object-fit: cover;
     flex-shrink: 0;
     box-shadow: var(--icon-shadow);
@@ -87,8 +100,9 @@ body {
 }
 
 .btn-action span.btn-label {
-    font-size: 0.72rem;
+    font-size: var(--label-size); 
     font-weight: 500;
+    letter-spacing: var(--label-spacing);
     color: var(--label-color);
     white-space: nowrap;
     overflow: hidden;
@@ -96,13 +110,96 @@ body {
     flex-grow: 1;
 }
 
+/* Các thanh trượt hệ thống */
+.slider-action-container {
+    grid-column: 1 / -1; 
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--btn-radius);
+    padding: var(--btn-padding-v) var(--btn-padding-h) var(--btn-padding-v) var(--btn-padding-v);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.1s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.slider-wrapper {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+/* Sửa lỗi vạch ngang thanh tiến trình, độc lập hoàn toàn với input[type=range] chung */
+.sys-custom-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.2); /* Vạch trắng mờ cho chế độ tối */
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    --val: 50%; 
+    background-image: linear-gradient(to right, #34c759 var(--val), transparent var(--val));
+}
+
+.sys-custom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    background-color: transparent;
+    background-size: cover;
+    background-position: center;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Ẩn track native bị trùng lấp gây lỗi vạch ngang trên sys-custom-slider */
+.sys-custom-slider::-webkit-slider-runnable-track {
+    background: transparent;
+    border: none;
+}
+
+#vol-slider::-webkit-slider-thumb { background-image: url('../icons/volume-dot.png'); }
+#bri-slider::-webkit-slider-thumb { background-image: url('../icons/brightness-dot.png'); }
+
+.tooltip-val {
+    position: absolute;
+    top: -35px;
+    left: 50%; 
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.tooltip-val.show {
+    opacity: 1;
+}
+
 .settings-btn {
     position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 16px);
-    right: calc(env(safe-area-inset-right) + 16px);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    right: max(16px, env(safe-area-inset-right));
+    width: var(--setting-size);
+    height: var(--setting-size);
+    border-radius: var(--setting-radius);
     background: transparent;
     border: none;
     cursor: pointer;
@@ -113,14 +210,37 @@ body {
 }
 
 .settings-btn img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    width: var(--setting-size);
+    height: var(--setting-size);
+    border-radius: var(--setting-radius);
     object-fit: contain;
     background-color: transparent;
 }
 
-/* Modal Cài đặt: Thêm Animation bung ra/thu vào */
+.info-btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.info-btn {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-btn img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
 .settings-panel {
     visibility: hidden;
     opacity: 0;
@@ -129,18 +249,40 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100dvh;
     background: rgba(0, 0, 0, 0.85);
+    color: #fff;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     z-index: 200;
     display: flex;
     flex-direction: column;
     padding: calc(env(safe-area-inset-top) + 20px) 20px calc(env(safe-area-inset-bottom) + 20px);
-    color: #fff;
     overflow-y: auto;
-    /* Hiệu ứng bung mượt mà (Cubic-bezier) */
     transition: visibility 0.3s, opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* Nhận diện giao diện sáng tối theo hệ thống */
+@media (prefers-color-scheme: light) {
+    /* Đóng khung Settings đẹp hơn cho Light Mode */
+    .settings-panel {
+        background: rgba(240, 240, 245, 0.95);
+        color: #000;
+    }
+    .close-btn { color: #000 !important; }
+    .settings-panel .toggle-text,
+    .settings-panel label { color: #000; }
+    .shadow-setting-group { border-left-color: rgba(0, 0, 0, 0.15) !important; }
+    .slider { background-color: rgba(0, 0, 0, 0.1) !important; }
+    .info-body a { color: #007aff; }
+    .info-desc { opacity: 0.7; }
+    
+    /* Vạch đen mờ cho chế độ sáng */
+    .sys-custom-slider { background-color: rgba(0, 0, 0, 0.15); }
+}
+
+#info-panel {
+    z-index: 300;
 }
 
 .settings-panel.active { 
@@ -149,20 +291,38 @@ body {
     transform: scale(1);
 }
 
-/* Hiệu ứng mờ mạnh khi kéo thanh trượt Shadow để nhìn rõ nền */
 .settings-panel.faded {
-    background: rgba(0, 0, 0, 0.05) !important;
-    backdrop-filter: blur(0px) !important;
-    -webkit-backdrop-filter: blur(0px) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
-.settings-panel.faded .settings-header,
-.settings-panel.faded .settings-body > .setting-group,
-.settings-panel.faded .settings-actions,
-.settings-panel.faded .shadow-controls > h3,
-.settings-panel.faded .shadow-controls .setting-group:not(.active-slider) {
-    opacity: 0.05;
-    pointer-events: none;
+.settings-panel.faded:not(.has-active-slider) > * {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.settings-panel.has-active-slider .settings-header,
+.settings-panel.has-active-slider .settings-body > .setting-group:not(.active-slider),
+.settings-panel.has-active-slider .settings-actions,
+.settings-panel.has-active-slider .info-btn-wrapper {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.settings-panel.has-active-slider .shadow-controls,
+.settings-panel.has-active-slider .sys-controls,
+.settings-panel.has-active-slider .shadow-setting-group {
+    border-top-color: transparent !important;
+}
+
+.settings-panel.has-active-slider .shadow-controls > h3,
+.settings-panel.has-active-slider .shadow-controls > .setting-group:not(.active-slider),
+.settings-panel.has-active-slider .shadow-setting-group > .setting-group:not(.active-slider),
+.settings-panel.has-active-slider .sys-controls > h3,
+.settings-panel.has-active-slider .sys-controls > .setting-group:not(.active-slider) {
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 .settings-panel.faded .active-slider {
@@ -171,7 +331,7 @@ body {
 }
 
 .settings-panel * {
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
 .settings-header {
@@ -200,12 +360,101 @@ body {
     max-width: 420px;
     width: 100%;
     margin: 0 auto;
-    padding-bottom: 40px;
+    padding-bottom: 40px; 
+}
+
+.info-body h3 {
+    margin-bottom: 10px;
+}
+.info-body p {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+.info-body a { 
+    color: #007aff; 
+    text-decoration: none; 
+    font-weight: bold; 
+}
+.info-desc { 
+    margin-top: 15px; 
+    font-size: 0.9rem; 
+    line-height: 1.5; 
+    opacity: 0.85; 
 }
 
 .setting-group { display: flex; flex-direction: column; gap: 6px; }
 .setting-group label:not(.toggle-label) { font-size: 0.85rem; opacity: 0.9; }
-.setting-group input[type="text"], .setting-group input[type="range"] { width: 100%; }
+
+.shadow-setting-group {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 2px solid rgba(255, 255, 255, 0.15);
+    animation: slideDrawer 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.shadow-setting-group.active {
+    display: flex;
+}
+
+@keyframes slideDrawer {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.setting-group input[type="text"], .setting-group input[type="color"] { 
+    width: 100%; 
+}
+.setting-group input[type="color"] {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.setting-group input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+.setting-group input[type="color"]::-webkit-color-swatch {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
+/* Giới hạn CSS input range chỉ áp dụng cho các slider trong bảng cài đặt, tránh xung đột */
+input[type=range]:not(.sys-custom-slider) {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+input[type=range]:not(.sys-custom-slider):focus {
+    outline: none;
+}
+input[type=range]:not(.sys-custom-slider)::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 25px;
+    width: 25px;
+    background: url('../icons/icon-dot.png') center/cover no-repeat;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    margin-top: -10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+input[type=range]:not(.sys-custom-slider)::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+}
+@media (prefers-color-scheme: light) {
+    input[type=range]:not(.sys-custom-slider)::-webkit-slider-runnable-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
+}
 
 .toggle-label {
     display: flex;
@@ -250,14 +499,14 @@ body {
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-input:checked + .slider {
+input[type="checkbox"]:checked + .slider {
     background-color: #34c759;
 }
-input:checked + .slider:before {
+input[type="checkbox"]:checked + .slider:before {
     transform: translateX(20px);
 }
 
-.shadow-controls {
+.shadow-controls, .sys-controls {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     padding-top: 16px;
     margin-top: 10px;
@@ -277,7 +526,6 @@ input:checked + .slider:before {
 .btn-primary, .btn-secondary {
     background: rgba(255, 255, 255, 0.15);
     border: none;
-    color: #fff;
     padding: 14px;
     border-radius: 12px;
     font-size: 1rem;
@@ -288,9 +536,16 @@ input:checked + .slider:before {
 }
 .btn-primary { 
     background: #007aff;
+    color: #fff;
 }
 .btn-primary:active { background: #005bb5; }
-.btn-secondary:active { background: rgba(255, 255, 255, 0.25); }
+.btn-secondary { 
+    color: #a14cf6 !important; /* Xanh ngọc - Cố định cho cả 2 chế độ */
+}
+@media (prefers-color-scheme: light) {
+    .btn-secondary { background: rgba(0, 0, 0, 0.08); }
+}
+.btn-secondary:active { background: rgba(13, 202, 240, 0.2); }
 .action-row { 
     display: flex; 
     gap: 12px; 
@@ -303,7 +558,6 @@ input:checked + .slider:before {
     margin-top: 4px;
 }
 
-/* Toast Notification */
 .toast-notification {
     position: fixed;
     bottom: 30px;
